@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: f478fd24bbf2b7545a7bb3f6e4eb29a5
+  - enabled: 1
+    path: Assets/Scenes/Lobby Menu.unity
+    guid: b339761f7eb8d3b46a8c815c91d5c748
+  - enabled: 1
+    path: Assets/Scenes/MrPuzzles Menu.unity
+    guid: 971bf74e200390545831ad310e4cd042
+  - enabled: 1
+    path: Assets/Scenes/Jennifer Menu.unity
+    guid: eec5f8ec7a0f3b34580cf37a13f165a7
+  m_configObjects: {}
