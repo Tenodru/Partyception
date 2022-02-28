@@ -82,7 +82,6 @@ public class LobbyMenu : MonoBehaviour
                                             startButton.interactable = true;
                                         }
                                     }
-
                                     break;
                                 }
                             }

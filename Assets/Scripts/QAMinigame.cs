@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class QAMinigame : MonoBehaviour
 {
@@ -11,13 +12,7 @@ public class QAMinigame : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void SetUpMinigame(string minigameData)
@@ -50,7 +45,7 @@ public class QAMinigame : MonoBehaviour
             }
         }
 
-        foreach(Button button in answerChoices)
+        foreach (Button button in answerChoices)
         {
             button.gameObject.SetActive(false);
         }
@@ -85,10 +80,46 @@ public class QAMinigame : MonoBehaviour
         if (correct)
         {
             Debug.Log("correct");
+            StartCoroutine(_UpdateStatus("correct"));
+
         }
         else
         {
             Debug.Log("incorrect");
+            StartCoroutine(_UpdateStatus("incorrect"));
+        }
+    }
+
+    public IEnumerator _UpdateStatus(string newStatus)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "update");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("newStatus", newStatus);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("https://tenodrucreative.com/tracker/updatePlayerStatus.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                LoadingPanel.current.ToggleLoadingPanel(false);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "success")
+                {
+                    CanvasSwitcher.current.SwitchCanvas("HubCanvas");
+                }
+                else
+                {
+                    AlertText.current.ToggleAlertText(receivedData, Color.red);
+                }
+            }
         }
     }
 }
