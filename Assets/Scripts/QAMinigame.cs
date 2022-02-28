@@ -73,8 +73,6 @@ public class QAMinigame : MonoBehaviour
                 answerChoices[i].onClick.AddListener(() => AnswerChoice(false));
             }
         }
-
-        PlayerStatusTracker.current.StartTracking();
     }
 
     public void AnswerChoice(bool correct)

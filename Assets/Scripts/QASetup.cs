@@ -74,6 +74,10 @@ public class QASetup : MonoBehaviour
             return;
         }
 
+        CanvasSwitcher.current.SwitchCanvas("PlayerStatusCanvas");
+
+        PlayerStatusTracker.current.StartTracking();
+
         StartCoroutine("_StartMinigame");
     }
 
