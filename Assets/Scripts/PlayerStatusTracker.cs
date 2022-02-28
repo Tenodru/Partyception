@@ -6,8 +6,14 @@ using UnityEngine.Networking;
 
 public class PlayerStatusTracker : MonoBehaviour
 {
+    public static PlayerStatusTracker current;
     public Transform playerTrackersPool;
     public List<PlayerTracker> playerTrackers;
+
+    private void Awake()
+    {
+        current = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +22,6 @@ public class PlayerStatusTracker : MonoBehaviour
         {
             playerTrackers.Add(playerTrackersPool.GetChild(i).GetComponent<PlayerTracker>());
         }
-        StartTracking();
     }
 
     public void StartTracking()
