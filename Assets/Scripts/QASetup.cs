@@ -73,11 +73,6 @@ public class QASetup : MonoBehaviour
             AlertText.current.ToggleAlertText("Your question is empty.", Color.red);
             return;
         }
-
-        CanvasSwitcher.current.SwitchCanvas("PlayerStatusCanvas");
-
-        PlayerStatusTracker.current.StartTracking();
-
         StartCoroutine("_StartMinigame");
     }
 
@@ -118,7 +113,8 @@ public class QASetup : MonoBehaviour
                 if (receivedData == "successfully started minigame")
                 {
                     LoadingPanel.current.ToggleLoadingPanel(false);
-                    CanvasSwitcher.current.SwitchCanvas("HubCanvas");
+                    PlayerStatusTracker.current.StartTracking();
+                    CanvasSwitcher.current.SwitchCanvas("PlayerStatusCanvas");
                 }
                 else
                 {
