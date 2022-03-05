@@ -14,12 +14,6 @@ public class PlayerCard : MonoBehaviour
         playerName.text = name;
     }
 
-    public void MakeLeader()
-    {
-        leaderIcon.sprite = mrPuzzlesIcon;
-        leaderIcon.color = Color.white;
-    }
-
     public void MakeCurrent()
     {
         GetComponent<Image>().color = Color.yellow;

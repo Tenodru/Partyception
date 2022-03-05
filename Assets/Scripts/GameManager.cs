@@ -24,11 +24,11 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void JoinLobby(string name, string lobbyName)
+    public void JoinLobby(string name, string lobbyName, string targetLobbyScene)
     {
         playerName = name;
         currentLobby = lobbyName;
-        LoadScene("Lobby Menu");
+        LoadScene(targetLobbyScene);
     }
 
     public void LoadScene(string sceneName)

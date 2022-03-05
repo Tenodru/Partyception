@@ -13,7 +13,11 @@ public class LobbyMenu : MonoBehaviour
     public List<GameObject> playerCards;
     public List<string> playerNames;
     public Button startButton;
-    public float timer = 0;
+    private float timer = 0;
+
+    [TextArea(1, 5)]
+    public string gameDatabaseLink;
+    public string mainScene;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +45,7 @@ public class LobbyMenu : MonoBehaviour
             form.AddField("lobbyNumber", GameManager.current.currentLobby);
             form.AddField("playerName", GameManager.current.playerName);
 
-            using (UnityWebRequest www = UnityWebRequest.Post("https://tenodrucreative.com/tracker/lobby.php", form))
+            using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
             {
                 yield return www.SendWebRequest();
 
@@ -69,14 +73,14 @@ public class LobbyMenu : MonoBehaviour
                                     playerCard.SetActive(true);
                                     playerCard.GetComponent<PlayerCard>().AssignPlayerName(data);
                                     playerNames.Add(data);
-                                    if (data.Contains("Mr. "))
+                                    if (data.Contains("Leader: "))
                                     {
-                                        playerCard.GetComponent<PlayerCard>().MakeLeader();
+                                        //do something special to indicate they are leader
                                     }
-                                    if (data == GameManager.current.playerName || data == "Mr. " + GameManager.current.playerName)
+                                    if (data == GameManager.current.playerName || data == "Leader: " + GameManager.current.playerName)
                                     {
                                         playerCard.GetComponent<PlayerCard>().MakeCurrent();
-                                        if (data.Contains("Mr. "))
+                                        if (data.Contains("Leader: "))
                                         {
                                             lobbyLeader = true;
                                             startButton.interactable = true;
@@ -101,7 +105,7 @@ public class LobbyMenu : MonoBehaviour
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
         form.AddField("playerName", GameManager.current.playerName);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://tenodrucreative.com/tracker/lobby.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -117,7 +121,7 @@ public class LobbyMenu : MonoBehaviour
                 if (receivedData == "successfully started game")
                 {
                     LoadingPanel.current.ToggleLoadingPanel(false);
-                    GameManager.current.LoadScene("MrPuzzles Menu");
+                    GameManager.current.LoadScene(mainScene);
                 }
                 else
                 {
@@ -137,7 +141,7 @@ public class LobbyMenu : MonoBehaviour
     {
         while (true)
         {
-            using (UnityWebRequest www = UnityWebRequest.Get("https://tenodrucreative.com/tracker/lobbies/" + GameManager.current.currentLobby + "/lobbyStatus.txt"))
+            using (UnityWebRequest www = UnityWebRequest.Get(gameDatabaseLink + "lobbies/" + GameManager.current.currentLobby + "/lobbyStatus.txt"))
             {
                 yield return www.SendWebRequest();
 
@@ -150,7 +154,7 @@ public class LobbyMenu : MonoBehaviour
                     string receivedData = www.downloadHandler.text;
                     if (receivedData == "start" && !inGame && !lobbyLeader)
                     {
-                        GameManager.current.LoadScene("Jennifer Menu");
+                        GameManager.current.LoadScene(mainScene);
                         StopAllCoroutines();
                     }
                 }

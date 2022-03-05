@@ -9,6 +9,11 @@ public class MainMenuManager : MonoBehaviour
     public InputField nameField;
     public InputField lobbyField;
 
+    [TextArea(1,5)]
+    public string gameDatabaseLink;
+    public string lobbyScene;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +34,7 @@ public class MainMenuManager : MonoBehaviour
         form.AddField("lobbyNumber", lobbyNumber);
         form.AddField("playerName", playerName);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("https://tenodrucreative.com/tracker/lobby.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
         {
             yield return www.SendWebRequest();
 
@@ -48,7 +53,7 @@ public class MainMenuManager : MonoBehaviour
                     if (receivedData == "lobby created")
                     {
                         LoadingPanel.current.ToggleLoadingPanel(false);
-                        GameManager.current.JoinLobby(playerName, lobbyNumber);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene);
                     }
                     else if (receivedData == "lobby already exists")
                     {
@@ -67,7 +72,7 @@ public class MainMenuManager : MonoBehaviour
                     if (receivedData == "lobby successfully joined")
                     {
                         LoadingPanel.current.ToggleLoadingPanel(false);
-                        GameManager.current.JoinLobby(playerName, lobbyNumber);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene);
                     }
                     else if (receivedData == "lobby does not exist")
                     {
