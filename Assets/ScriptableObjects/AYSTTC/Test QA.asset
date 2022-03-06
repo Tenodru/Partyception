@@ -15,7 +15,7 @@ MonoBehaviour:
   question: Enter question here.
   answerList:
   - answer: enter answer here
-    isCorrectAnswer: 1
+    isCorrectAnswer: 0
   - answer: enter answer here
     isCorrectAnswer: 0
   - answer: enter answer here
