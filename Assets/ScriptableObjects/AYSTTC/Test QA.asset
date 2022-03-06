@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   question: Enter question here.
   answerList:
-  - answer 1
-  - answer 2
-  - answer 3
-  - answer 4
+  - answer: enter answer here
+    isCorrectAnswer: 0
+  - answer: enter answer here
+    isCorrectAnswer: 0
+  - answer: enter answer here
+    isCorrectAnswer: 0
+  - answer: enter answer here
+    isCorrectAnswer: 0
