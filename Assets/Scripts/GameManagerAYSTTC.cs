@@ -57,8 +57,9 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             if (!timerBegun)
             {
-                timerBegun = true;
+                isTimerRunning = true;
                 StartCoroutine(Timer());
+                timerBegun = true;
             }
         }
     }
@@ -69,6 +70,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <param name="category"></param>
     public void ChooseCategory(QuestionCategory category)
     {
+        chosenCategory = category;
         ShowStartButton();
     }
 
@@ -123,19 +125,19 @@ public class GameManagerAYSTTC : MonoBehaviour
     
     IEnumerator Timer()
     {
+        Debug.Log("Timer begun.");
         while (isTimerRunning)
         {
             if (timeRemaining > 0)
             {
-                timeRemaining = -Time.deltaTime;
+                timeRemaining -= Time.deltaTime;
             }
             else
             {
                 timeRemaining = 0;
                 isTimerRunning = false;
             }
+            yield return null;
         }
-
-        yield return null;
     }
 }
