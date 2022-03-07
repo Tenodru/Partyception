@@ -20,7 +20,9 @@ public class GameManagerAYSTTC : MonoBehaviour
     public Button startButton;
 
     [HideInNormalInspector] public float timeRemaining = 15f;
+    [HideInNormalInspector] public bool timerBegun = false;
     [HideInNormalInspector] public bool isTimerRunning = false;
+    [HideInNormalInspector] public bool roundInProgress = false;
     [HideInNormalInspector] public int currentRound = 0;
     [HideInNormalInspector] public QuestionCategory chosenCategory;
 
@@ -40,7 +42,25 @@ public class GameManagerAYSTTC : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Timer();
+        //TODO: Grab random question from questions list.
+        //TODO: Initialize round.
+        //TODO: Do pre-timer stuff (like a "ready-set-go").
+        //TODO: Initialize timer.
+        //TODO: Display question and answer choices.
+
+        //TODO: When timer ends, check if player's chosen answer matches correct answer.
+        //TODO: Reward correct players.
+        //TODO: Eliminate incorrect players.
+        //TODO: Repeat loop until end.
+
+        if (roundInProgress)
+        {
+            if (!timerBegun)
+            {
+                timerBegun = true;
+                StartCoroutine(Timer());
+            }
+        }
     }
 
     /// <summary>
@@ -52,6 +72,9 @@ public class GameManagerAYSTTC : MonoBehaviour
         ShowStartButton();
     }
 
+    /// <summary>
+    /// Selects a random category.
+    /// </summary>
     public void ChooseRandomCategory()
     {
         // Choose a category at random.
@@ -61,34 +84,29 @@ public class GameManagerAYSTTC : MonoBehaviour
         ShowStartButton();
     }
 
+    /// <summary>
+    /// Shows or de-greyifies the Start Game button.
+    /// </summary>
     public void ShowStartButton()
     {
         // Perhaps have a "Start Game" button that is greyed out,
         // then made clickable when category is chosen.
     }
 
-    public void StartRoundLoop()
-    {
-        for (int x = 0; x < roundCount; x++)
-        {
-            currentRound = x;
-            isTimerRunning = true;
-            
-            //TODO: Grab random question from questions list.
-            //TODO: Initialize timer.
-            //TODO: Display question and answer choices.
-
-            //TODO: When timer ends, check if player's chosen answer matches correct answer.
-            //TODO: Reward correct players.
-            //TODO: Eliminate incorrect players.
-            //TODO: Repeat loop until end.
-        }
-    }
-
-    void Timer()
+    /// <summary>
+    /// Starts the game.
+    /// </summary>
+    public void StartGame()
     {
         timeRemaining = timerDuration;
+        currentRound = 1;
 
+        roundInProgress = true;
+    }
+
+    /*
+    void Timer()
+    {
         if (isTimerRunning)
         {
             if (timeRemaining > 0)
@@ -101,6 +119,23 @@ public class GameManagerAYSTTC : MonoBehaviour
                 isTimerRunning = false;
             }
         }
-    }
+    }*/
     
+    IEnumerator Timer()
+    {
+        while (isTimerRunning)
+        {
+            if (timeRemaining > 0)
+            {
+                timeRemaining = -Time.deltaTime;
+            }
+            else
+            {
+                timeRemaining = 0;
+                isTimerRunning = false;
+            }
+        }
+
+        yield return null;
+    }
 }
