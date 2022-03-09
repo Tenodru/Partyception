@@ -29,13 +29,20 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public bool timerBegun = false;
     [HideInNormalInspector] public bool isTimerRunning = false;
     [HideInNormalInspector] public bool roundInProgress = false;
+    [HideInNormalInspector] public bool isRoundOver = false;
+    [HideInNormalInspector] public bool runningEOR = false;
     [HideInNormalInspector] public int currentRound = 0;
     [HideInNormalInspector] public QuestionCategory chosenCategory;
     [HideInNormalInspector] public int catIndex = 0;
     [HideInNormalInspector] public int quesIndex = 0;
     [HideInNormalInspector] public int currentTier = 0;
+    [HideInNormalInspector] public bool questionChosen = false;
+    [HideInNormalInspector] public bool questionSent = false;
+    [HideInNormalInspector] public bool questionReceived = false;
+    [HideInNormalInspector] public bool roundComplete = false;
     [HideInNormalInspector] public Question currentQuestion;
     [HideInNormalInspector] public string questionID;
+    [HideInNormalInspector] public Answer selectedAnswer = null;
 
     public static GameManagerAYSTTC current;
 
@@ -76,51 +83,69 @@ public class GameManagerAYSTTC : MonoBehaviour
 
         if (roundInProgress)
         {
-            if (!timerBegun)
+            if (!timerBegun && !isRoundOver)
             {
-                isTimerRunning = true;
-                StartCoroutine(Timer());
-                timerBegun = true;
-
                 // Select and show question.
                 if (GameManager.current.playerStatus == PlayerStatus.Host)
                 {
-                    currentQuestion = ChooseQuestion();
-                    questionID = GetQuestionID(catIndex, quesIndex);
-                    StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+                    if (!questionChosen)
+                    {
+                        currentQuestion = ChooseQuestion();
+                        questionID = GetQuestionID(catIndex, quesIndex);
+                        StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+                        questionChosen = true;
+                    }
+                    if (questionSent)
+                    {
+                        isTimerRunning = true;
+                        StartCoroutine(Timer(timerDuration));
+                        timerBegun = true;
+                        StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+
+                        UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                    }
                 }
-                
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
                     StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+                    if (questionReceived) { timerBegun = true; }
+                    UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                }
+            }
+            else if (isRoundOver && !runningEOR)
+            {
+                // Run end-of-round activities.
+                questionSent = false;
+                runningEOR = true;
+                if (GameManager.current.playerStatus == PlayerStatus.Host)
+                {
+                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));
 
-                    UIManagerAYSTTC.current.SetGameStageP();
-                    UIManagerAYSTTC.current.questionDisplay.text = currentQuestion.question;
-                    List<Answer> answerList = currentQuestion.answerList;
-                    foreach (Button button in UIManagerAYSTTC.current.answerButtons)
+                    timeRemaining = 5f;
+                    isTimerRunning = true;
+                    Debug.Log("Time Set: " + timeRemaining);
+                    StartCoroutine(Timer(5f, TimerPurpose.EndOfRound));
+                    if (selectedAnswer == null)
                     {
-                        int answerIndex = Random.Range(0, answerList.Count - 1);
-                        button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
-                        answerList.RemoveAt(answerIndex);
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
+                    }
+                    else if (selectedAnswer.isCorrectAnswer)
+                    {
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
+                    } else
+                    {
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
                     }
                 }
             }
         }
+        
 
         if (Input.GetKeyDown(KeyCode.Return))
         {
             StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-
-            UIManagerAYSTTC.current.SetGameStageP();
-            UIManagerAYSTTC.current.questionDisplay.text = currentQuestion.question;
-            List<Answer> answerList = currentQuestion.answerList;
-            foreach (Button button in UIManagerAYSTTC.current.answerButtons)
-            {
-                int answerIndex = Random.Range(0, answerList.Count-1);
-                button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
-                answerList.RemoveAt(answerIndex);
-            }
-            
+            if (questionReceived) { timerBegun = true; }
+            UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
         }
     }
 
@@ -194,12 +219,32 @@ public class GameManagerAYSTTC : MonoBehaviour
     {
         return ("." + cIndex.ToString() + "Q" + qIndex.ToString());
     }
-    
-    IEnumerator Timer()
+
+    /// <summary>
+    /// Select an Answer and record into database.
+    /// </summary>
+    /// <param name="answer"></param>
+    public void ChooseAnswer(Answer answer)
     {
-        Debug.Log("Timer begun.");
+        selectedAnswer = answer;
+        string outcome = "";
+        if (selectedAnswer.isCorrectAnswer)
+        {
+            outcome = "correct";
+        } else
+        {
+            outcome = "incorrect";
+        }
+        StartCoroutine(Answer(GameManager.current.currentLobby, GameManager.current.playerName, outcome));
+    }
+    
+    IEnumerator Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
+    {
+        Debug.Log("Timer begun with purpose: " + purpose);
+        Debug.Log("Timer Set To: " + timeRemaining);
         while (isTimerRunning)
         {
+            UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
@@ -208,16 +253,24 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 timeRemaining = 0;
                 isTimerRunning = false;
+                if (purpose == TimerPurpose.DuringRound)
+                {
+                    isRoundOver = true;
+                }
+                else if (purpose == TimerPurpose.EndOfRound)
+                {
+                    isRoundOver = false;
+                    runningEOR = false;
+                }
             }
 
-            UIManagerAYSTTC.current.timerSlider.value = timeRemaining;
-            
             yield return null;
         }
     }
 
     public IEnumerator SendQuestion(string lobbyNumber, string questionID)
     {
+        Debug.Log("Sending question.");
         WWWForm form = new WWWForm();
         form.AddField("function", "startQuestion");
         form.AddField("lobbyNumber", lobbyNumber);
@@ -238,7 +291,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully started question")
                 {
-                    // Question begun.
+                    questionSent = true;
                 }
             }
         }
@@ -262,6 +315,7 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
             else
             {
+                questionReceived = true;
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
                 string[] splitData = receivedData.Split('.');
@@ -276,13 +330,65 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public void ReadMinigameData(string minigameData)
+    public IEnumerator Answer(string lobbyNumber, string playerName, string outcome)
     {
-        string[] splitData = minigameData.Split('\n');
-        string[] minigameLine = splitData[0].Split(':');
-        if (minigameLine[1] == "QA")
+        WWWForm form = new WWWForm();
+        form.AddField("function", "answerQuestion");
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("playerName", playerName);
+        form.AddField("outcome", outcome);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
         {
-            QAMinigame.FindObjectOfType<QAMinigame>().SetUpMinigame(minigameData);
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "player successfully answered")
+                {
+                    // Player successfully answered.
+                }
+            }
+        }
+    }
+
+    public IEnumerator CompleteRound(string lobbyNumber)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "completeRound");
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("roundNumber", currentRound);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully completed round")
+                {
+                    roundComplete = true;
+                }
+            }
         }
     }
 }
+
+/// <summary>
+/// When the Timer coroutine is going to be used.
+/// </summary>
+public enum TimerPurpose { DuringRound, EndOfRound }

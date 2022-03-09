@@ -24,7 +24,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Tooltip("The timer displaying the amount of time remaining.")]
     public Slider timerSlider;
     [Tooltip("The answer choice buttons.")]
-    public List<Button> answerButtons;
+    public List<AnswerButton> answerButtons;
     [Header("Outcome Screen (P)")]
     [Tooltip("The outcome screen.")]
     public GameObject outcomeScreen;
@@ -41,6 +41,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     public void Start()
     {
         gameScreen.SetActive(false);
+        timerSlider.gameObject.SetActive(false);
     }
 
     // Selection Stage. ---------------------------------------------------------
@@ -60,24 +61,47 @@ public class UIManagerAYSTTC : MonoBehaviour
     public void SetGameStageH()
     {
         selectionScreen.SetActive(false);
-        selectionScreen.SetActive(false);
         hostStatusScreen.SetActive(true);
+        timerSlider.gameObject.SetActive(true);
     }
 
-    public void SetGameStageP()
+    public void SetGameStageP(Question question)
     {
+        selectionScreen.SetActive(false);
         participantWaitingScreen.SetActive(false);
         gameScreen.SetActive(true);
+        timerSlider.gameObject.SetActive(true);
+
+        questionDisplay.text = question.question;
+        List<Answer> answerList = question.answerList;
+        foreach (AnswerButton button in answerButtons)
+        {
+
+            int answerIndex = Random.Range(0, answerList.Count - 1);
+            button.answer = answerList[answerIndex];
+            button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
+            answerList.RemoveAt(answerIndex);
+        }
     }
 
-    public void SelectAnswerChoice(Button answerChoice)
+    public void ShowTimer(float val, float maxVal)
     {
-        foreach (Button button in answerButtons)
+        timerSlider.gameObject.SetActive(true);
+        timerSlider.maxValue = maxVal;
+        timerSlider.value = val;
+    }
+
+    public void SelectAnswerChoice(AnswerButton answerChoice)
+    {
+        foreach (AnswerButton button in answerButtons)
         {
-            button.GetComponent<Image>().color = Color.white;
+            //button.GetComponent<Image>().color = Color.white;
+            button.GetComponent<Image>().color = button.colors.normalColor;
         }
-        answerChoice.GetComponent<Image>().color = Color.yellow;
-        //store selected answer choice somehow in a way that gamemanager can get
+        //answerChoice.GetComponent<Image>().color = Color.yellow;
+        answerChoice.GetComponent<Image>().color = answerChoice.colors.selectedColor;
+
+        GameManagerAYSTTC.current.selectedAnswer = answerChoice.answer;
     }
 
     public void DisplayOutcomeScreen(OutcomeType outcome)
