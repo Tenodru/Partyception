@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager current;
     public string playerName;
     public string currentLobby;
+    public PlayerStatus playerStatus;
 
     public List<string> players;
 
@@ -24,11 +25,12 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void JoinLobby(string name, string lobbyName, string targetLobbyScene)
+    public void JoinLobby(string name, string lobbyName, string targetLobbyScene, PlayerStatus status)
     {
         playerName = name;
         currentLobby = lobbyName;
         LoadScene(targetLobbyScene);
+        playerStatus = status;
     }
 
     public void LoadScene(string sceneName)
@@ -41,3 +43,8 @@ public class GameManager : MonoBehaviour
         players.Add(playerName);
     }
 }
+
+/// <summary>
+/// Whether the player is Host (creator of lobby) or Participant (joined lobby).
+/// </summary>
+public enum PlayerStatus { Host, Participant }

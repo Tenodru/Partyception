@@ -5,11 +5,15 @@ using UnityEngine;
 /// <summary>
 /// A Question-Answer object. Holds a string and a list of Answers.
 /// </summary>
-[CreateAssetMenu(fileName = "QAObject", menuName = "AYSTTC/Question-Answer Object")]
-public class QAObject : ScriptableObject
+[CreateAssetMenu(fileName = "Question", menuName = "AYSTTC/Question-Answer Object")]
+public class Question : ScriptableObject
 {
     [Tooltip("A question.")]
     public string question = "Enter question here.";
+
+    [Tooltip("The question difficulty.")]
+    [Range (1, 5)]
+    public int difficulty = 1;
 
     [Tooltip("A list of answer choices.")]
     public List<Answer> answerList = new List<Answer> { new Answer(), new Answer(), new Answer(), new Answer() };

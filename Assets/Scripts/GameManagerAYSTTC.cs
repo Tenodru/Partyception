@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Handles gameplay and question looping for AYSTTC.
@@ -18,6 +20,9 @@ public class GameManagerAYSTTC : MonoBehaviour
     [Header ("UI")]
     [Tooltip("The start button.")]
     public Button startButton;
+    [TextArea(1, 5)]
+    [Tooltip("The game database URL.")]
+    public string gameDatabaseLink;
 
     [HideInNormalInspector] public float timeRemaining = 15f;
     [HideInNormalInspector] public bool timerBegun = false;
@@ -25,6 +30,11 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public bool roundInProgress = false;
     [HideInNormalInspector] public int currentRound = 0;
     [HideInNormalInspector] public QuestionCategory chosenCategory;
+    [HideInNormalInspector] public int catIndex = 0;
+    [HideInNormalInspector] public int quesIndex = 0;
+    [HideInNormalInspector] public int currentTier = 0;
+    [HideInNormalInspector] public Question currentQuestion;
+    [HideInNormalInspector] public string questionID;
 
     public static GameManagerAYSTTC current;
 
@@ -36,7 +46,15 @@ public class GameManagerAYSTTC : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Host must choose a category. This is done through Buttons.
+        // Host must choose a category.
+        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        {
+            UIManagerAYSTTC.current.SetSelectionStageH();
+        }
+        else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+        {
+            UIManagerAYSTTC.current.SetSelectionStageP();
+        }
     }
 
     // Update is called once per frame
@@ -47,6 +65,8 @@ public class GameManagerAYSTTC : MonoBehaviour
         //TODO: Do pre-timer stuff (like a "ready-set-go").
         //TODO: Initialize timer.
         //TODO: Display question and answer choices.
+        //TODO: Send category and question through UnityWebRequest as an ID
+        //      ID = [category index] + [question index]
 
         //TODO: When timer ends, check if player's chosen answer matches correct answer.
         //TODO: Reward correct players.
@@ -60,6 +80,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                 isTimerRunning = true;
                 StartCoroutine(Timer());
                 timerBegun = true;
+
+                // Select and show question.
+                if (GameManager.current.playerStatus == PlayerStatus.Host)
+                {
+                    currentQuestion = ChooseQuestion();
+                    questionID = GetQuestionID(catIndex, quesIndex);
+                    StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+                }
+
+                if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                {
+                    StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+                }
             }
         }
     }
@@ -80,7 +113,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public void ChooseRandomCategory()
     {
         // Choose a category at random.
-        int catIndex = Random.Range(0, categories.Count);
+        catIndex = Random.Range(0, categories.Count);
         chosenCategory = categories[catIndex];
 
         ShowStartButton();
@@ -102,26 +135,37 @@ public class GameManagerAYSTTC : MonoBehaviour
     {
         timeRemaining = timerDuration;
         currentRound = 1;
+        currentTier = 1;
 
         roundInProgress = true;
     }
 
-    /*
-    void Timer()
+    /// <summary>
+    /// Selects a random question of the current tier in the chosen category.
+    /// </summary>
+    /// <returns></returns>
+    public Question ChooseQuestion()
     {
-        if (isTimerRunning)
+        List<Question> tierQuestions = new List<Question>();
+        foreach (Question q in chosenCategory.questions)
         {
-            if (timeRemaining > 0)
-            {
-                timeRemaining = -Time.deltaTime;
-            }
-            else
-            {
-                timeRemaining = 0;
-                isTimerRunning = false;
-            }
+            tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
         }
-    }*/
+        int qIndex = Random.Range(0, tierQuestions.Count);
+        quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
+        return chosenCategory.questions[quesIndex];
+    }
+
+    /// <summary>
+    /// Creates and returns the ID for the specified Category and Question.
+    /// </summary>
+    /// <param name="cIndex"></param>
+    /// <param name="qIndex"></param>
+    /// <returns></returns>
+    public string GetQuestionID(int cIndex, int qIndex)
+    {
+        return (cIndex.ToString() + "Q" + qIndex.ToString());
+    }
     
     IEnumerator Timer()
     {
@@ -138,6 +182,71 @@ public class GameManagerAYSTTC : MonoBehaviour
                 isTimerRunning = false;
             }
             yield return null;
+        }
+    }
+
+    public IEnumerator SendQuestion(string lobbyNumber, string questionID)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "startQuestion");
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("questionID", questionID);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully started question")
+                {
+                    // Question begun.
+                }
+            }
+        }
+    }
+
+    public IEnumerator GetQuestion(string lobbyNumber)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "getQuestion");
+        form.AddField("lobbyNumber", lobbyNumber);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully started question")
+                {
+                    // Question begun.
+                }
+            }
+        }
+    }
+
+    public void ReadMinigameData(string minigameData)
+    {
+        string[] splitData = minigameData.Split('\n');
+        string[] minigameLine = splitData[0].Split(':');
+        if (minigameLine[1] == "QA")
+        {
+            QAMinigame.FindObjectOfType<QAMinigame>().SetUpMinigame(minigameData);
         }
     }
 }

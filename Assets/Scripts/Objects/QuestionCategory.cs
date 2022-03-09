@@ -10,5 +10,5 @@ public class QuestionCategory : ScriptableObject
     public string categoryName = "category name";
 
     [Tooltip("The questions associated with this category.")]
-    public List<QAObject> questions;
+    public List<Question> questions;
 }

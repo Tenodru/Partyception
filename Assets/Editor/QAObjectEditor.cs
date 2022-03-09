@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor (typeof(QAObject))]
+[CustomEditor (typeof(Question))]
 public class QAObjectEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        QAObject script = target as QAObject;
+        Question script = target as Question;
 
         Answer correctAnswer = null;
 

@@ -53,7 +53,7 @@ public class MainMenuManager : MonoBehaviour
                     if (receivedData == "lobby created")
                     {
                         LoadingPanel.current.ToggleLoadingPanel(false);
-                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene, PlayerStatus.Host);
                     }
                     else if (receivedData == "lobby already exists")
                     {
@@ -72,7 +72,7 @@ public class MainMenuManager : MonoBehaviour
                     if (receivedData == "lobby successfully joined")
                     {
                         LoadingPanel.current.ToggleLoadingPanel(false);
-                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene, PlayerStatus.Participant);
                     }
                     else if (receivedData == "lobby does not exist")
                     {
