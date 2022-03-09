@@ -85,17 +85,17 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             if (!timerBegun && !isRoundOver)
             {
-                // Select and show question.
+                // Select and show Question, if Host.
                 if (GameManager.current.playerStatus == PlayerStatus.Host)
                 {
-                    if (!questionChosen)
+                    if (!questionChosen)                                                                    // Select a Question of the correct tier/difficulty at random.
                     {
                         currentQuestion = ChooseQuestion();
                         questionID = GetQuestionID(catIndex, quesIndex);
                         StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
                         questionChosen = true;
                     }
-                    if (questionSent)
+                    if (questionSent)                                                                       // Start timer only when Question is confirmed to have sent.
                     {
                         isTimerRunning = true;
                         StartCoroutine(Timer(timerDuration));
@@ -105,22 +105,32 @@ public class GameManagerAYSTTC : MonoBehaviour
                         UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                     }
                 }
+
+                // Get and show Question, if Participant.
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
                     StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-                    if (questionReceived) { timerBegun = true; }
+                    if (questionReceived) { timerBegun = true; }                                            // Start timer only when Question is received from server.
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                 }
             }
-            else if (isRoundOver && !runningEOR)
+            // Run end-of-round activities if round is over and end-of-round actions are not already running.
+            else if (isRoundOver && !runningEOR)                                                            
             {
-                // Run end-of-round activities.
                 questionSent = false;
-                runningEOR = true;
+                // Grab round completion status from server.
                 if (GameManager.current.playerStatus == PlayerStatus.Host)
                 {
-                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));
-
+                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));                            
+                }
+                else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                {
+                    StartCoroutine(GetRoundStatus(GameManager.current.currentLobby));
+                }
+                // Only begin running EOR actions once round completion status has been confirmed.
+                if (roundComplete)
+                {
+                    runningEOR = true;
                     timeRemaining = 5f;
                     isTimerRunning = true;
                     Debug.Log("Time Set: " + timeRemaining);
@@ -132,7 +142,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     else if (selectedAnswer.isCorrectAnswer)
                     {
                         UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
-                    } else
+                    }
+                    else
                     {
                         UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
                     }
@@ -140,7 +151,7 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
         
-
+        // Debug function. Runs the Participant game screen when Enter is pressed.
         if (Input.GetKeyDown(KeyCode.Return))
         {
             StartCoroutine(GetQuestion(GameManager.current.currentLobby));
@@ -238,13 +249,18 @@ public class GameManagerAYSTTC : MonoBehaviour
         StartCoroutine(Answer(GameManager.current.currentLobby, GameManager.current.playerName, outcome));
     }
     
+    /// <summary>
+    /// A timer. Accepts a maximum (starting) value, and a TimerPurpose (when the timer is going to be run).
+    /// </summary>
+    /// <param name="maxVal">The max/starting value.</param>
+    /// <param name="purpose">When the timer is going to be run.</param>
+    /// <returns></returns>
     IEnumerator Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
     {
         Debug.Log("Timer begun with purpose: " + purpose);
-        Debug.Log("Timer Set To: " + timeRemaining);
         while (isTimerRunning)
         {
-            UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);
+            UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
@@ -263,11 +279,16 @@ public class GameManagerAYSTTC : MonoBehaviour
                     runningEOR = false;
                 }
             }
-
             yield return null;
         }
     }
 
+    /// <summary>
+    /// Sends a Question, using a questionID, to the server.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <param name="questionID">The question ID. Use GetQuestionID() to create one.</param>
+    /// <returns></returns>
     public IEnumerator SendQuestion(string lobbyNumber, string questionID)
     {
         Debug.Log("Sending question.");
@@ -297,6 +318,11 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks for and grabs the latest questionID from the server, then converts it to a Category and Question.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <returns></returns>
     public IEnumerator GetQuestion(string lobbyNumber)
     {
         Debug.Log("Getting question.");
@@ -315,6 +341,7 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
             else
             {
+                // questionID received. Split the ID into appropriate Category index and Question index data.
                 questionReceived = true;
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
@@ -330,6 +357,13 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sends an outcome (whether the player got the question correct or not) to the server.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <param name="playerName">The player's name.</param>
+    /// <param name="outcome">'incorrect,' 'correct,' or 'timeOut.'</param>
+    /// <returns></returns>
     public IEnumerator Answer(string lobbyNumber, string playerName, string outcome)
     {
         WWWForm form = new WWWForm();
@@ -359,6 +393,11 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tells the server that the round has ended.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <returns></returns>
     public IEnumerator CompleteRound(string lobbyNumber)
     {
         WWWForm form = new WWWForm();
@@ -380,6 +419,38 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
                 if (receivedData == "successfully completed round")
+                {
+                    roundComplete = true;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks for and grabs round completion status from the server.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <returns></returns>
+    public IEnumerator GetRoundStatus(string lobbyNumber)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "getStatus");
+        form.AddField("lobbyNumber", lobbyNumber);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "completing")
                 {
                     roundComplete = true;
                 }
