@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using TMPro;
 
 /// <summary>
 /// Handles gameplay and question looping for AYSTTC.
@@ -88,12 +89,38 @@ public class GameManagerAYSTTC : MonoBehaviour
                     questionID = GetQuestionID(catIndex, quesIndex);
                     StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
                 }
-
+                
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
-                    StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+                    StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+
+                    UIManagerAYSTTC.current.SetGameStageP();
+                    UIManagerAYSTTC.current.questionDisplay.text = currentQuestion.question;
+                    List<Answer> answerList = currentQuestion.answerList;
+                    foreach (Button button in UIManagerAYSTTC.current.answerButtons)
+                    {
+                        int answerIndex = Random.Range(0, answerList.Count - 1);
+                        button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
+                        answerList.RemoveAt(answerIndex);
+                    }
                 }
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+
+            UIManagerAYSTTC.current.SetGameStageP();
+            UIManagerAYSTTC.current.questionDisplay.text = currentQuestion.question;
+            List<Answer> answerList = currentQuestion.answerList;
+            foreach (Button button in UIManagerAYSTTC.current.answerButtons)
+            {
+                int answerIndex = Random.Range(0, answerList.Count-1);
+                button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
+                answerList.RemoveAt(answerIndex);
+            }
+            
         }
     }
 
@@ -164,7 +191,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     public string GetQuestionID(int cIndex, int qIndex)
     {
-        return (cIndex.ToString() + "Q" + qIndex.ToString());
+        return ("." + cIndex.ToString() + "Q" + qIndex.ToString());
     }
     
     IEnumerator Timer()
@@ -215,6 +242,7 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     public IEnumerator GetQuestion(string lobbyNumber)
     {
+        Debug.Log("Getting question.");
         WWWForm form = new WWWForm();
         form.AddField("function", "getQuestion");
         form.AddField("lobbyNumber", lobbyNumber);
@@ -232,10 +260,14 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
-                if (receivedData == "successfully started question")
-                {
-                    // Question begun.
-                }
+                string[] splitData = receivedData.Split('.');
+                string dataID = splitData[splitData.Length - 1];
+                int dataIDCategory = int.Parse(dataID.Split('Q')[0]);
+                int dataIDQuestion = int.Parse(dataID.Split('Q')[1]);
+                Debug.Log("Grabbed category: " + dataIDCategory);
+                Debug.Log("Grabbed question: " + dataIDQuestion);
+                chosenCategory = categories[dataIDCategory];
+                currentQuestion = chosenCategory.questions[dataIDQuestion];
             }
         }
     }

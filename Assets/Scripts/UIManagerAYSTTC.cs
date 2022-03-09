@@ -13,10 +13,16 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject selectionScreen;
     [Tooltip("The screen participants see during the category selection phase.")]
     public GameObject participantWaitingScreen;
+    [Header("Game Screen (H)")]
     [Tooltip("The host's status info screen.")]
     public GameObject hostStatusScreen;
+    [Header("Game Screen (P)")]
     [Tooltip("The main game screen.")]
     public GameObject gameScreen;
+    [Tooltip("The question display.")]
+    public TextMeshProUGUI questionDisplay;
+    [Tooltip("The answer choice buttons.")]
+    public List<Button> answerButtons;
 
     public static UIManagerAYSTTC current;
 
@@ -46,6 +52,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     // Game Stage. ---------------------------------------------------------
     public void SetGameStageH()
     {
+        selectionScreen.SetActive(false);
         selectionScreen.SetActive(false);
         hostStatusScreen.SetActive(true);
     }
