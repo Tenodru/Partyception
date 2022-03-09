@@ -60,6 +60,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     // Game Stage. ---------------------------------------------------------
     public void SetGameStageH()
     {
+        outcomeScreen.SetActive(false);
         selectionScreen.SetActive(false);
         hostStatusScreen.SetActive(true);
         timerSlider.gameObject.SetActive(true);
@@ -67,19 +68,23 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void SetGameStageP(Question question)
     {
+        outcomeScreen.SetActive(false);
         selectionScreen.SetActive(false);
         participantWaitingScreen.SetActive(false);
         gameScreen.SetActive(true);
         timerSlider.gameObject.SetActive(true);
 
         questionDisplay.text = question.question;
-        List<Answer> answerList = question.answerList;
+        List<Answer> answerList = new List<Answer>(question.answerList);
         foreach (AnswerButton button in answerButtons)
         {
-
+            Debug.Log(question.question);
+            Debug.Log(answerList.Count);
             int answerIndex = Random.Range(0, answerList.Count - 1);
             button.answer = answerList[answerIndex];
+            Debug.Log(answerIndex);
             button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
+            button.GetComponent<Image>().color = button.colors.normalColor;
             answerList.RemoveAt(answerIndex);
         }
     }

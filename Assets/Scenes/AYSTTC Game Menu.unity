@@ -1370,7 +1370,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundCount: 5
-  timerDuration: 15
+  timerDuration: 5
   categories:
   - {fileID: 11400000, guid: 56ed5731f6c808143b806588cb5cf48a, type: 2}
   startButton: {fileID: 2131049623}
@@ -1389,6 +1389,7 @@ MonoBehaviour:
   questionChosen: 0
   questionSent: 0
   questionReceived: 0
+  roundComplete: 0
   currentQuestion: {fileID: 0}
   questionID: 
   selectedAnswer:

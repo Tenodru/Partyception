@@ -15,7 +15,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [Tooltip ("The number of rounds, or questions, to play.")]
     public int roundCount = 5;
     [Tooltip ("Timer duration in seconds.")]
-    public float timerDuration = 15f;
+    public float timerDuration = 5f;
     [Tooltip("The question categories.")]
     public List<QuestionCategory> categories;
     [Header ("UI")]
@@ -25,7 +25,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [Tooltip("The game database URL.")]
     public string gameDatabaseLink;
 
-    [HideInNormalInspector] public float timeRemaining = 15f;
+    [HideInNormalInspector] public float timeRemaining = 5f;
     [HideInNormalInspector] public bool timerBegun = false;
     [HideInNormalInspector] public bool isTimerRunning = false;
     [HideInNormalInspector] public bool roundInProgress = false;
@@ -97,11 +97,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     if (questionSent)                                                                       // Start timer only when Question is confirmed to have sent.
                     {
+                        timeRemaining = timerDuration;
                         isTimerRunning = true;
                         StartCoroutine(Timer(timerDuration));
                         timerBegun = true;
                         StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-
                         UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                     }
                 }
@@ -277,6 +277,13 @@ public class GameManagerAYSTTC : MonoBehaviour
                 {
                     isRoundOver = false;
                     runningEOR = false;
+                    //check for winner
+                    timerBegun = false;
+                    questionChosen = false;
+                    questionSent = false;
+                    roundComplete = false;
+                    selectedAnswer = null;
+                    Debug.Log("End of round has ended.");
                 }
             }
             yield return null;
