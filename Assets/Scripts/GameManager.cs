@@ -48,3 +48,8 @@ public class GameManager : MonoBehaviour
 /// Whether the player is Host (creator of lobby) or Participant (joined lobby).
 /// </summary>
 public enum PlayerStatus { Host, Participant }
+
+/// <summary>
+/// The type of outcome that can occur after a question in AYSTTC.
+/// </summary>
+public enum OutcomeType { Correct, Wrong, TimeOut }

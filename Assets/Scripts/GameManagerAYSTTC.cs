@@ -161,6 +161,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public void StartGame()
     {
         timeRemaining = timerDuration;
+        UIManagerAYSTTC.current.timerSlider.maxValue = timerDuration;
         currentRound = 1;
         currentTier = 1;
 
@@ -208,6 +209,9 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timeRemaining = 0;
                 isTimerRunning = false;
             }
+
+            UIManagerAYSTTC.current.timerSlider.value = timeRemaining;
+            
             yield return null;
         }
     }

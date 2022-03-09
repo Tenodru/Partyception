@@ -21,8 +21,15 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject gameScreen;
     [Tooltip("The question display.")]
     public TextMeshProUGUI questionDisplay;
+    [Tooltip("The timer displaying the amount of time remaining.")]
+    public Slider timerSlider;
     [Tooltip("The answer choice buttons.")]
     public List<Button> answerButtons;
+    [Header("Outcome Screen (P)")]
+    [Tooltip("The outcome screen.")]
+    public GameObject outcomeScreen;
+    [Tooltip("The outcome text.")]
+    public TextMeshProUGUI outcomeText;
 
     public static UIManagerAYSTTC current;
 
@@ -61,5 +68,37 @@ public class UIManagerAYSTTC : MonoBehaviour
     {
         participantWaitingScreen.SetActive(false);
         gameScreen.SetActive(true);
+    }
+
+    public void SelectAnswerChoice(Button answerChoice)
+    {
+        foreach (Button button in answerButtons)
+        {
+            button.GetComponent<Image>().color = Color.white;
+        }
+        answerChoice.GetComponent<Image>().color = Color.yellow;
+        //store selected answer choice somehow in a way that gamemanager can get
+    }
+
+    public void DisplayOutcomeScreen(OutcomeType outcome)
+    {
+        outcomeScreen.SetActive(true);
+        gameScreen.SetActive(false);
+
+        if (outcome == OutcomeType.Correct)
+        {
+            outcomeText.text = "Correct!" + "\n" +
+                "Awaiting next question.";
+        }
+        else if (outcome == OutcomeType.Wrong)
+        {
+            outcomeText.text = "Wrong!" + "\n" +
+                "You have been eliminated.";
+        }
+        else if (outcome == OutcomeType.TimeOut)
+        {
+            outcomeText.text = "You ran out of time!" + "\n" +
+                "You have been eliminated.";
+        }
     }
 }
