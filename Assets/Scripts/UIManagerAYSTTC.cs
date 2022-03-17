@@ -78,11 +78,8 @@ public class UIManagerAYSTTC : MonoBehaviour
         List<Answer> answerList = new List<Answer>(question.answerList);
         foreach (AnswerButton button in answerButtons)
         {
-            Debug.Log(question.question);
-            Debug.Log(answerList.Count);
             int answerIndex = Random.Range(0, answerList.Count - 1);
             button.answer = answerList[answerIndex];
-            Debug.Log(answerIndex);
             button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
             button.GetComponent<Image>().color = button.colors.normalColor;
             answerList.RemoveAt(answerIndex);

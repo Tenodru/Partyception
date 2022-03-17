@@ -62,6 +62,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         else if (GameManager.current.playerStatus == PlayerStatus.Participant)
         {
             UIManagerAYSTTC.current.SetSelectionStageP();
+            StartCoroutine("_CheckForRoundStart");
         }
     }
 
@@ -110,8 +111,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
                     StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-                    if (questionReceived) { timerBegun = true; }                                            // Start timer only when Question is received from server.
-                    UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                    if (questionReceived)                                                                   // Start timer only when Question is received from server.
+                    {
+                        timeRemaining = timerDuration;
+                        isTimerRunning = true;
+                        StartCoroutine(Timer(timerDuration));
+                        timerBegun = true;
+                        UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                    }
                 }
             }
             // Run end-of-round activities if round is over and end-of-round actions are not already running.
@@ -155,8 +162,11 @@ public class GameManagerAYSTTC : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-            if (questionReceived) { timerBegun = true; }
-            UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+            if (questionReceived)                                                                   // Start timer only when Question is received from server.
+            {
+                timerBegun = true;
+                UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+            }
         }
     }
 
@@ -460,6 +470,32 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (receivedData == "completing")
                 {
                     roundComplete = true;
+                }
+            }
+        }
+    }
+
+    public IEnumerator _CheckForRoundStart()
+    {
+        while (true)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(gameDatabaseLink + "lobbies/" + GameManager.current.currentLobby + "/lobbyStatus.txt"))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    if (receivedData == "questioning")
+                    {
+                        StartGame();
+                        StopAllCoroutines();
+                        Debug.Log("Host started game.");
+                    }
                 }
             }
         }

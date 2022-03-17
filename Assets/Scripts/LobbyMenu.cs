@@ -152,8 +152,9 @@ public class LobbyMenu : MonoBehaviour
                 else
                 {
                     string receivedData = www.downloadHandler.text;
-                    if (receivedData == "start" && !inGame && !lobbyLeader)
+                    if (receivedData != "" && !inGame && !lobbyLeader)
                     {
+                        GameManager.current.playerStatus = PlayerStatus.Participant;
                         GameManager.current.LoadScene(mainScene);
                         StopAllCoroutines();
                     }
