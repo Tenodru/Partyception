@@ -26,20 +26,20 @@ public class GameManagerAYSTTC : MonoBehaviour
     public string gameDatabaseLink;
 
     [HideInNormalInspector] public float timeRemaining = 5f;
-    [HideInNormalInspector] public bool timerBegun = false;
-    [HideInNormalInspector] public bool isTimerRunning = false;
-    [HideInNormalInspector] public bool roundInProgress = false;
-    [HideInNormalInspector] public bool isRoundOver = false;
-    [HideInNormalInspector] public bool runningEOR = false;
+    //[HideInNormalInspector] public bool timerBegun = false;
+    //[HideInNormalInspector] public bool isTimerRunning = false;
+    //[HideInNormalInspector] public bool roundInProgress = false;
+    //[HideInNormalInspector] public bool isRoundOver = false;
+    //[HideInNormalInspector] public bool runningEOR = false;
     [HideInNormalInspector] public int currentRound = 0;
     [HideInNormalInspector] public QuestionCategory chosenCategory;
     [HideInNormalInspector] public int catIndex = 0;
     [HideInNormalInspector] public int quesIndex = 0;
     [HideInNormalInspector] public int currentTier = 0;
-    [HideInNormalInspector] public bool questionChosen = false;
-    [HideInNormalInspector] public bool questionSent = false;
-    [HideInNormalInspector] public bool questionReceived = false;
-    [HideInNormalInspector] public bool roundComplete = false;
+    //[HideInNormalInspector] public bool questionChosen = false;
+    //[HideInNormalInspector] public bool questionSent = false;
+    //[HideInNormalInspector] public bool questionReceived = false;
+    //[HideInNormalInspector] public bool roundComplete = false;
     [HideInNormalInspector] public Question currentQuestion;
     [HideInNormalInspector] public string questionID;
     [HideInNormalInspector] public Answer selectedAnswer = null;
@@ -82,7 +82,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         //TODO: Eliminate incorrect players.
         //TODO: Repeat loop until end.
 
-        if (roundInProgress)
+        /*if (roundInProgress)
         {
             if (!timerBegun && !isRoundOver)
             {
@@ -167,7 +167,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timerBegun = true;
                 UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
             }
-        }
+        }*/
     }
 
     /// <summary>
@@ -206,12 +206,22 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        currentRound = 0;
+        currentTier = 0;
+
+        StartRound();
+    }
+
+    public void StartRound()
+    {
         timeRemaining = timerDuration;
         UIManagerAYSTTC.current.timerSlider.maxValue = timerDuration;
-        currentRound = 1;
-        currentTier = 1;
+        currentRound += 1;
+        currentTier += 1;
 
-        roundInProgress = true;
+        currentQuestion = ChooseQuestion();
+        questionID = GetQuestionID(catIndex, quesIndex);
+        StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
     }
 
     /// <summary>
@@ -268,7 +278,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     IEnumerator Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
     {
         Debug.Log("Timer begun with purpose: " + purpose);
-        while (isTimerRunning)
+        while (true)
         {
             UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
             if (timeRemaining > 0)
@@ -278,22 +288,24 @@ public class GameManagerAYSTTC : MonoBehaviour
             else
             {
                 timeRemaining = 0;
-                isTimerRunning = false;
                 if (purpose == TimerPurpose.DuringRound)
                 {
-                    isRoundOver = true;
+                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));
+                    yield break;
                 }
                 else if (purpose == TimerPurpose.EndOfRound)
                 {
-                    isRoundOver = false;
-                    runningEOR = false;
-                    //check for winner
-                    timerBegun = false;
-                    questionChosen = false;
-                    questionSent = false;
-                    roundComplete = false;
                     selectedAnswer = null;
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        StartRound();
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        StartCoroutine(_CheckForRoundStart());
+                    }
                     Debug.Log("End of round has ended.");
+                    yield break;
                 }
             }
             yield return null;
@@ -329,7 +341,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully started question")
                 {
-                    questionSent = true;
+                    timeRemaining = timerDuration;
+                    StartCoroutine(Timer(timerDuration));
+                    StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+                    UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                 }
             }
         }
@@ -342,7 +357,6 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     public IEnumerator GetQuestion(string lobbyNumber)
     {
-        Debug.Log("Getting question.");
         WWWForm form = new WWWForm();
         form.AddField("function", "getQuestion");
         form.AddField("lobbyNumber", lobbyNumber);
@@ -359,7 +373,6 @@ public class GameManagerAYSTTC : MonoBehaviour
             else
             {
                 // questionID received. Split the ID into appropriate Category index and Question index data.
-                questionReceived = true;
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
                 string[] splitData = receivedData.Split('.');
@@ -370,6 +383,15 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("Grabbed question: " + dataIDQuestion);
                 chosenCategory = categories[dataIDCategory];
                 currentQuestion = chosenCategory.questions[dataIDQuestion];
+
+                if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                {
+                    timeRemaining = timerDuration;
+                    StartCoroutine(Timer(timerDuration));
+                    UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                }
+
+                yield break;
             }
         }
     }
@@ -437,7 +459,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully completed round")
                 {
-                    roundComplete = true;
+                    StartCoroutine(GetRoundStatus(GameManager.current.currentLobby));
                 }
             }
         }
@@ -469,7 +491,21 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "completing")
                 {
-                    roundComplete = true;
+                    timeRemaining = 5f;
+                    Debug.Log("Time Set: " + timeRemaining);
+                    StartCoroutine(Timer(5f, TimerPurpose.EndOfRound));
+                    if (selectedAnswer == null)
+                    {
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
+                    }
+                    else if (selectedAnswer.isCorrectAnswer)
+                    {
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
+                    }
+                    else
+                    {
+                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                    }
                 }
             }
         }
@@ -493,8 +529,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (receivedData == "questioning")
                     {
                         StartGame();
-                        StopAllCoroutines();
                         Debug.Log("Host started game.");
+                        yield break;
                     }
                 }
             }

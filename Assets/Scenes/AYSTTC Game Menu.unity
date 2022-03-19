@@ -1376,20 +1376,11 @@ MonoBehaviour:
   startButton: {fileID: 2131049623}
   gameDatabaseLink: https://tenodrucreative.com/Partyception/AYSTTC/
   timeRemaining: 15
-  timerBegun: 0
-  isTimerRunning: 0
-  roundInProgress: 0
-  isRoundOver: 0
-  runningEOR: 0
   currentRound: 0
   chosenCategory: {fileID: 0}
   catIndex: 0
   quesIndex: 0
   currentTier: 0
-  questionChosen: 0
-  questionSent: 0
-  questionReceived: 0
-  roundComplete: 0
   currentQuestion: {fileID: 0}
   questionID: 
   selectedAnswer:
