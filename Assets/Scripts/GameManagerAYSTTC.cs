@@ -18,6 +18,8 @@ public class GameManagerAYSTTC : MonoBehaviour
     public float timerDuration = 5f;
     [Tooltip("The question categories.")]
     public List<QuestionCategory> categories;
+    public int tierInc = 1;
+    public int maxTier = 5;
     [Header ("UI")]
     [Tooltip("The start button.")]
     public Button startButton;
@@ -62,7 +64,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         else if (GameManager.current.playerStatus == PlayerStatus.Participant)
         {
             UIManagerAYSTTC.current.SetSelectionStageP();
-            StartCoroutine("_CheckForRoundStart");
+            StartCoroutine(_CheckForRoundStart());
         }
     }
 
@@ -197,8 +199,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// </summary>
     public void ShowStartButton()
     {
-        // Perhaps have a "Start Game" button that is greyed out,
-        // then made clickable when category is chosen.
+        startButton.interactable = true;
     }
 
     /// <summary>
@@ -212,16 +213,21 @@ public class GameManagerAYSTTC : MonoBehaviour
         StartRound();
     }
 
+    /// <summary>
+    /// Starts a new round by choosing a new question and sending it to the server. The host should only be able to access this function.
+    /// </summary>
     public void StartRound()
     {
         timeRemaining = timerDuration;
         UIManagerAYSTTC.current.timerSlider.maxValue = timerDuration;
         currentRound += 1;
-        currentTier += 1;
-
+        if (currentTier + tierInc <= maxTier)
+        {
+            currentTier += tierInc;
+        }
         currentQuestion = ChooseQuestion();
         questionID = GetQuestionID(catIndex, quesIndex);
-        StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
+        StartCoroutine(_SendQuestion(GameManager.current.currentLobby, questionID));
     }
 
     /// <summary>
@@ -266,7 +272,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             outcome = "incorrect";
         }
-        StartCoroutine(Answer(GameManager.current.currentLobby, GameManager.current.playerName, outcome));
+        StartCoroutine(_Answer(GameManager.current.currentLobby, GameManager.current.playerName, outcome));
     }
     
     /// <summary>
@@ -275,7 +281,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <param name="maxVal">The max/starting value.</param>
     /// <param name="purpose">When the timer is going to be run.</param>
     /// <returns></returns>
-    IEnumerator Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
+    IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
     {
         Debug.Log("Timer begun with purpose: " + purpose);
         while (true)
@@ -290,8 +296,16 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timeRemaining = 0;
                 if (purpose == TimerPurpose.DuringRound)
                 {
-                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));
-                    yield break;
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        yield break;
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        StartCoroutine(_GetRoundStatus(GameManager.current.currentLobby));
+                        yield break;
+                    }
                 }
                 else if (purpose == TimerPurpose.EndOfRound)
                 {
@@ -318,7 +332,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <param name="lobbyNumber">The current lobby number.</param>
     /// <param name="questionID">The question ID. Use GetQuestionID() to create one.</param>
     /// <returns></returns>
-    public IEnumerator SendQuestion(string lobbyNumber, string questionID)
+    public IEnumerator _SendQuestion(string lobbyNumber, string questionID)
     {
         Debug.Log("Sending question.");
         WWWForm form = new WWWForm();
@@ -342,8 +356,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (receivedData == "successfully started question")
                 {
                     timeRemaining = timerDuration;
-                    StartCoroutine(Timer(timerDuration));
-                    StartCoroutine(GetQuestion(GameManager.current.currentLobby));
+                    StartCoroutine(_Timer(timerDuration));
+                    StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                 }
             }
@@ -355,7 +369,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// </summary>
     /// <param name="lobbyNumber">The current lobby number.</param>
     /// <returns></returns>
-    public IEnumerator GetQuestion(string lobbyNumber)
+    public IEnumerator _GetQuestion(string lobbyNumber)
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "getQuestion");
@@ -387,7 +401,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
                     timeRemaining = timerDuration;
-                    StartCoroutine(Timer(timerDuration));
+                    StartCoroutine(_Timer(timerDuration));
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                 }
 
@@ -403,7 +417,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <param name="playerName">The player's name.</param>
     /// <param name="outcome">'incorrect,' 'correct,' or 'timeOut.'</param>
     /// <returns></returns>
-    public IEnumerator Answer(string lobbyNumber, string playerName, string outcome)
+    public IEnumerator _Answer(string lobbyNumber, string playerName, string outcome)
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "answerQuestion");
@@ -433,11 +447,11 @@ public class GameManagerAYSTTC : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells the server that the round has ended.
+    /// Tells the server that the round has ended. Should only be accessible by host.
     /// </summary>
     /// <param name="lobbyNumber">The current lobby number.</param>
     /// <returns></returns>
-    public IEnumerator CompleteRound(string lobbyNumber)
+    public IEnumerator _CompleteRound(string lobbyNumber)
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "completeRound");
@@ -459,7 +473,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully completed round")
                 {
-                    StartCoroutine(GetRoundStatus(GameManager.current.currentLobby));
+                    StartCoroutine(_GetRoundStatus(GameManager.current.currentLobby));
                 }
             }
         }
@@ -470,47 +484,55 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// </summary>
     /// <param name="lobbyNumber">The current lobby number.</param>
     /// <returns></returns>
-    public IEnumerator GetRoundStatus(string lobbyNumber)
+    public IEnumerator _GetRoundStatus(string lobbyNumber)
     {
-        WWWForm form = new WWWForm();
-        form.AddField("function", "getStatus");
-        form.AddField("lobbyNumber", lobbyNumber);
-
-        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        while (true)
         {
-            yield return www.SendWebRequest();
+            WWWForm form = new WWWForm();
+            form.AddField("function", "getStatus");
+            form.AddField("lobbyNumber", lobbyNumber);
 
-            if (www.result != UnityWebRequest.Result.Success)
+            using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
             {
-                Debug.Log(www.error);
-                AlertText.current.ToggleAlertText(www.error, Color.red);
-            }
-            else
-            {
-                string receivedData = www.downloadHandler.text;
-                Debug.Log(receivedData);
-                if (receivedData == "completing")
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
                 {
-                    timeRemaining = 5f;
-                    Debug.Log("Time Set: " + timeRemaining);
-                    StartCoroutine(Timer(5f, TimerPurpose.EndOfRound));
-                    if (selectedAnswer == null)
+                    Debug.Log(www.error);
+                    AlertText.current.ToggleAlertText(www.error, Color.red);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    Debug.Log(receivedData);
+                    if (receivedData == "completing")
                     {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                    }
-                    else if (selectedAnswer.isCorrectAnswer)
-                    {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
-                    }
-                    else
-                    {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                        timeRemaining = 5f;
+                        Debug.Log("Time Set: " + timeRemaining);
+                        StartCoroutine(_Timer(5f, TimerPurpose.EndOfRound));
+                        if (selectedAnswer == null)
+                        {
+                            UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
+                        }
+                        else if (selectedAnswer.isCorrectAnswer)
+                        {
+                            UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
+                        }
+                        else
+                        {
+                            UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                        }
+                        yield break;
                     }
                 }
             }
         }
     }
 
+    /// <summary>
+    /// Checks if next round has started yet. Should only be accessible by the participants.
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator _CheckForRoundStart()
     {
         while (true)
@@ -528,8 +550,12 @@ public class GameManagerAYSTTC : MonoBehaviour
                     string receivedData = www.downloadHandler.text;
                     if (receivedData == "questioning")
                     {
-                        StartGame();
-                        Debug.Log("Host started game.");
+                        if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                        {
+                            StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
+                        }
+                        //StartGame();
+                        //Debug.Log("Host started game.");
                         yield break;
                     }
                 }

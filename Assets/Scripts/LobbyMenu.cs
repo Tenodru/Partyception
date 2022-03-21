@@ -7,7 +7,6 @@ using UnityEngine.Networking;
 
 public class LobbyMenu : MonoBehaviour
 {
-    public bool inGame = false;
     public bool lobbyLeader = false;
     public Transform playerCardPool;
     public List<GameObject> playerCards;
@@ -152,11 +151,11 @@ public class LobbyMenu : MonoBehaviour
                 else
                 {
                     string receivedData = www.downloadHandler.text;
-                    if (receivedData != "" && !inGame && !lobbyLeader)
+                    if (receivedData != "" && !lobbyLeader)
                     {
                         GameManager.current.playerStatus = PlayerStatus.Participant;
                         GameManager.current.LoadScene(mainScene);
-                        StopAllCoroutines();
+                        yield break;
                     }
                 }
 
