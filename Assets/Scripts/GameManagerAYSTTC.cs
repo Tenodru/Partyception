@@ -64,7 +64,8 @@ public class GameManagerAYSTTC : MonoBehaviour
         else if (GameManager.current.playerStatus == PlayerStatus.Participant)
         {
             UIManagerAYSTTC.current.SetSelectionStageP();
-            StartCoroutine(_CheckForRoundStart());
+            UIManagerAYSTTC.current.DisplayInstructionsScreen(GameManager.current.playerStatus);
+            StartCoroutine(_CheckForGameStart());
         }
     }
 
@@ -210,7 +211,8 @@ public class GameManagerAYSTTC : MonoBehaviour
         currentRound = 0;
         currentTier = 0;
 
-        StartRound();
+        StartCoroutine(_StartGame(GameManager.current.currentLobby));
+        //StartRound();
     }
 
     /// <summary>
@@ -319,6 +321,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                         StartCoroutine(_CheckForRoundStart());
                     }
                     Debug.Log("End of round has ended.");
+                    yield break;
+                }
+                else if (purpose == TimerPurpose.PreStart)
+                {
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        StartRound();
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        StartCoroutine(_CheckForRoundStart());
+                    }
+                    Debug.Log("First round has started.");
                     yield break;
                 }
             }
@@ -562,9 +577,80 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Checks if game has started yet. Should only be accessible by the participants.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator _CheckForGameStart()
+    {
+        while (true)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(gameDatabaseLink + "lobbies/" + GameManager.current.currentLobby + "/lobbyStatus.txt"))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    if (receivedData == "prestart")
+                    {
+                        if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                        {
+                            StartCoroutine(_CheckForRoundStart());
+                            UIManagerAYSTTC.current.DisplayPreStartScreen();
+                            timeRemaining = timerDuration;
+                            Debug.Log("host starts game, new prestart timer");
+                            StartCoroutine(_Timer(timerDuration, TimerPurpose.PreStart));
+                        }
+                        yield break;
+                    }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Tells the server that the game has started and participants should run pre-start functions. Should only be accessible by host.
+    /// </summary>
+    /// <param name="lobbyNumber">The current lobby number.</param>
+    /// <returns></returns>
+    public IEnumerator _StartGame(string lobbyNumber)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "changeStatus");
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("newStatus", "prestart");
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully changed status")
+                {
+                    UIManagerAYSTTC.current.DisplayInstructionsScreen(GameManager.current.playerStatus);
+                    timeRemaining = timerDuration;
+                    StartCoroutine(_Timer(timerDuration, TimerPurpose.PreStart));
+                }
+            }
+        }
+    }
 }
 
 /// <summary>
 /// When the Timer coroutine is going to be used.
 /// </summary>
-public enum TimerPurpose { DuringRound, EndOfRound }
+public enum TimerPurpose { DuringRound, EndOfRound, PreStart }

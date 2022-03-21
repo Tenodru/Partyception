@@ -30,6 +30,16 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject outcomeScreen;
     [Tooltip("The outcome text.")]
     public TextMeshProUGUI outcomeText;
+    [Header("Instructions Screen")]
+    [Tooltip("The instructions screen.")]
+    public GameObject instructionsScreen;
+    [Tooltip("The host's instructions.")]
+    public GameObject hostInstructions;
+    [Tooltip("The participants's instructions.")]
+    public GameObject pInstructions;
+    [Header("Pre-Start Screen")]
+    [Tooltip("The pre-start screen.")]
+    public GameObject preStartScreen;
 
     public static UIManagerAYSTTC current;
 
@@ -60,6 +70,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     // Game Stage. ---------------------------------------------------------
     public void SetGameStageH()
     {
+        instructionsScreen.SetActive(false);
+        preStartScreen.SetActive(false);
         outcomeScreen.SetActive(false);
         selectionScreen.SetActive(false);
         hostStatusScreen.SetActive(true);
@@ -68,6 +80,8 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void SetGameStageP(Question question)
     {
+        instructionsScreen.SetActive(false);
+        preStartScreen.SetActive(false);
         outcomeScreen.SetActive(false);
         selectionScreen.SetActive(false);
         participantWaitingScreen.SetActive(false);
@@ -126,5 +140,25 @@ public class UIManagerAYSTTC : MonoBehaviour
             outcomeText.text = "You ran out of time!" + "\n" +
                 "You have been eliminated.";
         }
+    }
+
+    public void DisplayInstructionsScreen(PlayerStatus playerStatus)
+    {
+        instructionsScreen.SetActive(true);
+        if (playerStatus == PlayerStatus.Host)
+        {
+            hostInstructions.SetActive(true);
+            selectionScreen.SetActive(false);
+        }
+        else
+        {
+            pInstructions.SetActive(true);
+        }
+    }
+
+    public void DisplayPreStartScreen()
+    {
+        preStartScreen.SetActive(true);
+        participantWaitingScreen.SetActive(false);
     }
 }
