@@ -16,6 +16,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Header("Game Screen (H)")]
     [Tooltip("The host's status info screen.")]
     public GameObject hostStatusScreen;
+    [Tooltip("The host's numbers to hide answer choice.")]
+    public GameObject hostNumbers;
     [Header("Game Screen (P)")]
     [Tooltip("The main game screen.")]
     public GameObject gameScreen;
@@ -52,6 +54,29 @@ public class UIManagerAYSTTC : MonoBehaviour
     {
         gameScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
+            {
+                GameManagerAYSTTC.current.selectedAnswer = answerButtons[0].answer;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
+            {
+                GameManagerAYSTTC.current.selectedAnswer = answerButtons[1].answer;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
+            {
+                GameManagerAYSTTC.current.selectedAnswer = answerButtons[2].answer;
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
+            {
+                GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
+            }
+        }
     }
 
     // Selection Stage. ---------------------------------------------------------
@@ -109,6 +134,10 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void SelectAnswerChoice(AnswerButton answerChoice)
     {
+        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        {
+            return;
+        }
         foreach (AnswerButton button in answerButtons)
         {
             //button.GetComponent<Image>().color = Color.white;
@@ -132,13 +161,29 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
         else if (outcome == OutcomeType.Wrong)
         {
-            outcomeText.text = "Wrong!" + "\n" +
+            if (GameManager.current.playerStatus == PlayerStatus.Host)
+            {
+                outcomeText.text = "Wrong! You have been eliminated." + "\n" +
+                "However, you can stay answering questions because you are the host.";
+            }
+            else
+            {
+                outcomeText.text = "Wrong!" + "\n" +
                 "You have been eliminated.";
+            }
         }
         else if (outcome == OutcomeType.TimeOut)
         {
-            outcomeText.text = "You ran out of time!" + "\n" +
+            if (GameManager.current.playerStatus == PlayerStatus.Host)
+            {
+                outcomeText.text = "You ran out of time! You have been eliminated." + "\n" +
+                "However, you can stay answering questions because you are the host.";
+            }
+            else
+            {
+                outcomeText.text = "You ran out of time!" + "\n" +
                 "You have been eliminated.";
+            }
         }
     }
 
@@ -149,6 +194,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         {
             hostInstructions.SetActive(true);
             selectionScreen.SetActive(false);
+            hostNumbers.SetActive(true);
         }
         else
         {

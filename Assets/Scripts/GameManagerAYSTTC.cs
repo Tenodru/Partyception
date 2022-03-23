@@ -69,110 +69,6 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //TODO: Grab random question from questions list.
-        //TODO: Initialize round.
-        //TODO: Do pre-timer stuff (like a "ready-set-go").
-        //TODO: Initialize timer.
-        //TODO: Display question and answer choices.
-        //TODO: Send category and question through UnityWebRequest as an ID
-        //      ID = [category index] + [question index]
-
-        //TODO: When timer ends, check if player's chosen answer matches correct answer.
-        //TODO: Reward correct players.
-        //TODO: Eliminate incorrect players.
-        //TODO: Repeat loop until end.
-
-        /*if (roundInProgress)
-        {
-            if (!timerBegun && !isRoundOver)
-            {
-                // Select and show Question, if Host.
-                if (GameManager.current.playerStatus == PlayerStatus.Host)
-                {
-                    if (!questionChosen)                                                                    // Select a Question of the correct tier/difficulty at random.
-                    {
-                        currentQuestion = ChooseQuestion();
-                        questionID = GetQuestionID(catIndex, quesIndex);
-                        StartCoroutine(SendQuestion(GameManager.current.currentLobby, questionID));
-                        questionChosen = true;
-                    }
-                    if (questionSent)                                                                       // Start timer only when Question is confirmed to have sent.
-                    {
-                        timeRemaining = timerDuration;
-                        isTimerRunning = true;
-                        StartCoroutine(Timer(timerDuration));
-                        timerBegun = true;
-                        StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-                        UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
-                    }
-                }
-
-                // Get and show Question, if Participant.
-                if (GameManager.current.playerStatus == PlayerStatus.Participant)
-                {
-                    StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-                    if (questionReceived)                                                                   // Start timer only when Question is received from server.
-                    {
-                        timeRemaining = timerDuration;
-                        isTimerRunning = true;
-                        StartCoroutine(Timer(timerDuration));
-                        timerBegun = true;
-                        UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
-                    }
-                }
-            }
-            // Run end-of-round activities if round is over and end-of-round actions are not already running.
-            else if (isRoundOver && !runningEOR)                                                            
-            {
-                questionSent = false;
-                // Grab round completion status from server.
-                if (GameManager.current.playerStatus == PlayerStatus.Host)
-                {
-                    StartCoroutine(CompleteRound(GameManager.current.currentLobby));                            
-                }
-                else if (GameManager.current.playerStatus == PlayerStatus.Participant)
-                {
-                    StartCoroutine(GetRoundStatus(GameManager.current.currentLobby));
-                }
-                // Only begin running EOR actions once round completion status has been confirmed.
-                if (roundComplete)
-                {
-                    runningEOR = true;
-                    timeRemaining = 5f;
-                    isTimerRunning = true;
-                    Debug.Log("Time Set: " + timeRemaining);
-                    StartCoroutine(Timer(5f, TimerPurpose.EndOfRound));
-                    if (selectedAnswer == null)
-                    {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                    }
-                    else if (selectedAnswer.isCorrectAnswer)
-                    {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
-                    }
-                    else
-                    {
-                        UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
-                    }
-                }
-            }
-        }
-        
-        // Debug function. Runs the Participant game screen when Enter is pressed.
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            StartCoroutine(GetQuestion(GameManager.current.currentLobby));
-            if (questionReceived)                                                                   // Start timer only when Question is received from server.
-            {
-                timerBegun = true;
-                UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
-            }
-        }*/
-    }
-
     /// <summary>
     /// Selects the specified Category as the chosen question Category.
     /// </summary>
@@ -309,7 +205,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         yield break;
                     }
                 }
-                else if (purpose == TimerPurpose.EndOfRound)
+                else if (purpose == TimerPurpose.EndOfRoundSafe)
                 {
                     selectedAnswer = null;
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
@@ -321,6 +217,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                         StartCoroutine(_CheckForRoundStart());
                     }
                     Debug.Log("End of round has ended.");
+                    yield break;
+                }
+                else if (purpose == TimerPurpose.EndOfRoundEliminated)
+                {
+                    selectedAnswer = null;
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        StartRound();
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                    }
                     yield break;
                 }
                 else if (purpose == TimerPurpose.PreStart)
@@ -524,18 +433,20 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
-                        StartCoroutine(_Timer(5f, TimerPurpose.EndOfRound));
                         if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
+                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         else if (selectedAnswer.isCorrectAnswer)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
+                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
                         }
                         else
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         yield break;
                     }
@@ -652,4 +563,4 @@ public class GameManagerAYSTTC : MonoBehaviour
 /// <summary>
 /// When the Timer coroutine is going to be used.
 /// </summary>
-public enum TimerPurpose { DuringRound, EndOfRound, PreStart }
+public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart }
