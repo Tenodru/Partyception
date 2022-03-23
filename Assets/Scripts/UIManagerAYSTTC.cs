@@ -122,6 +122,12 @@ public class UIManagerAYSTTC : MonoBehaviour
             button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
             button.GetComponent<Image>().color = button.colors.normalColor;
             answerList.RemoveAt(answerIndex);
+            if (GameManager.current.playerStatus == PlayerStatus.Host)
+            {
+                ColorBlock colorVar = button.colors;
+                colorVar.selectedColor = new Color(255, 255, 255);
+                button.colors = colorVar;
+            }
         }
     }
 
