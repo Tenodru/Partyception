@@ -160,5 +160,6 @@ public class UIManagerAYSTTC : MonoBehaviour
     {
         preStartScreen.SetActive(true);
         participantWaitingScreen.SetActive(false);
+        instructionsScreen.SetActive(false);
     }
 }
