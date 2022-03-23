@@ -605,7 +605,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                             UIManagerAYSTTC.current.DisplayPreStartScreen();
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
-                            StartCoroutine(_Timer(timerDuration, TimerPurpose.PreStart));
                         }
                         yield break;
                     }
