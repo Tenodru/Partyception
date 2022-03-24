@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
+  m_Name: Games Question 15
+  m_EditorClassIdentifier: 
+  question: "Which game was the winner of \u201CGame of the Year\u201D award at the
+    Game Awards in 2018?"
+  difficulty: 5
+  answerList:
+  - answer: Last of Us Part II
+    isCorrectAnswer: 0
+  - answer: God Of War
+    isCorrectAnswer: 0
+  - answer: 'Sekiro: Shadows Die Twice'
+    isCorrectAnswer: 1
+  - answer: Red Dead Redemption II
+    isCorrectAnswer: 0
