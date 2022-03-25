@@ -14,7 +14,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [Header("Parameters")]
     [Tooltip ("The number of rounds, or questions, to play.")]
     public int roundCount = 5;
-    [Tooltip ("Timer duration in seconds.")]
+    [Tooltip ("Round timer duration in seconds.")]
     public float timerDuration = 5f;
     [Tooltip("The question categories.")]
     public List<QuestionCategory> categories;
@@ -45,6 +45,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public Question currentQuestion;
     [HideInNormalInspector] public string questionID;
     [HideInNormalInspector] public Answer selectedAnswer = null;
+    [HideInNormalInspector] public int remainingPlayerCount = 0;
 
     public static GameManagerAYSTTC current;
 
@@ -431,6 +432,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "completing")
                     {
+                        if (currentRound == roundCount)
+                        {
+
+                        }
+
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
                         if (selectedAnswer == null)
@@ -558,9 +564,42 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Tells the server that the game has ended.
+    /// </summary>
+    /// <param name="lobbyNumber"></param>
+    /// <returns></returns>
+    public IEnumerator _EndGame(string lobbyNumber)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "changeStatus");
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("newStatus", "gameEnd");
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully changed status")
+                {
+                    UIManagerAYSTTC.current.DisplayGameEndScreen(GameManager.current.playerStatus);
+                }
+            }
+        }
+    }
 }
 
 /// <summary>
 /// When the Timer coroutine is going to be used.
 /// </summary>
-public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart }
+public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }

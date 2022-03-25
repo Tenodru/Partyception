@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -42,8 +43,15 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Header("Pre-Start Screen")]
     [Tooltip("The pre-start screen.")]
     public GameObject preStartScreen;
+    [Header("Game End Screen")]
+    [Tooltip("The end-of-game screen.")]
+    public GameObject gameEndScreen;
+    [Tooltip("Displays the number of remaining players.")]
+    public TextMeshProUGUI playersRemainingDisplay;
 
     public static UIManagerAYSTTC current;
+
+    [HideInNormalInspector] public float timeRemaining;  
 
     private void Awake()
     {
@@ -213,5 +221,45 @@ public class UIManagerAYSTTC : MonoBehaviour
         preStartScreen.SetActive(true);
         participantWaitingScreen.SetActive(false);
         instructionsScreen.SetActive(false);
+    }
+
+    public void DisplayGameEndScreen(PlayerStatus playerStatus)
+    {
+        gameEndScreen.SetActive(true);
+        // TODO: Display number of remaining players.
+        // TODO: Display eliminated players (in memoriam).
+        // TODO: Host should have Create New Lobby button.
+        StartCoroutine(_Timer(2f, () =>
+        {
+            playersRemainingDisplay.text = "You and " + GameManagerAYSTTC.current.remainingPlayerCount + " others made it to the end!";
+            playersRemainingDisplay.gameObject.SetActive(true);
+        }));
+    }
+
+    /// <summary>
+    /// Timer used for UI elements.
+    /// </summary>
+    /// <param name="startTime">The starting time.</param>
+    /// <returns></returns>
+    IEnumerator _Timer(float startTime, Action func = null)
+    {
+        Debug.Log("UI Timer begun.");
+        timeRemaining = startTime;
+        while (true)
+        {
+            UIManagerAYSTTC.current.ShowTimer(timeRemaining, startTime);                                               // Keeps the timer slider display updated.
+            if (timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                if (func != null)
+                {
+                    func.Invoke();
+                }
+            }
+            yield return null;
+        }
     }
 }
