@@ -597,6 +597,35 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Sets remainingPlayerCount to the count of players grabbed from the database.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator _GetPlayerCount()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "getPlayerList");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("playerName", GameManager.current.playerName);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                string[] splitData = receivedData.Split('\n');
+                remainingPlayerCount = splitData.Length;
+            }
+        }
+    }
 }
 
 /// <summary>
