@@ -125,7 +125,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         List<Answer> answerList = new List<Answer>(question.answerList);
         foreach (AnswerButton button in answerButtons)
         {
-            int answerIndex = Random.Range(0, answerList.Count - 1);
+            int answerIndex = UnityEngine.Random.Range(0, answerList.Count - 1);
             button.answer = answerList[answerIndex];
             button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
             button.GetComponent<Image>().color = button.colors.normalColor;
