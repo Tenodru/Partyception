@@ -51,7 +51,8 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public static UIManagerAYSTTC current;
 
-    [HideInNormalInspector] public float timeRemaining;  
+    [HideInNormalInspector] public float timeRemaining;
+    [HideInNormalInspector] public int playerCount;
 
     private void Awake()
     {
@@ -62,6 +63,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     {
         gameScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
+        gameEndScreen.SetActive(false);
     }
 
     private void Update()
@@ -225,15 +227,37 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void DisplayGameEndScreen(PlayerStatus playerStatus)
     {
+        gameScreen.SetActive(false);
+        outcomeScreen.SetActive(false);
+        timerSlider.gameObject.SetActive(false);
         gameEndScreen.SetActive(true);
         // TODO: Display number of remaining players.
         // TODO: Display eliminated players (in memoriam).
         // TODO: Host should have Create New Lobby button.
-        StartCoroutine(_Timer(2f, () =>
+        UpdatePlayerCount();
+        if (playerCount - 1 == 1)
         {
-            playersRemainingDisplay.text = "You and " + GameManagerAYSTTC.current.remainingPlayerCount + " others made it to the end!";
-            playersRemainingDisplay.gameObject.SetActive(true);
-        }));
+            StartCoroutine(_Timer(2f, () =>
+            {
+                playersRemainingDisplay.text = "You were the ONLY player to get every question right!";
+                playersRemainingDisplay.gameObject.SetActive(true);
+                StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
+            }));
+        }
+        else if (playerCount - 1 > 1)
+        {
+            StartCoroutine(_Timer(2f, () =>
+            {
+                playersRemainingDisplay.text = "You and " + (GameManagerAYSTTC.current.remainingPlayerCount - 1) + " others made it to the end!";
+                playersRemainingDisplay.gameObject.SetActive(true);
+                StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
+            }));
+        }
+    }
+
+    public void UpdatePlayerCount()
+    {
+        playerCount = GameManagerAYSTTC.current.remainingPlayerCount;
     }
 
     /// <summary>
@@ -247,7 +271,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         timeRemaining = startTime;
         while (true)
         {
-            UIManagerAYSTTC.current.ShowTimer(timeRemaining, startTime);                                               // Keeps the timer slider display updated.
+            //ShowTimer(timeRemaining, startTime);                                               // Keeps the timer slider display updated.
             if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
@@ -260,6 +284,82 @@ public class UIManagerAYSTTC : MonoBehaviour
                 }
             }
             yield return null;
+        }
+    }
+
+    /// <summary>
+    /// Starts a fade-out/fade-in cycle for the specified object.
+    /// </summary>
+    /// <param name="obj">The object to begin fading out/in.</param>
+    /// <param name="co">The reference to save this coroutine cycle to. Used to track and remotely stop the coroutine.</param>
+    /// <param name="fadeOut">Whether the object should begin with fadeOut or fadeIn.</param>
+    public void _FadeObjectCycle(GameObject obj, Coroutine co, bool fadeOut = true)
+    {
+        if (fadeOut)
+            StartCoroutine(_FadeObjectOut(obj, 1, true, co));
+        else
+            StartCoroutine(_FadeObjectIn(obj, 1, true, co));
+    }
+
+    /// <summary>
+    /// Fades the object alpha out to 0 over time.
+    /// </summary>
+    /// <param name="obj">The object to fade out.</param>
+    /// <param name="dur">The fade out time.</param>
+    /// <param name="doFadeInAfter">Whether the object should fade back in afterwards.</param>
+    /// <param name="co">An existing FadeOut/FadeIn coroutine. Used to track and remotely stop the coroutine when needed.</param>
+    /// <returns></returns>
+    IEnumerator _FadeObjectOut(GameObject obj, float dur, bool doFadeInAfter = false, Coroutine co = null)
+    {
+        CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
+        float startVal = canvasGroup.alpha;
+        float time = 0;
+
+        while (time < dur)
+        {
+            canvasGroup.alpha = Mathf.Lerp(startVal, 0, time / dur);
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 0;
+        if (doFadeInAfter)
+        {
+            if (co != null)
+                StartCoroutine(_FadeObjectIn(obj, dur, true, co));
+            else
+                StartCoroutine(_FadeObjectIn(obj, dur, true));
+        }
+    }
+
+    /// /// <summary>
+    /// Fades the object alpha in to 1 over time.
+    /// </summary>
+    /// <param name="obj">The object to fade in.</param>
+    /// <param name="dur">The fade in time.</param>
+    /// <param name="doFadeInAfter">Whether the object should fade back out afterwards.</param>
+    /// <param name="co">An existing FadeOut/FadeIn coroutine. Used to track and remotely stop the coroutine when needed.</param>
+    /// <returns></returns>
+    IEnumerator _FadeObjectIn(GameObject obj, float dur, bool doFadeOutAfter = false, Coroutine co = null)
+    {
+        CanvasGroup canvasGroup = obj.GetComponent<CanvasGroup>();
+        float startVal = canvasGroup.alpha;
+        float time = 0;
+
+        while (time < dur)
+        {
+            canvasGroup.alpha = Mathf.Lerp(startVal, 1, time / dur);
+            time += Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        canvasGroup.alpha = 1;
+        if (doFadeOutAfter)
+        {
+            if (co != null)
+                StartCoroutine(_FadeObjectOut(obj, dur, true, co));
+            else
+                StartCoroutine(_FadeObjectOut(obj, dur, true));
         }
     }
 }

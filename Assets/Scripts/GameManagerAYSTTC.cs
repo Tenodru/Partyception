@@ -211,10 +211,24 @@ public class GameManagerAYSTTC : MonoBehaviour
                     selectedAnswer = null;
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            StartCoroutine(_GetPlayerCount());
+                            StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
+                        }
                         StartRound();
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            // Do Participant end game stuff.
+                            UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
+                            yield break;
+                        }
                         StartCoroutine(_CheckForRoundStart());
                     }
                     Debug.Log("End of round has ended.");
@@ -225,6 +239,13 @@ public class GameManagerAYSTTC : MonoBehaviour
                     selectedAnswer = null;
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            StartCoroutine(_GetPlayerCount());
+                            StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
+                        }
                         StartRound();
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -432,11 +453,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "completing")
                     {
-                        if (currentRound == roundCount)
-                        {
-
-                        }
-
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
                         if (selectedAnswer == null)
@@ -489,6 +505,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                         //StartGame();
                         //Debug.Log("Host started game.");
                         yield break;
+                    }
+                    else if (receivedData == "gameEnd")
+                    {
+                        UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
                     }
                 }
             }
