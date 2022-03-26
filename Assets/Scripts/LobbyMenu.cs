@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Android;
 using UnityEngine.Networking;
+using TMPro;
 
 public class LobbyMenu : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class LobbyMenu : MonoBehaviour
     public List<GameObject> playerCards;
     public List<string> playerNames;
     public Button startButton;
+    public TextMeshProUGUI lobbyCodeDisplay;
     private float timer = 0;
 
     [TextArea(1, 5)]
@@ -27,6 +29,8 @@ public class LobbyMenu : MonoBehaviour
         }
         StartCoroutine("_GetPlayerList");
         StartCoroutine("_CheckForStart");
+
+        lobbyCodeDisplay.text = GameManager.current.currentLobby;
     }
 
     // Update is called once per frame
