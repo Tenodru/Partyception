@@ -1,0 +1,1044 @@
+fileFormatVersion: 2
+guid: c2b672122c03c0146bf45d9b9234d07a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1115757783955046351
+    second: Scrolling_BG_Sprite_Sheet_0
+  - first:
+      213: 7844610644441203823
+    second: Scrolling_BG_Sprite_Sheet_1
+  - first:
+      213: 5811418637743445882
+    second: Scrolling_BG_Sprite_Sheet_2
+  - first:
+      213: 7033153869386827272
+    second: Scrolling_BG_Sprite_Sheet_3
+  - first:
+      213: -893802932334812789
+    second: Scrolling_BG_Sprite_Sheet_4
+  - first:
+      213: 6201909136426301222
+    second: Scrolling_BG_Sprite_Sheet_5
+  - first:
+      213: 5242468371732060580
+    second: Scrolling_BG_Sprite_Sheet_6
+  - first:
+      213: -5517105630192607714
+    second: Scrolling_BG_Sprite_Sheet_7
+  - first:
+      213: -2736523676166031083
+    second: Scrolling_BG_Sprite_Sheet_8
+  - first:
+      213: -4747789634702066562
+    second: Scrolling_BG_Sprite_Sheet_9
+  - first:
+      213: 3659392446070361623
+    second: Scrolling_BG_Sprite_Sheet_10
+  - first:
+      213: -5128806234825139723
+    second: Scrolling_BG_Sprite_Sheet_11
+  - first:
+      213: -5687999787043891778
+    second: Scrolling_BG_Sprite_Sheet_12
+  - first:
+      213: 7125787303390253668
+    second: Scrolling_BG_Sprite_Sheet_13
+  - first:
+      213: 5849036680855487943
+    second: Scrolling_BG_Sprite_Sheet_14
+  - first:
+      213: 4672294514322773013
+    second: Scrolling_BG_Sprite_Sheet_15
+  - first:
+      213: 945304793896076233
+    second: Scrolling_BG_Sprite_Sheet_16
+  - first:
+      213: -7148357315714166525
+    second: Scrolling_BG_Sprite_Sheet_17
+  - first:
+      213: 7179001581689877537
+    second: Scrolling_BG_Sprite_Sheet_18
+  - first:
+      213: -7799919068514863349
+    second: Scrolling_BG_Sprite_Sheet_19
+  - first:
+      213: 2327445896867953414
+    second: Scrolling_BG_Sprite_Sheet_20
+  - first:
+      213: 5473444929045439421
+    second: Scrolling_BG_Sprite_Sheet_21
+  - first:
+      213: 3794943577636969301
+    second: Scrolling_BG_Sprite_Sheet_22
+  - first:
+      213: 2302558238419384052
+    second: Scrolling_BG_Sprite_Sheet_23
+  - first:
+      213: 2473317289340366466
+    second: Scrolling_BG_Sprite_Sheet_24
+  - first:
+      213: -6675131108892749609
+    second: Scrolling_BG_Sprite_Sheet_25
+  - first:
+      213: -7888865647910347612
+    second: Scrolling_BG_Sprite_Sheet_26
+  - first:
+      213: -4264463085584363014
+    second: Scrolling_BG_Sprite_Sheet_27
+  - first:
+      213: -8467275512053650498
+    second: Scrolling_BG_Sprite_Sheet_28
+  - first:
+      213: -563078361293563850
+    second: Scrolling_BG_Sprite_Sheet_29
+  - first:
+      213: -6040497529703381053
+    second: Scrolling_BG_Sprite_Sheet_30
+  - first:
+      213: -5629298388877116720
+    second: Scrolling_BG_Sprite_Sheet_31
+  - first:
+      213: 798619063357402542
+    second: Scrolling_BG_Sprite_Sheet_32
+  - first:
+      213: 3754442969375267859
+    second: Scrolling_BG_Sprite_Sheet_33
+  - first:
+      213: 5640482774938895828
+    second: Scrolling_BG_Sprite_Sheet_34
+  - first:
+      213: -9029382655616306899
+    second: Scrolling_BG_Sprite_Sheet_35
+  - first:
+      213: -2027196915680874028
+    second: Scrolling_BG_Sprite_Sheet_36
+  - first:
+      213: -6168910437301232473
+    second: Scrolling_BG_Sprite_Sheet_37
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcf74000bc7fb7f00800000000000000
+      internalID: 1115757783955046351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f648a2f81d7addc60800000000000000
+      internalID: 7844610644441203823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7758c7f57e46a050800000000000000
+      internalID: 5811418637743445882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 2368
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80647735e28ca9160800000000000000
+      internalID: 7033153869386827272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 3157
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b812bf6f7f29893f0800000000000000
+      internalID: -893802932334812789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 3947
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62770fd108b911650800000000000000
+      internalID: 6201909136426301222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 4736
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a95f43553df0c840800000000000000
+      internalID: 5242468371732060580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 5525
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1edf0409ad4f63b0800000000000000
+      internalID: -5517105630192607714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 6316
+        y: 444
+        width: 788
+        height: 443
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5197daa173ae50ad0800000000000000
+      internalID: -2736523676166031083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 7104
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7c3d4b6b767c1eb0800000000000000
+      internalID: -4747789634702066562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 7894
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71e85c99a06c8c230800000000000000
+      internalID: 3659392446070361623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 8683
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9507b27e1d2d8b0800000000000000
+      internalID: -5128806234825139723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 9474
+        y: 444
+        width: 788
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb550ca745a2011b0800000000000000
+      internalID: -5687999787043891778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 10262
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46290936cc1e3e260800000000000000
+      internalID: 7125787303390253668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 11051
+        y: 444
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c50f982fd3fb2150800000000000000
+      internalID: 5849036680855487943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 11841
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 514173c1b1357d040800000000000000
+      internalID: 4672294514322773013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 12631
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c346ac93b56e1d00800000000000000
+      internalID: 945304793896076233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 13420
+        y: 444
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 301da4d15eeebcc90800000000000000
+      internalID: -7148357315714166525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 14209
+        y: 444
+        width: 782
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 124b79e07efe0a360800000000000000
+      internalID: 7179001581689877537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b073064deee11c390800000000000000
+      internalID: -7799919068514863349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_20
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b31cc36bfbc4020800000000000000
+      internalID: 2327445896867953414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_21
+      rect:
+        serializedVersion: 2
+        x: 1578
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db3aa65d92595fb40800000000000000
+      internalID: 5473444929045439421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_22
+      rect:
+        serializedVersion: 2
+        x: 2368
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b93bfc3195aa430800000000000000
+      internalID: 3794943577636969301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_23
+      rect:
+        serializedVersion: 2
+        x: 3157
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f6f2a3b48454ff10800000000000000
+      internalID: 2302558238419384052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_24
+      rect:
+        serializedVersion: 2
+        x: 3947
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ee6ff68fcf25220800000000000000
+      internalID: 2473317289340366466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_25
+      rect:
+        serializedVersion: 2
+        x: 4736
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d0d9417f9b2d53a0800000000000000
+      internalID: -6675131108892749609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_26
+      rect:
+        serializedVersion: 2
+        x: 5525
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ac958f7d7e158290800000000000000
+      internalID: -7888865647910347612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_27
+      rect:
+        serializedVersion: 2
+        x: 6315
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af15af1fa6591d4c0800000000000000
+      internalID: -4264463085584363014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_28
+      rect:
+        serializedVersion: 2
+        x: 7104
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbada888c13e7a80800000000000000
+      internalID: -8467275512053650498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_29
+      rect:
+        serializedVersion: 2
+        x: 7894
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6385366b63b8f28f0800000000000000
+      internalID: -563078361293563850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_30
+      rect:
+        serializedVersion: 2
+        x: 8683
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c7c76b2087db2ca0800000000000000
+      internalID: -6040497529703381053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_31
+      rect:
+        serializedVersion: 2
+        x: 9473
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dafc4cc0f6b0e1b0800000000000000
+      internalID: -5629298388877116720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_32
+      rect:
+        serializedVersion: 2
+        x: 10262
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eade54e8ec3451b00800000000000000
+      internalID: 798619063357402542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_33
+      rect:
+        serializedVersion: 2
+        x: 11051
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c531f1df57a1430800000000000000
+      internalID: 3754442969375267859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_34
+      rect:
+        serializedVersion: 2
+        x: 11841
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d541f10335074e40800000000000000
+      internalID: 5640482774938895828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_35
+      rect:
+        serializedVersion: 2
+        x: 12630
+        y: 0
+        width: 790
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d21baee705031b280800000000000000
+      internalID: -9029382655616306899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_36
+      rect:
+        serializedVersion: 2
+        x: 13420
+        y: 0
+        width: 789
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d1f21f4523fdd3e0800000000000000
+      internalID: -2027196915680874028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Scrolling_BG_Sprite_Sheet_37
+      rect:
+        serializedVersion: 2
+        x: 14209
+        y: 0
+        width: 782
+        height: 444
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7acd57d34a0a36aa0800000000000000
+      internalID: -6168910437301232473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
