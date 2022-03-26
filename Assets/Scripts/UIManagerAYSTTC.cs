@@ -13,6 +13,8 @@ public class UIManagerAYSTTC : MonoBehaviour
 {
     [Tooltip ("The category selection screen.")]
     public GameObject selectionScreen;
+    public List<Button> categoryButtons;
+    public List<QuestionCategory> categories;
     [Tooltip("The screen participants see during the category selection phase.")]
     public GameObject participantWaitingScreen;
     [Header("Game Screen (H)")]
@@ -88,6 +90,16 @@ public class UIManagerAYSTTC : MonoBehaviour
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
             }
         }
+    }
+
+    public void ChooseCategory(QuestionCategory category)
+    {
+        foreach (Button button in categoryButtons)
+        {
+            button.GetComponent<Image>().color = Color.white;
+        }
+        categoryButtons[categories.IndexOf(category)].GetComponent<Image>().color = Color.yellow;
+        GameManagerAYSTTC.current.ChooseCategory(category);
     }
 
     // Selection Stage. ---------------------------------------------------------
