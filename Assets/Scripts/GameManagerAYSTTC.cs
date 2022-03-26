@@ -109,6 +109,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         currentTier = 0;
 
         StartCoroutine(_StartGame(GameManager.current.currentLobby));
+        StartCoroutine(_GetPlayerCount());
         //StartRound();
     }
 
@@ -250,7 +251,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
-                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                        yield break;
+                        //GameManager.current.LoadScene("AYSTTC Main Menu");
                     }
                     yield break;
                 }
@@ -586,7 +588,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells the server that the game has ended.
+    /// Tells the server that the game has ended. Should only be called by the host.
     /// </summary>
     /// <param name="lobbyNumber"></param>
     /// <returns></returns>
@@ -613,6 +615,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (receivedData == "successfully changed status")
                 {
                     UIManagerAYSTTC.current.DisplayGameEndScreen(GameManager.current.playerStatus);
+
                 }
             }
         }
@@ -643,6 +646,38 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
                 remainingPlayerCount = splitData.Length;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Deletes the current lobby from the website database.
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator _DeleteLobby()
+    {
+        Debug.Log("Running deletion coroutine.");
+
+        WWWForm form = new WWWForm();
+        form.AddField("function", "deleteLobby");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+                Debug.Log("Could not delete lobby.");
+            }
+            else
+            {
+                Debug.Log("In the process of deleting lobby!");
+                string receivedData = www.downloadHandler.text;
+                Debug.Log("Current Lobby List: " + receivedData);
+                Debug.Log("Deleted lobby!");
             }
         }
     }

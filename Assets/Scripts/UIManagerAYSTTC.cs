@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
@@ -253,6 +254,20 @@ public class UIManagerAYSTTC : MonoBehaviour
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
         }
+    }
+
+    /// <summary>
+    /// Returns the player to the main menu.
+    /// </summary>
+    public void BackToMainMenu()
+    {
+        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        {
+            // Delete lobby.
+            GameManager.current.StartCoroutine(GameManager.current._DeleteLobby());
+            Debug.Log("Deleting Lobby.");
+        }
+        SceneManager.LoadScene(0);
     }
 
     public void UpdatePlayerCount()

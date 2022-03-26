@@ -1598,6 +1598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ef7cf1d88988ea48b4aa653a1be1414, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameDatabaseLink: https://tenodrucreative.com/Partyception/AYSTTC/
   playerName: Victor
   currentLobby: 444
   playerStatus: 0
