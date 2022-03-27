@@ -15,6 +15,12 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject selectionScreen;
     public List<Button> categoryButtons;
     public List<QuestionCategory> categories;
+    public Slider maxRoundsSlider;
+    public Slider roundTimeSlider;
+    public Slider difficultySlider;
+    public TextMeshProUGUI maxRoundsText;
+    public TextMeshProUGUI roundTimeText;
+    public TextMeshProUGUI difficultySliderText;
     [Tooltip("The screen participants see during the category selection phase.")]
     public GameObject participantWaitingScreen;
     [Header("Game Screen (H)")]
@@ -311,6 +317,48 @@ public class UIManagerAYSTTC : MonoBehaviour
                 }
             }
             yield return null;
+        }
+    }
+
+    public void UpdateSettings(string settingType)
+    {
+        if (settingType == "maxRounds")
+        {
+            GameManagerAYSTTC.current.roundCount = (int)maxRoundsSlider.value;
+            maxRoundsText.text = maxRoundsSlider.value.ToString();
+            if (maxRoundsSlider.value == 16)
+            {
+                maxRoundsText.text = "Endless";
+            }
+            else
+            {
+                maxRoundsText.text = maxRoundsSlider.value.ToString();
+            }
+        }
+        else if (settingType == "roundTime")
+        {
+            GameManagerAYSTTC.current.timerDuration = (int)roundTimeSlider.value;
+            roundTimeText.text = roundTimeSlider.value.ToString();
+        }
+        else if (settingType == "difficulty")
+        {
+            GameManagerAYSTTC.current.difficulty = (int)difficultySlider.value;
+            if (difficultySlider.value == 0)
+            {
+                difficultySliderText.text = "Easy";
+            }
+            else if (difficultySlider.value == 1)
+            {
+                difficultySliderText.text = "Normal";
+            }
+            else if (difficultySlider.value == 2)
+            {
+                difficultySliderText.text = "Hard";
+            }
+            else if (difficultySlider.value == 3)
+            {
+                difficultySliderText.text = "Very Hard";
+            }
         }
     }
 

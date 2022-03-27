@@ -12,6 +12,8 @@ using TMPro;
 public class GameManagerAYSTTC : MonoBehaviour
 {
     [Header("Parameters")]
+    [Tooltip("The current difficulty of the game.")]
+    public int difficulty = 1;
     [Tooltip ("The number of rounds, or questions, to play.")]
     public int roundCount = 5;
     [Tooltip ("Round timer duration in seconds.")]
