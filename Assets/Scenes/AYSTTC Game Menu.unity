@@ -3097,6 +3097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f763c7263574a540bd1893e1930708c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bgBrightness: {fileID: 985083663}
   selectionScreen: {fileID: 4310523408557658054}
   categoryButtons:
   - {fileID: 4310523409082111010}

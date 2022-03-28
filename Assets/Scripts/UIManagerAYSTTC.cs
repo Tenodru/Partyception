@@ -11,6 +11,8 @@ using TMPro;
 /// </summary>
 public class UIManagerAYSTTC : MonoBehaviour
 {
+    public Image bgBrightness;
+
     [Tooltip ("The category selection screen.")]
     public GameObject selectionScreen;
     public List<Button> categoryButtons;

@@ -226,6 +226,10 @@ public class GameManagerAYSTTC : MonoBehaviour
             UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
             if (timeRemaining > 0)
             {
+                if (purpose == TimerPurpose.DuringRound)
+                {
+                    UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.8f - ((timeRemaining / timerDuration * 0.6f) + 0.1f));
+                }
                 timeRemaining -= Time.deltaTime;
             }
             else
@@ -492,6 +496,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "completing")
                     {
+                        UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
                         if (selectedAnswer == null)
