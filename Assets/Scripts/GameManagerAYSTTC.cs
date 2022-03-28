@@ -258,7 +258,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                            StartCoroutine(_GetPlayerCount(func: () => StartCoroutine(_EndGame(GameManager.current.currentLobby))));
                             //StartCoroutine(_EndGame(GameManager.current.currentLobby));
                             yield break;
                         }
@@ -710,12 +710,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("New Player List: " + playerList + ", " + playerList.Count);
                 remainingPlayerCount = playerList.Count;
                 updatedPlayerCount = true;
+
+                if (func != null)
+                {
+                    func.Invoke();
+                }
             }
         }
-        if (func != null)
-        {
-            func.Invoke();
-        }
+        
         if (co != null)
         {
             StartCoroutine(co);
