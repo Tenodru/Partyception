@@ -40,6 +40,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public Answer selectedAnswer = null;
     [HideInNormalInspector] public int remainingPlayerCount = 0;
     [HideInNormalInspector] public bool doAllCategories = false;
+    [HideInNormalInspector] public bool updatedPlayerCount = false;
 
     public static GameManagerAYSTTC current;
 
@@ -253,8 +254,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                         if (currentRound == roundCount)
                         {
                             StartCoroutine(_GetPlayerCount());
-                            StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                            yield break;
+                            while (!updatedPlayerCount)
+                            {
+                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                                yield break;
+                            }
                         }
                         StartRound();
                     }
@@ -263,9 +267,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            // Do Participant end game stuff.
-                            UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
-                            yield break;
+                            while (!updatedPlayerCount)
+                            {
+                                UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
+                                yield break;
+                            }
                         }
                         StartCoroutine(_CheckForRoundStart());
                     }
@@ -281,8 +287,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                         if (currentRound == roundCount)
                         {
                             StartCoroutine(_GetPlayerCount());
-                            StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                            yield break;
+                            while (!updatedPlayerCount)
+                            {
+                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                                yield break;
+                            }
                         }
                         StartRound();
                     }
@@ -654,7 +663,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (receivedData == "successfully changed status")
                 {
                     UIManagerAYSTTC.current.DisplayGameEndScreen(GameManager.current.playerStatus);
-
                 }
             }
         }
@@ -685,6 +693,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
                 remainingPlayerCount = splitData.Length;
+                updatedPlayerCount = true;
             }
         }
     }
