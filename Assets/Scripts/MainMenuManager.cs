@@ -51,6 +51,16 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(EnterLobby(functionName, nameField.text, lobbyField.text));
     }
 
+    public void CreateLobby ()
+    {
+        StartCoroutine(EnterLobby("createLobby", nameField.text, lobbyCode));
+    }
+
+    public void JoinLobby()
+    {
+        StartCoroutine(EnterLobby("joinLobby", nameField.text, lobbyField.text));
+    }
+
     public IEnumerator EnterLobby(string functionType, string playerName, string lobbyNumber)
     {
         LoadingPanel.current.ToggleLoadingPanel(true);
