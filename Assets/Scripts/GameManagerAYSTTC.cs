@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -83,7 +84,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public void ChooseRandomCategory(bool changeUI = false)
     {
         // Choose a category at random.
-        catIndex = Random.Range(0, categories.Count);
+        catIndex = UnityEngine.Random.Range(0, categories.Count);
         chosenCategory = categories[catIndex];
 
         if (changeUI)
@@ -177,7 +178,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
         }
-        int qIndex = Random.Range(0, tierQuestions.Count);
+        int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
         quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
         catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
         return chosenCategory.questions[quesIndex];
@@ -257,12 +258,9 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            StartCoroutine(_GetPlayerCount());
-                            while (!updatedPlayerCount)
-                            {
-                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
                         }
                         else
                         {
@@ -274,11 +272,9 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            while (!updatedPlayerCount)
-                            {
-                                UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(func: () => UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant)));
+                            //UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
+                            yield break;
                         }
                         else
                         {
@@ -296,12 +292,9 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            StartCoroutine(_GetPlayerCount());
-                            while (!updatedPlayerCount)
-                            {
-                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
                         }
                         else
                         {
@@ -685,8 +678,9 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <summary>
     /// Sets remainingPlayerCount to the count of players grabbed from the database.
     /// </summary>
+    /// <param name="func">A method to run after player count is updated.</param>
     /// <returns></returns>
-    public IEnumerator _GetPlayerCount()
+    public IEnumerator _GetPlayerCount(Action func = null, IEnumerator co = null)
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "getPlayerList");
@@ -709,6 +703,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                 remainingPlayerCount = splitData.Length;
                 updatedPlayerCount = true;
             }
+        }
+        if (func != null)
+        {
+            func.Invoke();
+        }
+        if (co != null)
+        {
+            StartCoroutine(co);
         }
     }
 
