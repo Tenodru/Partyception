@@ -700,6 +700,7 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
+                Debug.Log("Player List: " + splitData);
                 remainingPlayerCount = splitData.Length;
                 updatedPlayerCount = true;
             }
