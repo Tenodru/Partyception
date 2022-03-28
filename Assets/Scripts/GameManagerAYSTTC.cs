@@ -692,6 +692,10 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
+<<<<<<< Updated upstream
+=======
+                Debug.Log("Player List: " + receivedData + splitData.Length);
+>>>>>>> Stashed changes
                 remainingPlayerCount = splitData.Length;
                 updatedPlayerCount = true;
             }
