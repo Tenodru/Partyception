@@ -110,6 +110,30 @@ public class GameManagerAYSTTC : MonoBehaviour
         currentRound = 0;
         currentTier = 0;
 
+        //set max rounds
+        roundCount = (int)UIManagerAYSTTC.current.maxRoundsSlider.value;
+
+        //set max tier
+        if ((int)UIManagerAYSTTC.current.difficultySlider.value == 0)
+        {
+            maxTier = 2;
+        }
+        else if ((int)UIManagerAYSTTC.current.difficultySlider.value == 1)
+        {
+            maxTier = 3;
+        }
+        else if ((int)UIManagerAYSTTC.current.difficultySlider.value == 2)
+        {
+            maxTier = 4;
+        }
+        else if ((int)UIManagerAYSTTC.current.difficultySlider.value == 3)
+        {
+            maxTier = 5;
+        }
+
+        //set round time
+        timerDuration = (int)UIManagerAYSTTC.current.roundTimeSlider.value;
+
         StartCoroutine(_StartGame(GameManager.current.currentLobby));
         StartCoroutine(_GetPlayerCount());
         //StartRound();
@@ -305,7 +329,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully started question")
                 {
-                    timeRemaining = timerDuration;
+                    //timeRemaining = timerDuration;
                     StartCoroutine(_Timer(timerDuration));
                     StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
@@ -350,7 +374,7 @@ public class GameManagerAYSTTC : MonoBehaviour
 
                 if (GameManager.current.playerStatus == PlayerStatus.Participant)
                 {
-                    timeRemaining = timerDuration;
+                    //timeRemaining = timerDuration;
                     StartCoroutine(_Timer(timerDuration));
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
                 }
@@ -544,6 +568,22 @@ public class GameManagerAYSTTC : MonoBehaviour
                         {
                             StartCoroutine(_CheckForRoundStart());
                             UIManagerAYSTTC.current.DisplayPreStartScreen();
+                            if (chosenCategory == UIManagerAYSTTC.current.categories[0])
+                            {
+                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Twitch");
+                            }
+                            else if (chosenCategory == UIManagerAYSTTC.current.categories[1])
+                            {
+                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Film");
+                            }
+                            else if (chosenCategory == UIManagerAYSTTC.current.categories[2])
+                            {
+                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Games");
+                            }
+                            else if (chosenCategory == UIManagerAYSTTC.current.categories[3])
+                            {
+                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("All");
+                            }
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
                         }

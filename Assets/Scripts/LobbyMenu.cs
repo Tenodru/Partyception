@@ -20,6 +20,8 @@ public class LobbyMenu : MonoBehaviour
     public string gameDatabaseLink;
     public string mainScene;
 
+    public AudioClip playerJoinSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -74,6 +76,7 @@ public class LobbyMenu : MonoBehaviour
                                 if (!playerCard.activeInHierarchy && !playerNames.Contains(data))
                                 {
                                     playerCard.SetActive(true);
+                                    AudioManager.current.PlaySound(playerJoinSound);
                                     playerCard.GetComponent<PlayerCard>().AssignPlayerName(data);
                                     playerNames.Add(data);
                                     if (data.Contains("Leader: "))

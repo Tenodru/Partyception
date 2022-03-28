@@ -52,6 +52,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Header("Pre-Start Screen")]
     [Tooltip("The pre-start screen.")]
     public GameObject preStartScreen;
+    public Animator categorySelectAnimation;
     [Header("Game End Screen")]
     [Tooltip("The end-of-game screen.")]
     public GameObject gameEndScreen;
