@@ -328,7 +328,16 @@ public class UIManagerAYSTTC : MonoBehaviour
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
         }
-        else if (playerCount > 1)
+        else if (playerCount == 2)
+        {
+            StartCoroutine(_Timer(2f, () =>
+            {
+                playersRemainingDisplay.text = "You and 1 other made it to the end!";
+                playersRemainingDisplay.gameObject.SetActive(true);
+                StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
+            }));
+        }
+        else if (playerCount > 2)
         {
             StartCoroutine(_Timer(2f, () =>
             {
