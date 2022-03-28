@@ -46,6 +46,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject outcomeScreen;
     [Tooltip("The outcome text.")]
     public TextMeshProUGUI outcomeText;
+    public Animator outcomeAnim;
 
     [Header("Instructions Screen")]
     [Tooltip("The instructions screen.")]
@@ -219,6 +220,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         {
             outcomeText.text = "Correct!" + "\n" +
                 "Awaiting next question.";
+            outcomeAnim.SetTrigger("Win");
         }
         else if (outcome == OutcomeType.Wrong)
         {
@@ -232,6 +234,7 @@ public class UIManagerAYSTTC : MonoBehaviour
                 outcomeText.text = "Wrong!" + "\n" +
                 "You have been eliminated.";
             }
+            outcomeAnim.SetTrigger("Lose");
         }
         else if (outcome == OutcomeType.TimeOut)
         {
@@ -245,6 +248,7 @@ public class UIManagerAYSTTC : MonoBehaviour
                 outcomeText.text = "You ran out of time!" + "\n" +
                 "You have been eliminated.";
             }
+            outcomeAnim.SetTrigger("Lose");
         }
     }
 
