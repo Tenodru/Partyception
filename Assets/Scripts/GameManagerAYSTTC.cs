@@ -555,6 +555,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
+                            currentRound += 1;
+                            if (currentTier + tierInc <= maxTier)
+                            {
+                                currentTier += tierInc;
+                            }
                             StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
                         }
                         //StartGame();
