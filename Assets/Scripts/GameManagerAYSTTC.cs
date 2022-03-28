@@ -593,6 +593,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
+                            AudioManager.current.PlayMusic("inGameMusic");
                             StartCoroutine(_CheckForRoundStart());
                             string category = receivedData.Split('/')[1];
                             string timerDur = receivedData.Split('/')[2];
