@@ -7,6 +7,8 @@ using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
+    public GameObject newGM;
+
     public InputField nameField;
     public InputField lobbyField;
     public TextMeshProUGUI lobbyCodeDisplay;
@@ -33,6 +35,10 @@ public class MainMenuManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameManager.current == null)
+        {
+            Instantiate(newGM, transform.position, transform.rotation);
+        }
         AudioManager.current.PlayMusic("mainMenuMusic");
         StartCoroutine(_GetLobbyList());
     }
