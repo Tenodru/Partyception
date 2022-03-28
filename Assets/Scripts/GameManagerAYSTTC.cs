@@ -596,8 +596,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                             AudioManager.current.PlayMusic("inGameMusic");
                             StartCoroutine(_CheckForRoundStart());
                             string category = receivedData.Split('/')[1];
-                            string timerDur = receivedData.Split('/')[2];
-                            timerDuration = int.Parse(timerDur);
+                            timerDuration = int.Parse(receivedData.Split('/')[2]);
+                            roundCount = int.Parse(receivedData.Split('/')[3]);
                             UIManagerAYSTTC.current.DisplayPreStartScreen(category);
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
@@ -619,7 +619,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("function", "changeStatus");
         form.AddField("lobbyNumber", lobbyNumber);
-        form.AddField("newStatus", "prestart" + "/" + catIndex + "/" + timerDuration);
+        form.AddField("newStatus", "prestart" + "/" + catIndex + "/" + timerDuration + "/" + roundCount);
 
         using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
         {
