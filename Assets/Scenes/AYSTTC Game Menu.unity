@@ -3140,6 +3140,9 @@ MonoBehaviour:
   timerDuration: 5
   categories:
   - {fileID: 11400000, guid: 56ed5731f6c808143b806588cb5cf48a, type: 2}
+  - {fileID: 11400000, guid: b0dd2ddf539c6f8418b1136f2eddf2fb, type: 2}
+  - {fileID: 11400000, guid: ff56113c354f8ad498051aef8bcfa16b, type: 2}
+  - {fileID: 11400000, guid: 3f6dd747c9bf8944089fc94b832b2d24, type: 2}
   tierInc: 1
   maxTier: 5
   startButton: {fileID: 4310523409270667553}
@@ -3156,6 +3159,7 @@ MonoBehaviour:
     answer: enter answer here
     isCorrectAnswer: 0
   remainingPlayerCount: 0
+  doAllCategories: 0
 --- !u!114 &853217440
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -48,6 +48,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public string questionID;
     [HideInNormalInspector] public Answer selectedAnswer = null;
     [HideInNormalInspector] public int remainingPlayerCount = 0;
+    [HideInNormalInspector] public bool doAllCategories = false;
 
     public static GameManagerAYSTTC current;
 
@@ -85,12 +86,23 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <summary>
     /// Selects a random category.
     /// </summary>
-    public void ChooseRandomCategory()
+    /// <param name="changeUI">Set to true if used for Random category button.</param>
+    public void ChooseRandomCategory(bool changeUI = false)
     {
         // Choose a category at random.
         catIndex = Random.Range(0, categories.Count);
         chosenCategory = categories[catIndex];
 
+        if (changeUI)
+            ShowStartButton();
+    }
+
+    /// <summary>
+    /// Enables all categories for play. Not currently used since we already have an ALL QuestionCategory.
+    /// </summary>
+    public void ChooseAllCategories()
+    {
+        doAllCategories = true;
         ShowStartButton();
     }
 
@@ -162,6 +174,10 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     public Question ChooseQuestion()
     {
+        if (doAllCategories)
+        {
+            ChooseRandomCategory();
+        }
         List<Question> tierQuestions = new List<Question>();
         foreach (Question q in chosenCategory.questions)
         {
@@ -169,6 +185,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
         int qIndex = Random.Range(0, tierQuestions.Count);
         quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
+        catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
         return chosenCategory.questions[quesIndex];
     }
 
