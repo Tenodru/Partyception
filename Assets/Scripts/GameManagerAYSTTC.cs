@@ -80,6 +80,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public void ChooseCategory(QuestionCategory category)
     {
         chosenCategory = category;
+        catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
         ShowStartButton();
     }
 
@@ -226,6 +227,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
     {
+        timeRemaining = maxVal;
         Debug.Log("Timer begun with purpose: " + purpose);
         while (true)
         {
@@ -579,29 +581,30 @@ public class GameManagerAYSTTC : MonoBehaviour
                 else
                 {
                     string receivedData = www.downloadHandler.text;
-                    if (receivedData == "prestart")
+                    if (receivedData.Contains("prestart"))
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
                             StartCoroutine(_CheckForRoundStart());
+                            string category = receivedData.Replace("prestart/", "");
                             UIManagerAYSTTC.current.DisplayPreStartScreen();
                             Debug.Log("lala");
-                            if (chosenCategory == UIManagerAYSTTC.current.categories[0])
+                            if (category == "0")
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Twitch");
                                 Debug.Log("lala0");
                             }
-                            else if (chosenCategory == UIManagerAYSTTC.current.categories[1])
+                            else if (category == "1")
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Film");
                                 Debug.Log("lala1");
                             }
-                            else if (chosenCategory == UIManagerAYSTTC.current.categories[2])
+                            else if (category == "2")
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Games");
                                 Debug.Log("lala2");
                             }
-                            else if (chosenCategory == UIManagerAYSTTC.current.categories[3])
+                            else if (category == "3")
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("All");
                                 Debug.Log("lala3");
@@ -626,7 +629,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("function", "changeStatus");
         form.AddField("lobbyNumber", lobbyNumber);
-        form.AddField("newStatus", "prestart");
+        form.AddField("newStatus", "prestart" + "/" + catIndex);
 
         using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
         {
