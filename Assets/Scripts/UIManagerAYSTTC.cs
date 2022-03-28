@@ -23,11 +23,14 @@ public class UIManagerAYSTTC : MonoBehaviour
     public TextMeshProUGUI difficultySliderText;
     [Tooltip("The screen participants see during the category selection phase.")]
     public GameObject participantWaitingScreen;
+
     [Header("Game Screen (H)")]
     [Tooltip("The host's status info screen.")]
     public GameObject hostStatusScreen;
     [Tooltip("The host's numbers to hide answer choice.")]
     public GameObject hostNumbers;
+    public AudioClip buttonPressSound;
+
     [Header("Game Screen (P)")]
     [Tooltip("The main game screen.")]
     public GameObject gameScreen;
@@ -37,11 +40,13 @@ public class UIManagerAYSTTC : MonoBehaviour
     public Slider timerSlider;
     [Tooltip("The answer choice buttons.")]
     public List<AnswerButton> answerButtons;
+
     [Header("Outcome Screen (P)")]
     [Tooltip("The outcome screen.")]
     public GameObject outcomeScreen;
     [Tooltip("The outcome text.")]
     public TextMeshProUGUI outcomeText;
+
     [Header("Instructions Screen")]
     [Tooltip("The instructions screen.")]
     public GameObject instructionsScreen;
@@ -49,10 +54,16 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject hostInstructions;
     [Tooltip("The participants's instructions.")]
     public GameObject pInstructions;
+
     [Header("Pre-Start Screen")]
     [Tooltip("The pre-start screen.")]
     public GameObject preStartScreen;
     public Animator categorySelectAnimation;
+    public AudioClip twitchIntro;
+    public AudioClip filmIntro;
+    public AudioClip gamesIntro;
+    public AudioClip allIntro;
+
     [Header("Game End Screen")]
     [Tooltip("The end-of-game screen.")]
     public GameObject gameEndScreen;
@@ -83,18 +94,22 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[0].answer;
+                AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[1].answer;
+                AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[2].answer;
+                AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
+                AudioManager.current.PlaySound(buttonPressSound);
             }
         }
     }
@@ -238,11 +253,32 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public void DisplayPreStartScreen()
+    public void DisplayPreStartScreen(string category)
     {
         preStartScreen.SetActive(true);
         participantWaitingScreen.SetActive(false);
         instructionsScreen.SetActive(false);
+
+        if (category == "0")
+        {
+            categorySelectAnimation.SetTrigger("Twitch");
+            AudioManager.current.PlaySound(twitchIntro);
+        }
+        else if (category == "1")
+        {
+            categorySelectAnimation.SetTrigger("Film");
+            AudioManager.current.PlaySound(filmIntro);
+        }
+        else if (category == "2")
+        {
+            categorySelectAnimation.SetTrigger("Games");
+            AudioManager.current.PlaySound(gamesIntro);
+        }
+        else if (category == "3")
+        {
+            categorySelectAnimation.SetTrigger("All");
+            AudioManager.current.PlaySound(allIntro);
+        }
     }
 
     public void DisplayGameEndScreen(PlayerStatus playerStatus)

@@ -296,8 +296,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
+                        GameManager.current.LoadScene("AYSTTC Main Menu");
                         yield break;
-                        //GameManager.current.LoadScene("AYSTTC Main Menu");
                     }
                     yield break;
                 }
@@ -587,28 +587,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         {
                             StartCoroutine(_CheckForRoundStart());
                             string category = receivedData.Replace("prestart/", "");
-                            UIManagerAYSTTC.current.DisplayPreStartScreen();
-                            Debug.Log("lala");
-                            if (category == "0")
-                            {
-                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Twitch");
-                                Debug.Log("lala0");
-                            }
-                            else if (category == "1")
-                            {
-                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Film");
-                                Debug.Log("lala1");
-                            }
-                            else if (category == "2")
-                            {
-                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Games");
-                                Debug.Log("lala2");
-                            }
-                            else if (category == "3")
-                            {
-                                UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("All");
-                                Debug.Log("lala3");
-                            }
+                            UIManagerAYSTTC.current.DisplayPreStartScreen(category);
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
                         }
@@ -647,8 +626,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (receivedData == "successfully changed status")
                 {
                     UIManagerAYSTTC.current.DisplayInstructionsScreen(GameManager.current.playerStatus);
-                    timeRemaining = timerDuration;
-                    StartCoroutine(_Timer(timerDuration, TimerPurpose.PreStart));
+                    StartCoroutine(_Timer(5, TimerPurpose.PreStart));
                 }
             }
         }

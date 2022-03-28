@@ -3192,6 +3192,7 @@ MonoBehaviour:
   participantWaitingScreen: {fileID: 959272951}
   hostStatusScreen: {fileID: 241617620}
   hostNumbers: {fileID: 882345850}
+  buttonPressSound: {fileID: 8300000, guid: 1b03a3e729b913f4a85f4c2ff404cb4b, type: 3}
   gameScreen: {fileID: 992562817}
   questionDisplay: {fileID: 350208614}
   timerSlider: {fileID: 1510035477}
@@ -3207,6 +3208,10 @@ MonoBehaviour:
   pInstructions: {fileID: 1581264485}
   preStartScreen: {fileID: 748543420}
   categorySelectAnimation: {fileID: 37870406}
+  twitchIntro: {fileID: 8300000, guid: b6bc2db7132980049ae8fcd18b5fdf72, type: 3}
+  filmIntro: {fileID: 8300000, guid: 912fd4df880bff44482f0d93cc8f3378, type: 3}
+  gamesIntro: {fileID: 8300000, guid: 64a73681256cce04f86cb26648b7f159, type: 3}
+  allIntro: {fileID: 0}
   gameEndScreen: {fileID: 2137840707}
   playersRemainingDisplay: {fileID: 1517014226}
   timeRemaining: 0
