@@ -568,21 +568,26 @@ public class GameManagerAYSTTC : MonoBehaviour
                         {
                             StartCoroutine(_CheckForRoundStart());
                             UIManagerAYSTTC.current.DisplayPreStartScreen();
+                            Debug.Log("lala");
                             if (chosenCategory == UIManagerAYSTTC.current.categories[0])
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Twitch");
+                                Debug.Log("lala0");
                             }
                             else if (chosenCategory == UIManagerAYSTTC.current.categories[1])
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Film");
+                                Debug.Log("lala1");
                             }
                             else if (chosenCategory == UIManagerAYSTTC.current.categories[2])
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("Games");
+                                Debug.Log("lala2");
                             }
                             else if (chosenCategory == UIManagerAYSTTC.current.categories[3])
                             {
                                 UIManagerAYSTTC.current.categorySelectAnimation.SetTrigger("All");
+                                Debug.Log("lala3");
                             }
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
