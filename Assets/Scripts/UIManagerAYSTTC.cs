@@ -114,6 +114,10 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Selects the specified category to pull questions from. Recolors other Category buttons.
+    /// </summary>
+    /// <param name="category"></param>
     public void ChooseCategory(QuestionCategory category)
     {
         foreach (Button button in categoryButtons)
@@ -200,6 +204,12 @@ public class UIManagerAYSTTC : MonoBehaviour
         GameManagerAYSTTC.current.selectedAnswer = answerChoice.answer;
     }
 
+    // Intro and Ending Stages. ---------------------------------------------------------
+    
+    /// <summary>
+    /// Displays the Outcome screen after the timer for a question hits 0.
+    /// </summary>
+    /// <param name="outcome">The Outcome (Correct, TimeOut, Wrong) for the player.</param>
     public void DisplayOutcomeScreen(OutcomeType outcome)
     {
         outcomeScreen.SetActive(true);
@@ -238,6 +248,10 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays the instructions screen to the player. Doubles as a "waiting room."
+    /// </summary>
+    /// <param name="playerStatus">Whether the player is Host or Participant.</param>
     public void DisplayInstructionsScreen(PlayerStatus playerStatus)
     {
         instructionsScreen.SetActive(true);
@@ -253,6 +267,10 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays the animated category intro screen after Category has been chosen.
+    /// </summary>
+    /// <param name="category">The specified Category that was chosen.</param>
     public void DisplayPreStartScreen(string category)
     {
         preStartScreen.SetActive(true);
@@ -281,6 +299,10 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Displays the end screen, after all rounds have been played or (theoretically) final player has been eliminated.
+    /// </summary>
+    /// <param name="playerStatus">Whether player is Host or Participant.</param>
     public void DisplayGameEndScreen(PlayerStatus playerStatus)
     {
         gameScreen.SetActive(false);
@@ -325,6 +347,9 @@ public class UIManagerAYSTTC : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
+    /// <summary>
+    /// Updates the player count from AYSTTC's GameManager.
+    /// </summary>
     public void UpdatePlayerCount()
     {
         playerCount = GameManagerAYSTTC.current.remainingPlayerCount;
@@ -357,6 +382,10 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Updates the lobby settings based on Host selections.
+    /// </summary>
+    /// <param name="settingType">The specified Setting Type to change.</param>
     public void UpdateSettings(string settingType)
     {
         if (settingType == "maxRounds")

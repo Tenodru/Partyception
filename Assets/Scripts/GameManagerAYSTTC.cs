@@ -30,20 +30,11 @@ public class GameManagerAYSTTC : MonoBehaviour
     public string gameDatabaseLink;
 
     [HideInNormalInspector] public float timeRemaining = 5f;
-    //[HideInNormalInspector] public bool timerBegun = false;
-    //[HideInNormalInspector] public bool isTimerRunning = false;
-    //[HideInNormalInspector] public bool roundInProgress = false;
-    //[HideInNormalInspector] public bool isRoundOver = false;
-    //[HideInNormalInspector] public bool runningEOR = false;
     [HideInNormalInspector] public int currentRound = 0;
     [HideInNormalInspector] public QuestionCategory chosenCategory;
     [HideInNormalInspector] public int catIndex = 0;
     [HideInNormalInspector] public int quesIndex = 0;
     [HideInNormalInspector] public int currentTier = 0;
-    //[HideInNormalInspector] public bool questionChosen = false;
-    //[HideInNormalInspector] public bool questionSent = false;
-    //[HideInNormalInspector] public bool questionReceived = false;
-    //[HideInNormalInspector] public bool roundComplete = false;
     [HideInNormalInspector] public Question currentQuestion;
     [HideInNormalInspector] public string questionID;
     [HideInNormalInspector] public Answer selectedAnswer = null;
