@@ -332,7 +332,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         {
             StartCoroutine(_Timer(2f, () =>
             {
-                playersRemainingDisplay.text = "You and " + (GameManagerAYSTTC.current.remainingPlayerCount - 1) + " others made it to the end!";
+                playersRemainingDisplay.text = "You and " + (playerCount - 1) + " others made it to the end!";
                 playersRemainingDisplay.gameObject.SetActive(true);
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
