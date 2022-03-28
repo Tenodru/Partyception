@@ -12,7 +12,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip mainMenuMusic;
     public AudioClip inGameMusic;
 
-    private void Start()
+    private void Awake()
     {
         current = this;
     }
