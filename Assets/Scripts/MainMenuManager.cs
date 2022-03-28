@@ -24,10 +24,42 @@ public class MainMenuManager : MonoBehaviour
     [HideInNormalInspector] public List<string> lobbyList = new List<string>();
     [HideInNormalInspector] public const string codeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
+    [Header("Info Panel")]
+    public GameObject infoPanel;
+    public Text infoPanelText;
+    public Button createLobbyButton;
+    public Button joinLobbyButton;
+
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(_GetLobbyList());
+    }
+
+    public void ShowInfoPanel(string type)
+    {
+        infoPanel.SetActive(true);
+        if (type == "create")
+        {
+            infoPanelText.text = "Enter your name:";
+            nameField.gameObject.SetActive(true);
+            lobbyField.gameObject.SetActive(false);
+            createLobbyButton.gameObject.SetActive(true);
+            joinLobbyButton.gameObject.SetActive(false);
+        }
+        else if (type == "join")
+        {
+            infoPanelText.text = "Enter your name and lobby number:";
+            nameField.gameObject.SetActive(true);
+            lobbyField.gameObject.SetActive(true);
+            createLobbyButton.gameObject.SetActive(false);
+            joinLobbyButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void HideInfoPanel()
+    {
+        infoPanel.SetActive(false);
     }
 
     /// <summary>
