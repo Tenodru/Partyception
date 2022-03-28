@@ -48,7 +48,7 @@ public class MainMenuManager : MonoBehaviour
     public void Lobby(string functionName)
     {
         //StartCoroutine(EnterLobby(functionName, nameField.text, lobbyField.text));
-        StartCoroutine(EnterLobby(functionName, nameField.text, lobbyCode));
+        StartCoroutine(EnterLobby(functionName, nameField.text, lobbyField.text));
     }
 
     public IEnumerator EnterLobby(string functionType, string playerName, string lobbyNumber)
