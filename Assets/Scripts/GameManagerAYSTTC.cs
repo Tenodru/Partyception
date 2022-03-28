@@ -264,7 +264,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 yield break;
                             }
                         }
-                        StartRound();
+                        else
+                        {
+                            StartRound();
+                        }
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
@@ -277,7 +280,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 yield break;
                             }
                         }
-                        StartCoroutine(_CheckForRoundStart());
+                        else
+                        {
+                            StartCoroutine(_CheckForRoundStart());
+                        }
                     }
                     Debug.Log("End of round has ended.");
                     yield break;
@@ -297,7 +303,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 yield break;
                             }
                         }
-                        StartRound();
+                        else
+                        {
+                            StartRound();
+                        }
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
