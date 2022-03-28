@@ -386,9 +386,9 @@ public class UIManagerAYSTTC : MonoBehaviour
     /// Updates the lobby settings based on Host selections.
     /// </summary>
     /// <param name="settingType">The specified Setting Type to change.</param>
-    public void UpdateSettings(string settingType)
+    public void UpdateSettings(int settingType)
     {
-        if (settingType == "maxRounds")
+        if ((SettingType)settingType == SettingType.MaxRounds)
         {
             GameManagerAYSTTC.current.roundCount = (int)maxRoundsSlider.value;
             maxRoundsText.text = maxRoundsSlider.value.ToString();
@@ -401,12 +401,12 @@ public class UIManagerAYSTTC : MonoBehaviour
                 maxRoundsText.text = maxRoundsSlider.value.ToString();
             }
         }
-        else if (settingType == "roundTime")
+        else if ((SettingType)settingType == SettingType.RoundTime)
         {
             GameManagerAYSTTC.current.timerDuration = (int)roundTimeSlider.value;
             roundTimeText.text = roundTimeSlider.value.ToString();
         }
-        else if (settingType == "difficulty")
+        else if ((SettingType)settingType == SettingType.Difficulty)
         {
             GameManagerAYSTTC.current.difficulty = (int)difficultySlider.value;
             if (difficultySlider.value == 0)
@@ -504,3 +504,9 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 }
+
+/// <summary>
+/// A type of lobby Setting to be changed. Created for AYSTTC.
+/// </summary>
+[System.Serializable]
+public enum SettingType { MaxRounds, RoundTime, Difficulty }
