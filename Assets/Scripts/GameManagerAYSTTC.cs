@@ -111,6 +111,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
+        AudioManager.current.PlayMusic("inGameMusic");
         currentRound = 0;
         currentTier = 0;
 
