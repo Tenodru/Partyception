@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
+  m_Name: Games Question e3
+  m_EditorClassIdentifier: 
+  question: Who are the antagonists of the first Halo game?
+  difficulty: 2
+  answerList:
+  - answer: Covenant
+    isCorrectAnswer: 1
+  - answer: Spartans
+    isCorrectAnswer: 0
+  - answer: UNSC
+    isCorrectAnswer: 0
+  - answer: Hive
+    isCorrectAnswer: 0
