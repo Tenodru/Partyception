@@ -97,21 +97,25 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[0].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[0].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[1].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[1].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[2].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[2].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[3].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
         }

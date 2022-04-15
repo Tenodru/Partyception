@@ -241,7 +241,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                 {
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
-                        StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        StartCoroutine(_ReadyCheck());
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -757,6 +758,39 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Current Lobby List: " + receivedData);
                 Debug.Log("Deleted lobby!");
+            }
+        }
+    }
+
+    public IEnumerator _ReadyCheck()
+    {
+        while (true)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("function", "retrieve");
+            form.AddField("lobbyNumber", GameManager.current.currentLobby);
+
+            using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    Debug.Log(receivedData);
+                    if (receivedData == "everyone is ready")
+                    {
+                        if (GameManager.current.playerStatus == PlayerStatus.Host)
+                        {
+                            StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        }
+                        yield break;
+                    }
+                }
             }
         }
     }
