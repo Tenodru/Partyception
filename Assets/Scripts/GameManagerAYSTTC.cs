@@ -513,18 +513,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                         if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                            StartCoroutine(_EliminatePlayer());
+                            StartCoroutine(_UpdatePlayerStatus("eliminated"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         else if (selectedAnswer.isCorrectAnswer)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
+                            StartCoroutine(_UpdatePlayerStatus("awaiting"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
                         }
                         else
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
-                            StartCoroutine(_EliminatePlayer());
+                            StartCoroutine(_UpdatePlayerStatus("eliminated"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         yield break;
@@ -796,15 +797,15 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public IEnumerator _EliminatePlayer()
+    public IEnumerator _UpdatePlayerStatus(string newStatus)
     {
-        Debug.Log("Eliminating Player: " + GameManager.current.playerName);
+        Debug.Log(GameManager.current.playerName + "'s new status: " + newStatus);
 
         WWWForm form = new WWWForm();
         form.AddField("function", "update");
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
         form.AddField("playerName", GameManager.current.playerName);
-        form.AddField("newStatus", "eliminated");
+        form.AddField("newStatus", newStatus);
 
         using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
         {
@@ -820,9 +821,16 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully updated player status")
                 {
-                    GameManager.current.LoadScene("AYSTTC Main Menu");
-                    // Eventually we want to send them to an eliminated screen.
-                    yield break;
+                    if (newStatus == "eliminated")
+                    {
+                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                        // Eventually we want to send them to an eliminated screen.
+                        yield break;
+                    }
+                    else if (newStatus == "awaiting")
+                    {
+
+                    }
                 }
             }
         }
