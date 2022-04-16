@@ -304,7 +304,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
-                        StartCoroutine(_EliminatePlayer());
                         yield break;
                     }
                     yield break;
@@ -514,6 +513,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
+                            StartCoroutine(_EliminatePlayer());
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         else if (selectedAnswer.isCorrectAnswer)
@@ -524,6 +524,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         else
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                            StartCoroutine(_EliminatePlayer());
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         yield break;
