@@ -304,7 +304,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
-                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                        StartCoroutine(_EliminatePlayer());
                         yield break;
                     }
                     yield break;
@@ -790,6 +790,38 @@ public class GameManagerAYSTTC : MonoBehaviour
                         }
                         yield break;
                     }
+                }
+            }
+        }
+    }
+
+    public IEnumerator _EliminatePlayer()
+    {
+        Debug.Log("Eliminating Player: " + GameManager.current.playerName);
+
+        WWWForm form = new WWWForm();
+        form.AddField("function", "update");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("playerName", GameManager.current.playerName);
+        form.AddField("newStatus", "eliminated");
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully updated player status")
+                {
+                    GameManager.current.LoadScene("AYSTTC Main Menu");
+                    // Eventually we want to send them to an eliminated screen.
+                    yield break;
                 }
             }
         }
