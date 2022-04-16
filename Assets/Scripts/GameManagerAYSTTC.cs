@@ -239,6 +239,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timeRemaining = 0;
                 if (purpose == TimerPurpose.DuringRound)
                 {
+                    if (selectedAnswer == null)
+                    {
+                        StartCoroutine(_UpdatePlayerStatus("eliminated"));
+                    }
+                    else if (selectedAnswer.isCorrectAnswer)
+                    {
+                        StartCoroutine(_UpdatePlayerStatus("awaiting"));
+                    }
+                    else
+                    {
+                        StartCoroutine(_UpdatePlayerStatus("eliminated"));
+                    }
+
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
@@ -513,19 +526,16 @@ public class GameManagerAYSTTC : MonoBehaviour
                         if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                            StartCoroutine(_UpdatePlayerStatus("eliminated"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         else if (selectedAnswer.isCorrectAnswer)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
-                            StartCoroutine(_UpdatePlayerStatus("awaiting"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
                         }
                         else
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
-                            StartCoroutine(_UpdatePlayerStatus("eliminated"));
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                         }
                         yield break;
