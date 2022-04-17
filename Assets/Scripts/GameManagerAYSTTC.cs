@@ -204,12 +204,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                 }
             }
 
-            usedQuestions.Add(chosenCategory.questions[quesIndex]);
             int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
             quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
             catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
-            
-            
+            usedQuestions.Add(chosenCategory.questions[quesIndex]);
+
             return chosenCategory.questions[quesIndex];
         }
         
@@ -453,6 +452,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     //timeRemaining = timerDuration;
                     StartCoroutine(_Timer(timerDuration));
                     UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                    usedQuestions.Add(currentQuestion);
                 }
 
                 yield break;

@@ -18,7 +18,7 @@ public class QuestionCard : MonoBehaviour
 
     public void UpdateQuestionCard(int _questionNum, Question question)
     {
-        questionNum.text = _questionNum.ToString();
+        questionNum.text = (_questionNum + 1).ToString();
         questionText.text = question.question;
         for(int i = 0; i < answers.Length; i++)
         {
