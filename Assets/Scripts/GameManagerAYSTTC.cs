@@ -708,7 +708,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public IEnumerator _GetPlayerCount(Action func = null, IEnumerator co = null)
     {
         WWWForm form = new WWWForm();
-        form.AddField("function", "getPlayerList");
+        form.AddField("function", "getRemainingPlayers");
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
         form.AddField("playerName", GameManager.current.playerName);
 
@@ -724,6 +724,10 @@ public class GameManagerAYSTTC : MonoBehaviour
             else
             {
                 string receivedData = www.downloadHandler.text;
+                remainingPlayerCount = int.Parse(receivedData);
+
+                /*
+                string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
                 List<string> playerList = new List<string>();
                 foreach (string str in splitData)
@@ -734,6 +738,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("New Player List: " + playerList + ", " + playerList.Count);
                 remainingPlayerCount = playerList.Count;
                 updatedPlayerCount = true;
+                */
 
                 if (func != null)
                 {
