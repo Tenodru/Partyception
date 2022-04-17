@@ -73,6 +73,11 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Tooltip("Displays the number of remaining players.")]
     public TextMeshProUGUI playersRemainingDisplay;
 
+    [Header("Game Recap Screen")]
+    public GameObject gameRecapScreen;
+    public Transform questionHolder;
+    public List<QuestionCard> questionCards;
+
     public static UIManagerAYSTTC current;
 
     [HideInNormalInspector] public float timeRemaining;
@@ -88,6 +93,11 @@ public class UIManagerAYSTTC : MonoBehaviour
         gameScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
         gameEndScreen.SetActive(false);
+
+        for(int i = 0; i < questionHolder.childCount; i++)
+        {
+            questionCards.Add(questionHolder.GetChild(i).GetComponent<QuestionCard>());
+        }
     }
 
     private void Update()
@@ -309,12 +319,30 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    public void ToggleGameRecapScreen()
+    {
+        if (gameRecapScreen.activeInHierarchy)
+        {
+            gameRecapScreen.SetActive(false);
+            gameEndScreen.SetActive(true);
+        }
+        else
+        {
+            gameRecapScreen.SetActive(true);
+            gameEndScreen.SetActive(false);
+        }
+    }
+
     /// <summary>
     /// Displays the end screen, after all rounds have been played or (theoretically) final player has been eliminated.
     /// </summary>
     /// <param name="playerStatus">Whether player is Host or Participant.</param>
     public void DisplayGameEndScreen(PlayerStatus playerStatus)
     {
+        if (playerStatus == PlayerStatus.Host)
+        {
+            UpdateQuestionRecap(GameManagerAYSTTC.current.usedQuestions);
+        }
         gameScreen.SetActive(false);
         outcomeScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
@@ -460,6 +488,15 @@ public class UIManagerAYSTTC : MonoBehaviour
             StartCoroutine(_FadeObjectOut(obj, 1, true, co));
         else
             StartCoroutine(_FadeObjectIn(obj, 1, true, co));
+    }
+
+    public void UpdateQuestionRecap(List<Question> questions)
+    {
+        for(int i = 0; i < questions.Count; i++)
+        {
+            questionCards[i].gameObject.SetActive(true);
+            questionCards[i].UpdateQuestionCard(i, questions[i]);
+        }
     }
 
     /// <summary>
