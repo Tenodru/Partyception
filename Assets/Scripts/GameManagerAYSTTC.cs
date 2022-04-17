@@ -201,14 +201,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (tierQuestions.Count < 1)
                 {
                     tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
-                } else
-                {
-                    usedQuestions.Add(chosenCategory.questions[quesIndex]);
                 }
             }
+
+            usedQuestions.Add(chosenCategory.questions[quesIndex]);
             int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
             quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
             catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
+            
             
             return chosenCategory.questions[quesIndex];
         }
