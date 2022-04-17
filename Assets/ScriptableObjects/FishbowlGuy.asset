@@ -13,24 +13,17 @@ MonoBehaviour:
   m_Name: FishbowlGuy
   m_EditorClassIdentifier: 
   avatarParts:
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
-  - partSprite: {fileID: 0}
-    defaultColor: {r: 0, g: 0, b: 0, a: 0}
-    partColor: {r: 0, g: 0, b: 0, a: 0}
+  - partSprite: {fileID: 21300000, guid: 9ecf36e5c0cc5ea46873cff23a1e7a08, type: 3}
+    defaultColor: {r: 0.53333336, g: 0.6392157, b: 1, a: 1}
+  - partSprite: {fileID: 21300000, guid: a27c83873e71cd2428b00d97710fca9f, type: 3}
+    defaultColor: {r: 0.8745099, g: 0.91372555, b: 1, a: 1}
+  - partSprite: {fileID: 21300000, guid: 24ddeb16f9a2c3744a6652889ecb7246, type: 3}
+    defaultColor: {r: 1, g: 0.89019614, b: 0.7686275, a: 1}
+  - partSprite: {fileID: 21300000, guid: 0d385a84330553b40a7b304adc44a658, type: 3}
+    defaultColor: {r: 1, g: 0.7058824, b: 0.4901961, a: 1}
+  - partSprite: {fileID: 21300000, guid: 6fddf2bda57a0d041aaac99bd85e7913, type: 3}
+    defaultColor: {r: 1, g: 0.9725491, b: 1, a: 1}
+  - partSprite: {fileID: 21300000, guid: a885bbac3636fa54d92eff8d24466487, type: 3}
+    defaultColor: {r: 0.29803923, g: 0.24313727, b: 0.227451, a: 1}
+  - partSprite: {fileID: 21300000, guid: c8f86d47117d4b74cacad195d487bd2d, type: 3}
+    defaultColor: {r: 0.5921569, g: 0.74509805, b: 0.9490197, a: 1}

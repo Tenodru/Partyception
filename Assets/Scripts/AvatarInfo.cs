@@ -7,7 +7,6 @@ public class AvatarPart
 {
     public Sprite partSprite;
     public Color defaultColor;
-    public Color partColor;
 }
 
 [CreateAssetMenu(fileName = "New Avatar Info", menuName = "AvatarInfo")]
