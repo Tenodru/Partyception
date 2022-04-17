@@ -177,11 +177,8 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
         if (unlimitedRounds)
         {
-            List<Question> tierQuestions = new List<Question>();
-            foreach (Question q in chosenCategory.questions)
-            {
-                tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
-            }
+            List<Question> tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+
             int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
             quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
             catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
@@ -189,11 +186,8 @@ public class GameManagerAYSTTC : MonoBehaviour
         } else
         {
             // If not unlimited rounds, avoid using used questions.
-            List<Question> tierQuestions = new List<Question>();
-            foreach (Question q in chosenCategory.questions)
-            {
-                tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
-            }
+            List<Question> tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+
             if (usedQuestions.Count > 0)
             {
                 foreach (Question q in usedQuestions)
@@ -203,11 +197,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                         tierQuestions.Remove(q);
                     }
                 }
+                // If all questions of this difficulty tier have already been used, we can re-use the old questions.
+                if (tierQuestions.Count < 1)
+                {
+                    tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+                } else
+                {
+                    usedQuestions.Add(chosenCategory.questions[quesIndex]);
+                }
             }
             int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
             quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
             catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
-            usedQuestions.Add(chosenCategory.questions[quesIndex]);
+            
             return chosenCategory.questions[quesIndex];
         }
         
