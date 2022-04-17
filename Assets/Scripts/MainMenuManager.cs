@@ -39,6 +39,10 @@ public class MainMenuManager : MonoBehaviour
         {
             Instantiate(newGM, transform.position, transform.rotation);
         }
+        else
+        {
+            GameManager.current.players.Clear();
+        }
         AudioManager.current.PlayMusic("mainMenuMusic");
         StartCoroutine(_GetLobbyList());
     }

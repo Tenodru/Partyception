@@ -854,6 +854,33 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
     }
+
+    public IEnumerator _GetEliminatedPlayers()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "getEliminatedPlayers");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("roundNumber", currentRound);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully sent eliminated players")
+                {
+                    
+                }
+            }
+        }
+    }
 }
 
 /// <summary>
