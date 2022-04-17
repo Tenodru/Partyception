@@ -339,10 +339,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     /// <param name="playerStatus">Whether player is Host or Participant.</param>
     public void DisplayGameEndScreen(PlayerStatus playerStatus)
     {
-        if (playerStatus == PlayerStatus.Host)
-        {
-            UpdateQuestionRecap(GameManagerAYSTTC.current.usedQuestions);
-        }
+        UpdateQuestionRecap(GameManagerAYSTTC.current.usedQuestions);
         gameScreen.SetActive(false);
         outcomeScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
