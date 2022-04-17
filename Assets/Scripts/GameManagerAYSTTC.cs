@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -83,7 +84,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public void ChooseRandomCategory(bool changeUI = false)
     {
         // Choose a category at random.
-        catIndex = Random.Range(0, categories.Count);
+        catIndex = UnityEngine.Random.Range(0, categories.Count);
         chosenCategory = categories[catIndex];
 
         if (changeUI)
@@ -177,7 +178,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
         }
-        int qIndex = Random.Range(0, tierQuestions.Count);
+        int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
         quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
         catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
         return chosenCategory.questions[quesIndex];
@@ -227,6 +228,10 @@ public class GameManagerAYSTTC : MonoBehaviour
             UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
             if (timeRemaining > 0)
             {
+                if (purpose == TimerPurpose.DuringRound)
+                {
+                    UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.8f - ((timeRemaining / timerDuration * 0.6f) + 0.1f));
+                }
                 timeRemaining -= Time.deltaTime;
             }
             else
@@ -234,9 +239,27 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timeRemaining = 0;
                 if (purpose == TimerPurpose.DuringRound)
                 {
+                    if (selectedAnswer == null)
+                    {
+                        Debug.Log("selected answer was null");
+                        
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
+                    }
+                    else if (selectedAnswer.isCorrectAnswer)
+                    {
+                        Debug.Log("correct answer");
+                        StartCoroutine(_UpdatePlayerStatus("correct"));
+                    }
+                    else
+                    {
+                        Debug.Log("wrong answer");
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
+                    }
+
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
-                        StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        StartCoroutine(_ReadyCheck());
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -253,27 +276,28 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            StartCoroutine(_GetPlayerCount());
-                            while (!updatedPlayerCount)
-                            {
-                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(func: () => StartCoroutine(_EndGame(GameManager.current.currentLobby))));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
                         }
-                        StartRound();
+                        else
+                        {
+                            StartRound();
+                        }
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            while (!updatedPlayerCount)
-                            {
-                                UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(func: () => UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant)));
+                            //UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
+                            yield break;
                         }
-                        StartCoroutine(_CheckForRoundStart());
+                        else
+                        {
+                            StartCoroutine(_CheckForRoundStart());
+                        }
                     }
                     Debug.Log("End of round has ended.");
                     yield break;
@@ -286,18 +310,19 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Final round was reached. Go to end screen.
                         if (currentRound == roundCount)
                         {
-                            StartCoroutine(_GetPlayerCount());
-                            while (!updatedPlayerCount)
-                            {
-                                StartCoroutine(_EndGame(GameManager.current.currentLobby));
-                                yield break;
-                            }
+                            StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
                         }
-                        StartRound();
+                        else
+                        {
+                            StartRound();
+                        }
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
                         GameManager.current.LoadScene("AYSTTC Main Menu");
+                        // Eventually we want to send them to an eliminated screen.
                         yield break;
                     }
                     yield break;
@@ -501,6 +526,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "completing")
                     {
+                        UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
                         if (selectedAnswer == null)
@@ -548,6 +574,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
+                            currentRound += 1;
+                            if (currentTier + tierInc <= maxTier)
+                            {
+                                currentTier += tierInc;
+                            }
                             StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
                         }
                         //StartGame();
@@ -586,10 +617,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
+                            AudioManager.current.PlayMusic("inGameMusic");
                             StartCoroutine(_CheckForRoundStart());
                             string category = receivedData.Split('/')[1];
-                            string timerDur = receivedData.Split('/')[2];
-                            timerDuration = int.Parse(timerDur);
+                            timerDuration = int.Parse(receivedData.Split('/')[2]);
+                            roundCount = int.Parse(receivedData.Split('/')[3]);
                             UIManagerAYSTTC.current.DisplayPreStartScreen(category);
                             timeRemaining = timerDuration;
                             Debug.Log("host starts game, new prestart timer");
@@ -611,7 +643,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("function", "changeStatus");
         form.AddField("lobbyNumber", lobbyNumber);
-        form.AddField("newStatus", "prestart" + "/" + catIndex + "/" + timerDuration);
+        form.AddField("newStatus", "prestart" + "/" + catIndex + "/" + timerDuration + "/" + roundCount);
 
         using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
         {
@@ -671,8 +703,9 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <summary>
     /// Sets remainingPlayerCount to the count of players grabbed from the database.
     /// </summary>
+    /// <param name="func">A method to run after player count is updated.</param>
     /// <returns></returns>
-    public IEnumerator _GetPlayerCount()
+    public IEnumerator _GetPlayerCount(Action func = null, IEnumerator co = null)
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "getPlayerList");
@@ -692,13 +725,26 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 string[] splitData = receivedData.Split('\n');
-<<<<<<< Updated upstream
-=======
-                Debug.Log("Player List: " + receivedData + splitData.Length);
->>>>>>> Stashed changes
-                remainingPlayerCount = splitData.Length;
+                List<string> playerList = new List<string>();
+                foreach (string str in splitData)
+                {
+                    if (str != "") { playerList.Add(str); }
+                }
+                Debug.Log("Player List: " + receivedData + ", " + splitData.Length);
+                Debug.Log("New Player List: " + playerList + ", " + playerList.Count);
+                remainingPlayerCount = playerList.Count;
                 updatedPlayerCount = true;
+
+                if (func != null)
+                {
+                    func.Invoke();
+                }
             }
+        }
+        
+        if (co != null)
+        {
+            StartCoroutine(co);
         }
     }
 
@@ -730,6 +776,76 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Current Lobby List: " + receivedData);
                 Debug.Log("Deleted lobby!");
+            }
+        }
+    }
+
+    public IEnumerator _ReadyCheck()
+    {
+        while (true)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("function", "retrieve");
+            form.AddField("lobbyNumber", GameManager.current.currentLobby);
+
+            using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    Debug.Log(receivedData);
+                    if (receivedData == "everyone is ready")
+                    {
+                        if (GameManager.current.playerStatus == PlayerStatus.Host)
+                        {
+                            StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                        }
+                        yield break;
+                    }
+                }
+            }
+        }
+    }
+
+    public IEnumerator _UpdatePlayerStatus(string newStatus)
+    {
+        Debug.Log(GameManager.current.playerName + "'s new status: " + newStatus);
+
+        WWWForm form = new WWWForm();
+        form.AddField("function", "update");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("playerName", GameManager.current.playerName);
+        form.AddField("newStatus", newStatus);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully updated player status")
+                {
+                    /*if (newStatus == "eliminated")
+                    {
+                        
+                    }
+                    else if (newStatus == "correct")
+                    {
+
+                    }*/
+                }
             }
         }
     }

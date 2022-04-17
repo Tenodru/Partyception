@@ -11,6 +11,8 @@ using TMPro;
 /// </summary>
 public class UIManagerAYSTTC : MonoBehaviour
 {
+    public Image bgBrightness;
+
     [Tooltip ("The category selection screen.")]
     public GameObject selectionScreen;
     public List<Button> categoryButtons;
@@ -95,21 +97,25 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[0].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[0].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[1].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[1].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[2].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[2].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
+                GameManagerAYSTTC.current.ChooseAnswer(answerButtons[3].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
             }
         }
@@ -317,7 +323,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         // TODO: Display eliminated players (in memoriam).
         // TODO: Host should have Create New Lobby button.
         UpdatePlayerCount();
-        if (playerCount - 1 == 1)
+        if (playerCount == 1)
         {
             StartCoroutine(_Timer(2f, () =>
             {
@@ -326,7 +332,16 @@ public class UIManagerAYSTTC : MonoBehaviour
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
         }
-        else if (playerCount - 1 > 1)
+        else if (playerCount == 2)
+        {
+            StartCoroutine(_Timer(2f, () =>
+            {
+                playersRemainingDisplay.text = "You and 1 other made it to the end!";
+                playersRemainingDisplay.gameObject.SetActive(true);
+                StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
+            }));
+        }
+        else if (playerCount > 2)
         {
             StartCoroutine(_Timer(2f, () =>
             {
