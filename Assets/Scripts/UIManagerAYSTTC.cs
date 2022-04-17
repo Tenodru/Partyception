@@ -414,6 +414,7 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (maxRoundsSlider.value == 16)
             {
                 maxRoundsText.text = "Endless";
+                GameManagerAYSTTC.current.unlimitedRounds = true;
             }
             else
             {

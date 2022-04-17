@@ -42,6 +42,8 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public int remainingPlayerCount = 0;
     [HideInNormalInspector] public bool doAllCategories = false;
     [HideInNormalInspector] public bool updatedPlayerCount = false;
+    [HideInNormalInspector] public bool unlimitedRounds = false;
+    [HideInNormalInspector] public List<Question> usedQuestions = new List<Question>();
 
     public static GameManagerAYSTTC current;
 
@@ -173,15 +175,42 @@ public class GameManagerAYSTTC : MonoBehaviour
         {
             ChooseRandomCategory();
         }
-        List<Question> tierQuestions = new List<Question>();
-        foreach (Question q in chosenCategory.questions)
+        if (unlimitedRounds)
         {
-            tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+            List<Question> tierQuestions = new List<Question>();
+            foreach (Question q in chosenCategory.questions)
+            {
+                tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+            }
+            int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
+            quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
+            catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
+            return chosenCategory.questions[quesIndex];
+        } else
+        {
+            // If not unlimited rounds, avoid using used questions.
+            List<Question> tierQuestions = new List<Question>();
+            foreach (Question q in chosenCategory.questions)
+            {
+                tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
+            }
+            if (usedQuestions.Count > 0)
+            {
+                foreach (Question q in usedQuestions)
+                {
+                    if (tierQuestions.Contains(q))
+                    {
+                        tierQuestions.Remove(q);
+                    }
+                }
+            }
+            int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
+            quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
+            catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
+            usedQuestions.Add(chosenCategory.questions[quesIndex]);
+            return chosenCategory.questions[quesIndex];
         }
-        int qIndex = UnityEngine.Random.Range(0, tierQuestions.Count);
-        quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
-        catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
-        return chosenCategory.questions[quesIndex];
+        
     }
 
     /// <summary>
