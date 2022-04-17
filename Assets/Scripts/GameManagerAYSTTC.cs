@@ -242,12 +242,13 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (selectedAnswer == null)
                     {
                         Debug.Log("selected answer was null");
+                        
                         StartCoroutine(_UpdatePlayerStatus("eliminated"));
                     }
                     else if (selectedAnswer.isCorrectAnswer)
                     {
                         Debug.Log("correct answer");
-                        StartCoroutine(_UpdatePlayerStatus("awaiting"));
+                        StartCoroutine(_UpdatePlayerStatus("correct"));
                     }
                     else
                     {
@@ -840,7 +841,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         // Eventually we want to send them to an eliminated screen.
                         yield break;
                     }
-                    else if (newStatus == "awaiting")
+                    else if (newStatus == "correct")
                     {
 
                     }
