@@ -243,7 +243,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         Debug.Log("selected answer was null");
                         
-                        StartCoroutine(_UpdatePlayerStatus("eliminated"));
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
                     }
                     else if (selectedAnswer.isCorrectAnswer)
                     {
@@ -253,7 +253,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     else
                     {
                         Debug.Log("wrong answer");
-                        StartCoroutine(_UpdatePlayerStatus("eliminated"));
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
                     }
 
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
@@ -321,6 +321,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
+                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                        // Eventually we want to send them to an eliminated screen.
                         yield break;
                     }
                     yield break;
@@ -835,16 +837,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log(receivedData);
                 if (receivedData == "successfully updated player status")
                 {
-                    if (newStatus == "eliminated")
+                    /*if (newStatus == "eliminated")
                     {
-                        GameManager.current.LoadScene("AYSTTC Main Menu");
-                        // Eventually we want to send them to an eliminated screen.
-                        yield break;
+                        
                     }
                     else if (newStatus == "correct")
                     {
 
-                    }
+                    }*/
                 }
             }
         }
