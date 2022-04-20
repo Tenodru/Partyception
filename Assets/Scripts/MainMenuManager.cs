@@ -31,6 +31,9 @@ public class MainMenuManager : MonoBehaviour
     public Text infoPanelText;
     public Button createLobbyButton;
     public Button joinLobbyButton;
+    public InputField nameInputField;
+    public Text charCountDisplay;
+    public Text charLimitDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -45,6 +48,24 @@ public class MainMenuManager : MonoBehaviour
         }
         AudioManager.current.PlayMusic("mainMenuMusic");
         StartCoroutine(_GetLobbyList());
+    }
+
+    private void Update()
+    {
+        if (nameInputField.enabled)
+        {
+            charCountDisplay.text = nameInputField.text.Length.ToString();
+            if (nameInputField.text.Length < nameInputField.characterLimit / 2)
+            {
+                charCountDisplay.color = new Color(0.2509804f, 1f, 0.4862745f);
+            } else if (nameInputField.text.Length == nameInputField.characterLimit)
+            {
+                charCountDisplay.color = new Color(1f, 0f, 0f);
+            } else
+            {
+                charCountDisplay.color = new Color(1f, 0.6705883f, 0.2509804f);
+            }
+        }
     }
 
     public void ShowInfoPanel(string type)
