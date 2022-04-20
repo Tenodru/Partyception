@@ -361,7 +361,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                 {
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
-                        StartCoroutine(_ReadyCheck("startRound"));
+                        //StartCoroutine(_ReadyCheck("startRound"));
+                        StartRound();
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
