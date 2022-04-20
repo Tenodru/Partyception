@@ -289,7 +289,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
-                        StartCoroutine(_ReadyCheck());
+                        StartCoroutine(_ReadyCheck("completeRound"));
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -361,10 +361,12 @@ public class GameManagerAYSTTC : MonoBehaviour
                 {
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
-                        StartRound();
+                        StartCoroutine(_ReadyCheck("startRound"));
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
                     {
+                        //REMOVE THIS IF BROKEN
+                        StartCoroutine(_UpdatePlayerStatus("awaiting"));
                         StartCoroutine(_CheckForRoundStart());
                     }
                     Debug.Log("First round has started.");
@@ -648,6 +650,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Participant)
                         {
+                            //REMOVE THIS IF BROKEN
+                            StartCoroutine(_UpdatePlayerStatus("prestart"));
                             AudioManager.current.PlayMusic("inGameMusic");
                             StartCoroutine(_CheckForRoundStart());
                             string category = receivedData.Split('/')[1];
@@ -816,7 +820,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public IEnumerator _ReadyCheck()
+    public IEnumerator _ReadyCheck(string type)
     {
         while (true)
         {
@@ -840,7 +844,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         if (GameManager.current.playerStatus == PlayerStatus.Host)
                         {
-                            StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                            if (type == "completeRound")
+                            {
+                                StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
+                            }
+                            else if (type == "startRound")
+                            {
+                                StartRound();
+                            }
                         }
                         yield break;
                     }

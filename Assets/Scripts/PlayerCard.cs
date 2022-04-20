@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class PlayerCard : MonoBehaviour
 {
     public Text playerName;
-    public Image leaderIcon;
-    public Sprite mrPuzzlesIcon;
+    public Image playerIcon;
+    public Sprite leaderIcon;
 
     public void AssignPlayerName(string name)
     {
@@ -17,5 +17,11 @@ public class PlayerCard : MonoBehaviour
     public void MakeCurrent()
     {
         GetComponent<Image>().color = Color.yellow;
+    }
+
+    public void MakeLeader()
+    {
+        playerIcon.gameObject.SetActive(true);
+        playerIcon.sprite = leaderIcon;
     }
 }

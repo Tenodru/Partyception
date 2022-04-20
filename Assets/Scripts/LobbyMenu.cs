@@ -81,7 +81,7 @@ public class LobbyMenu : MonoBehaviour
                                     playerNames.Add(data);
                                     if (data.Contains("Leader: "))
                                     {
-                                        //do something special to indicate they are leader
+                                        playerCard.GetComponent<PlayerCard>().MakeLeader();
                                     }
                                     if (data == GameManager.current.playerName || data == "Leader: " + GameManager.current.playerName)
                                     {
