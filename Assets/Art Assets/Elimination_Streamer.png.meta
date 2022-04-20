@@ -1,37 +1,37 @@
 fileFormatVersion: 2
-guid: 5f0af17523e4b41eb8c34531d262833a
+guid: 97c675590c1fc46328ff5bc7877addbe
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -190263856022079292
-    second: Film_0
+      213: 1765213181937104872
+    second: Elimination_Streamer_0
   - first:
-      213: 6112347380418100872
-    second: Film_1
+      213: -1835666350827080768
+    second: Elimination_Streamer_1
   - first:
-      213: 1706724464624664001
-    second: Film_2
+      213: -8825962982843538693
+    second: Elimination_Streamer_2
   - first:
-      213: -6429345600334140498
-    second: Film_3
+      213: -5545640975984493041
+    second: Elimination_Streamer_3
   - first:
-      213: 5999487253333925121
-    second: Film_4
+      213: -6600839038285799760
+    second: Elimination_Streamer_4
   - first:
-      213: 7418652818819087639
-    second: Film_5
+      213: -4735968001200543934
+    second: Elimination_Streamer_5
   - first:
-      213: 6345702648362663895
-    second: Film_6
+      213: 2939499122325386834
+    second: Elimination_Streamer_6
   - first:
-      213: 2516824301449451665
-    second: Film_7
+      213: -7251015735924182751
+    second: Elimination_Streamer_7
   - first:
-      213: 4582439741744740444
-    second: Film_8
+      213: 9102588065340144007
+    second: Elimination_Streamer_8
   - first:
-      213: -8983280073255145508
-    second: Film_9
+      213: -6064914230178229564
+    second: Elimination_Streamer_9
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -133,7 +133,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Film_0
+      name: Elimination_Streamer_0
       rect:
         serializedVersion: 2
         x: 0
@@ -147,14 +147,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4c83530f70c0c5df0800000000000000
-      internalID: -190263856022079292
+      spriteID: 8e7b236590c4f7810800000000000000
+      internalID: 1765213181937104872
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_1
+      name: Elimination_Streamer_1
       rect:
         serializedVersion: 2
         x: 384
@@ -168,14 +168,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88e3c91de8b63d450800000000000000
-      internalID: 6112347380418100872
+      spriteID: 0c370d00e276686e0800000000000000
+      internalID: -1835666350827080768
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_2
+      name: Elimination_Streamer_2
       rect:
         serializedVersion: 2
         x: 768
@@ -189,14 +189,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cdfb63abd08fa710800000000000000
-      internalID: 1706724464624664001
+      spriteID: bf22dd6dd61e38580800000000000000
+      internalID: -8825962982843538693
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_3
+      name: Elimination_Streamer_3
       rect:
         serializedVersion: 2
         x: 1152
@@ -210,14 +210,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: eabecd99d3066c6a0800000000000000
-      internalID: -6429345600334140498
+      spriteID: f0ef7961aece903b0800000000000000
+      internalID: -5545640975984493041
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_4
+      name: Elimination_Streamer_4
       rect:
         serializedVersion: 2
         x: 1536
@@ -231,14 +231,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10dd379ced5724350800000000000000
-      internalID: 5999487253333925121
+      spriteID: 0be917f0edb1564a0800000000000000
+      internalID: -6600839038285799760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_5
+      name: Elimination_Streamer_5
       rect:
         serializedVersion: 2
         x: 0
@@ -252,14 +252,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 71d79a9de6954f660800000000000000
-      internalID: 7418652818819087639
+      spriteID: 24723d4f136764eb0800000000000000
+      internalID: -4735968001200543934
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_6
+      name: Elimination_Streamer_6
       rect:
         serializedVersion: 2
         x: 384
@@ -273,14 +273,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7df79ed00f6701850800000000000000
-      internalID: 6345702648362663895
+      spriteID: 256f6cba0e23bc820800000000000000
+      internalID: 2939499122325386834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_7
+      name: Elimination_Streamer_7
       rect:
         serializedVersion: 2
         x: 768
@@ -294,14 +294,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19817f11e5e8de220800000000000000
-      internalID: 2516824301449451665
+      spriteID: 121b87f0b973f5b90800000000000000
+      internalID: -7251015735924182751
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_8
+      name: Elimination_Streamer_8
       rect:
         serializedVersion: 2
         x: 1152
@@ -315,14 +315,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c58f3539aa8189f30800000000000000
-      internalID: 4582439741744740444
+      spriteID: 7893f4b2e93e25e70800000000000000
+      internalID: 9102588065340144007
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Film_9
+      name: Elimination_Streamer_9
       rect:
         serializedVersion: 2
         x: 1536
@@ -336,8 +336,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdf28cb6e5af45380800000000000000
-      internalID: -8983280073255145508
+      spriteID: 4c2d30514a815dba0800000000000000
+      internalID: -6064914230178229564
       vertices: []
       indices: 
       edges: []
