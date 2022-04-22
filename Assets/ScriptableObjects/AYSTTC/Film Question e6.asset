@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Film Question e6
   m_EditorClassIdentifier: 
-  question: "What item is Leonardo Decaprio\u2019s totem in the film \u201CInception\u201D?"
+  question: "What item is Leonardo Decaprio\u2019s totem in the film Inception?"
   difficulty: 3
   answerList:
   - answer: Top

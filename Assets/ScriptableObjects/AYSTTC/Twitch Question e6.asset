@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
-  m_Name: Film Question e3
+  m_Name: Twitch Question e6
   m_EditorClassIdentifier: 
-  question: "Finish the quote: \u201CAvengers\u2026\""
-  difficulty: 2
+  question: In June 2020, a popular streamer under the name ______ was permanently
+    banned on Twitch and the reason for this ban is still unknown.
+  difficulty: 3
   answerList:
-  - answer: Fight
-    isCorrectAnswer: 0
-  - answer: Unite
-    isCorrectAnswer: 0
-  - answer: Assemble
+  - answer: Dr. Disrespect
     isCorrectAnswer: 1
-  - answer: Together
+  - answer: TimTheTatman
+    isCorrectAnswer: 0
+  - answer: Mizkif
+    isCorrectAnswer: 0
+  - answer: Ludwig
     isCorrectAnswer: 0

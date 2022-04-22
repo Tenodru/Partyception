@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Games Question e2
   m_EditorClassIdentifier: 
-  question: Samus Aran is a bounty hunter from which of these classic nintendo titles?
+  question: Samus Aran is a bounty hunter from which of these classic Nintendo titles?
   difficulty: 1
   answerList:
   - answer: Metroid

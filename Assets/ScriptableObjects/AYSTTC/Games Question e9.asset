@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Games Question e9
   m_EditorClassIdentifier: 
-  question: Which of these is widely considered to be the first Videogame?
+  question: Which of these is widely considered to be the first videogame?
   difficulty: 5
   answerList:
   - answer: Tennis for Two

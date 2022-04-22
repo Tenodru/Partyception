@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Games Question 4
   m_EditorClassIdentifier: 
-  question: Which of these companies owns the game library steam?
+  question: Which of these companies owns the game library Steam?
   difficulty: 2
   answerList:
   - answer: Microsoft

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Games Question e10
   m_EditorClassIdentifier: 
-  question: "The 1990 SEGA title \u201CGolden Axe\u201D featured a voice by a..."
+  question: The 1990 SEGA title Golden Axe featured a voice by a...
   difficulty: 5
   answerList:
   - answer: Prisoner on Death Row

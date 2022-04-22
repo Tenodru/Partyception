@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Games Question 14
   m_EditorClassIdentifier: 
-  question: "How many worlds are there in \u201CSuper Mario 3D World\u201D?"
+  question: How many worlds are there in Super Mario 3D World?
   difficulty: 5
   answerList:
   - answer: 13

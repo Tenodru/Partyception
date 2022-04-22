@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Film Question e2
   m_EditorClassIdentifier: 
-  question: "Who is the main antagonist to Batman in the film \u201CThe Dark Knight\u201D?"
+  question: Who is the main antagonist to Batman in the film The Dark Knight?
   difficulty: 1
   answerList:
   - answer: Scarecrow

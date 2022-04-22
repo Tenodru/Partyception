@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
-  m_Name: Film Question e3
+  m_Name: Twitch Question e7
   m_EditorClassIdentifier: 
-  question: "Finish the quote: \u201CAvengers\u2026\""
-  difficulty: 2
+  question: What is the common emote to spam when a streamer has been tricked or
+    lured into a trap?
+  difficulty: 4
   answerList:
-  - answer: Fight
-    isCorrectAnswer: 0
-  - answer: Unite
-    isCorrectAnswer: 0
-  - answer: Assemble
+  - answer: Jebaited
     isCorrectAnswer: 1
-  - answer: Together
+  - answer: PJSalt
+    isCorrectAnswer: 0
+  - answer: SeemsGood
+    isCorrectAnswer: 0
+  - answer: CoolCat
     isCorrectAnswer: 0

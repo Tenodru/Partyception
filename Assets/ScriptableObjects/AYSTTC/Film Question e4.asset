@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Film Question e4
   m_EditorClassIdentifier: 
-  question: "In what region does Mt. Doom reside in \u201CThe Lord of the Rings\u201D?"
+  question: In what region does Mt. Doom reside in The Lord of the Rings?
   difficulty: 2
   answerList:
   - answer: The Shire

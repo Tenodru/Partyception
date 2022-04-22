@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Twitch Question 8
   m_EditorClassIdentifier: 
   question: Which new Twitch category was created in 2021 in response to uproar among
-    viewers and streamers?
+    viewers and streamers regarding community guidelines?
   difficulty: 3
   answerList:
   - answer: ASMR
