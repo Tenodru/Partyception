@@ -50,6 +50,11 @@ public class UIManagerAYSTTC : MonoBehaviour
     public TextMeshProUGUI outcomeText;
     public Animator outcomeAnim;
 
+    public int numRemainingPlayers;
+    public Text remainingPlayerCount;
+    public GameObject playerList;
+    public GameObject playerHolder;
+
     [Header("Instructions Screen")]
     [Tooltip("The instructions screen.")]
     public GameObject instructionsScreen;
@@ -266,7 +271,29 @@ public class UIManagerAYSTTC : MonoBehaviour
             }
             outcomeAnim.SetTrigger("Lose");
         }
+
+
     }
+
+    IEnumerator ReduceRemainingPlayerCount(int numEliminations)
+    {
+        int ticks = 0;
+        while (ticks < numEliminations)
+        {
+            yield return new WaitForSeconds(1.5f / numEliminations);
+            numRemainingPlayers -= 1;
+            remainingPlayerCount.text = numRemainingPlayers.ToString();
+            ticks += 1;
+        }
+    }
+
+    /*IEnumerator Memoriam()
+    {
+        while (ticks < numEliminations)
+        {
+            
+        }
+    }*/
 
     /// <summary>
     /// Displays the instructions screen to the player. Doubles as a "waiting room."

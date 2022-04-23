@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
@@ -82,6 +83,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Deleted lobby!");
             }
         }
+    }
+
+    public IEnumerator Timer(Action<bool> assigner, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        assigner(true);
     }
 }
 

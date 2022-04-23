@@ -17,6 +17,11 @@ public class AudioManager : MonoBehaviour
         current = this;
     }
 
+    private void Start()
+    {
+        GameManager.current.StartCoroutine(GameManager.current.Timer(x => music.Play(), 1f));
+    }
+
     public void PlayMusic(string type)
     {
         if (music.isPlaying)
