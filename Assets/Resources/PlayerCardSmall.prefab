@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 272.2051, y: 60}
+  m_SizeDelta: {x: 272.2051, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4622576454275681388
 CanvasRenderer:
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7640347815612325734}
   - component: {fileID: 7040386277140774795}
   m_Layer: 5
-  m_Name: PlayerCard
+  m_Name: PlayerCardSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 350, y: -150}
-  m_SizeDelta: {x: 350, y: 60}
+  m_SizeDelta: {x: 350, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4622576455418677181
 CanvasRenderer:
@@ -281,7 +281,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -162.7, y: 0}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 45, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4373910409517646774
 CanvasRenderer:

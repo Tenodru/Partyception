@@ -20,6 +20,12 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         GameManager.current.StartCoroutine(GameManager.current.Timer(x => music.Play(), 1f));
+        GameManager.current.StartCoroutine(GameManager.current.Timer(x => TransitionCanvas.current.Animate("BlackFadeIn"), 11f));
+        if (GameObject.Find("OpeningVideo") != null)
+        {
+            GameManager.current.StartCoroutine(GameManager.current.Timer(x => GameObject.Find("OpeningVideo").SetActive(false), 11.5f));
+        }
+        GameManager.current.StartCoroutine(GameManager.current.Timer(x => TransitionCanvas.current.Animate("BlackFadeOut"), 11.5f));
     }
 
     public void PlayMusic(string type)
