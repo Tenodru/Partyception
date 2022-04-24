@@ -291,6 +291,7 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void UpdateEliminatedPlayers(int remainingPlayers, int eliminatedPlayers, List<string> playerNames)
     {
+        playerHolder.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -130.2f, 0);
         numRemainingPlayers = remainingPlayers + playerNames.Count;
         remainingPlayerCount.text = numRemainingPlayers.ToString();
 
