@@ -289,9 +289,9 @@ public class UIManagerAYSTTC : MonoBehaviour
         StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2f));
     }
 
-    public void UpdateEliminatedPlayers(int remainingPlayers, List<string> playerNames)
+    public void UpdateEliminatedPlayers(int remainingPlayers, int eliminatedPlayers, List<string> playerNames)
     {
-        numRemainingPlayers = remainingPlayers + playerNames.Count;
+        numRemainingPlayers = remainingPlayers - eliminatedPlayers;
         remainingPlayerCount.text = numRemainingPlayers.ToString();
 
         foreach (PlayerCard playerCard in playerCards)

@@ -927,7 +927,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Received Player List: " + receivedData);
                 string[] splitData = receivedData.Split('\n');
-                int playerCount = int.Parse(splitData[0]);
+                int playerCount = int.Parse(splitData[0]) - eliminatedPlayerCount;
                 foreach (string str in splitData)
                 {
                     if (str == splitData[0]) { continue; }
@@ -936,7 +936,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("Eliminated Player List: " + playerList + ", " + playerList.Count);
                 Debug.Log("Remaining Player Count: " + playerCount);
                 eliminatedPlayerCount += playerCount;
-                UIManagerAYSTTC.current.UpdateEliminatedPlayers(playerCount, playerList);
+                UIManagerAYSTTC.current.UpdateEliminatedPlayers(playerCount, eliminatedPlayerCount, playerList);
             }
         }
     }
