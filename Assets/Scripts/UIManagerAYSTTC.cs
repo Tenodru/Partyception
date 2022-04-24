@@ -53,7 +53,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     public int numRemainingPlayers;
     public Text remainingPlayerCount;
     public GameObject playerList;
-    public GameObject playerHolder;
+    public Transform playerHolder;
+    public List<PlayerCard> playerCards;
     public int playerCardSize;
 
     [Header("Instructions Screen")]
@@ -103,6 +104,11 @@ public class UIManagerAYSTTC : MonoBehaviour
         for(int i = 0; i < questionHolder.childCount; i++)
         {
             questionCards.Add(questionHolder.GetChild(i).GetComponent<QuestionCard>());
+        }
+
+        for (int i = 0; i < playerHolder.childCount; i++)
+        {
+            playerCards.Add(playerHolder.GetChild(i).GetComponent<PlayerCard>());
         }
     }
 
@@ -281,12 +287,36 @@ public class UIManagerAYSTTC : MonoBehaviour
             outcomeAnim.SetTrigger("Lose");
         }
 
-        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount(10)), 2f));
-        StartCoroutine(Timer(x => StartCoroutine(Memoriam(10)), 2f));
+        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2f));
+        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2f));
     }
 
-    IEnumerator ReduceRemainingPlayerCount(int numEliminations)
+    public void UpdateEliminatedPlayers(int remainingPlayers, List<string> playerNames)
     {
+        remainingPlayerCount.text = (remainingPlayers + playerNames.Count).ToString();
+
+        foreach (PlayerCard playerCard in playerCards)
+        {
+            playerCard.gameObject.SetActive(false);
+        }
+        for (int i = 0; i < playerNames.Count; i++)
+        {
+            playerCards[i].gameObject.SetActive(true);
+            playerCards[i].AssignPlayerName(playerNames[i]);
+        }
+    }
+
+    IEnumerator ReduceRemainingPlayerCount()
+    {
+        int numEliminations = 0;
+        foreach (PlayerCard playerCard in playerCards)
+        {
+            if (playerCard.gameObject.activeInHierarchy)
+            {
+                numEliminations += 1;
+            }
+        }
+        
         int ticks = 0;
         while (ticks < numEliminations)
         {
@@ -297,8 +327,17 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
-    IEnumerator Memoriam(int numEliminations)
+    IEnumerator Memoriam()
     {
+        int numEliminations = 0;
+        foreach (PlayerCard playerCard in playerCards)
+        {
+            if (playerCard.gameObject.activeInHierarchy)
+            {
+                numEliminations += 1;
+            }
+        }
+
         playerHolder.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -130.2f, 0);
         float topPadding = playerHolder.GetComponent<VerticalLayoutGroup>().padding.top;
         float bottomPadding = playerHolder.GetComponent<VerticalLayoutGroup>().padding.bottom;
