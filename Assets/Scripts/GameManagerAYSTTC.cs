@@ -44,6 +44,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public bool updatedPlayerCount = false;
     [HideInNormalInspector] public bool unlimitedRounds = false;
     [HideInNormalInspector] public List<Question> usedQuestions = new List<Question>();
+    [HideInNormalInspector] public List<string> playerList = new List<string>();
 
     public static GameManagerAYSTTC current;
 
@@ -560,6 +561,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "completing")
                     {
+                        StartCoroutine(_GetEliminatedPlayers());
                         UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
@@ -899,7 +901,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     }
 
     /// <summary>
-    /// Tells the server to 
+    /// Tells the server to get the number of players eliminated this round.
     /// </summary>
     /// <returns></returns>
     public IEnumerator _GetEliminatedPlayers()
@@ -922,7 +924,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Received Player List: " + receivedData);
                 string[] splitData = receivedData.Split('\n');
-                List<string> playerList = new List<string>();
                 int playerCount = int.Parse(splitData[0]);
                 foreach (string str in splitData)
                 {
@@ -930,6 +931,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (str != "") { playerList.Add(str); }
                 }
                 Debug.Log("Eliminated Player List: " + playerList + ", " + playerList.Count);
+                Debug.Log("Remaining Player Count: " + playerCount);
                 
             }
         }
