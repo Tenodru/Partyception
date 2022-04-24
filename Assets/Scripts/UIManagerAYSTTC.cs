@@ -54,6 +54,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     public Text remainingPlayerCount;
     public GameObject playerList;
     public GameObject playerHolder;
+    public int playerCardSize;
 
     [Header("Instructions Screen")]
     [Tooltip("The instructions screen.")]
@@ -105,8 +106,15 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
+    public IEnumerator Timer(Action<bool> assigner, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        assigner(true);
+    }
+
     private void Update()
     {
+        /*
         if (GameManager.current.playerStatus == PlayerStatus.Host)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
@@ -134,6 +142,7 @@ public class UIManagerAYSTTC : MonoBehaviour
                 AudioManager.current.PlaySound(buttonPressSound);
             }
         }
+        */
     }
 
     /// <summary>
@@ -272,7 +281,8 @@ public class UIManagerAYSTTC : MonoBehaviour
             outcomeAnim.SetTrigger("Lose");
         }
 
-
+        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount(10)), 2f));
+        StartCoroutine(Timer(x => StartCoroutine(Memoriam(10)), 2f));
     }
 
     IEnumerator ReduceRemainingPlayerCount(int numEliminations)
@@ -287,13 +297,22 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
     }
 
-    /*IEnumerator Memoriam()
+    IEnumerator Memoriam(int numEliminations)
     {
-        while (ticks < numEliminations)
+        playerHolder.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, -130.2f, 0);
+        float topPadding = playerHolder.GetComponent<VerticalLayoutGroup>().padding.top;
+        float bottomPadding = playerHolder.GetComponent<VerticalLayoutGroup>().padding.bottom;
+        float spacing = playerHolder.GetComponent<VerticalLayoutGroup>().spacing;
+        float playerHolderHeight = topPadding + bottomPadding + (spacing * (numEliminations - 1)) + (numEliminations * playerCardSize) + 10;
+        float newY = -130.2f + (playerHolderHeight * 2);
+        float currentY = -130.2f;
+        while (playerHolder.GetComponent<RectTransform>().anchoredPosition.y < newY)
         {
-            
+            yield return new WaitForSeconds(0.02f);
+            currentY += (playerHolderHeight * 2)/150;
+            playerHolder.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, currentY, 0);
         }
-    }*/
+    }
 
     /// <summary>
     /// Displays the instructions screen to the player. Doubles as a "waiting room."
