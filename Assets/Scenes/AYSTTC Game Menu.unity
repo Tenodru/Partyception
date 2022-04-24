@@ -11440,6 +11440,7 @@ MonoBehaviour:
   updatedPlayerCount: 0
   unlimitedRounds: 0
   usedQuestions: []
+  playerList: []
 --- !u!114 &853217440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11488,7 +11489,8 @@ MonoBehaviour:
   numRemainingPlayers: 35
   remainingPlayerCount: {fileID: 1531837136}
   playerList: {fileID: 544213076}
-  playerHolder: {fileID: 896200188}
+  playerHolder: {fileID: 896200189}
+  playerCards: []
   playerCardSize: 60
   instructionsScreen: {fileID: 927707788}
   hostInstructions: {fileID: 1217256848}
