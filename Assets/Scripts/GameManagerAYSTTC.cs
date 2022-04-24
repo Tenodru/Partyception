@@ -906,6 +906,8 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     public IEnumerator _GetEliminatedPlayers()
     {
+        playerList.Clear();
+
         WWWForm form = new WWWForm();
         form.AddField("function", "getEliminatedPlayers");
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
@@ -932,7 +934,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 }
                 Debug.Log("Eliminated Player List: " + playerList + ", " + playerList.Count);
                 Debug.Log("Remaining Player Count: " + playerCount);
-                
+                UIManagerAYSTTC.current.UpdateEliminatedPlayers(playerCount, playerList);
             }
         }
     }

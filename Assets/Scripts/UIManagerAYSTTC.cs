@@ -120,7 +120,6 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     private void Update()
     {
-        /*
         if (GameManager.current.playerStatus == PlayerStatus.Host)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
@@ -148,7 +147,6 @@ public class UIManagerAYSTTC : MonoBehaviour
                 AudioManager.current.PlaySound(buttonPressSound);
             }
         }
-        */
     }
 
     /// <summary>
@@ -237,7 +235,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
         //answerChoice.GetComponent<Image>().color = Color.yellow;
         answerChoice.GetComponent<Image>().color = answerChoice.colors.selectedColor;
-
+        AudioManager.current.PlaySound(buttonPressSound);
         GameManagerAYSTTC.current.selectedAnswer = answerChoice.answer;
     }
 
