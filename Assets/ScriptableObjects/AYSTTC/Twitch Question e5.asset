@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Twitch Question e5
   m_EditorClassIdentifier: 
-  question: he popular streamer Tyler1 is best known for playing what game?
+  question: The popular streamer Tyler1 is best known for playing what game?
   difficulty: 3
   answerList:
   - answer: League of Legends

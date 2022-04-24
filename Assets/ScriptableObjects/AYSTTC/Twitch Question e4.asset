@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e9f969268bc6a43966249078e180d5, type: 3}
   m_Name: Twitch Question e4
   m_EditorClassIdentifier: 
-  question: Enter questiWhich of these is not an official Twitch emote?on here.
+  question: Which of these is not an official Twitch emote?
   difficulty: 2
   answerList:
   - answer: PeepoWow
