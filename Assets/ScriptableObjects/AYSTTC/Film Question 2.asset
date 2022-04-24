@@ -22,4 +22,4 @@ MonoBehaviour:
   - answer: Blake
     isCorrectAnswer: 0
   - answer: Joey
-    isCorrectAnswer: 0
+    isCorrectAnswer: 1
