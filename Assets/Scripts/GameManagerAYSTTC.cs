@@ -272,7 +272,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                 timeRemaining = 0;
                 if (purpose == TimerPurpose.DuringRound)
                 {
-                    if (selectedAnswer == null)
+                    if (hostEliminated)
+                    {
+                        Debug.Log("Host was already eliminated");
+                    }
+                    else if (selectedAnswer == null)
                     {
                         Debug.Log("selected answer was null");
                         
