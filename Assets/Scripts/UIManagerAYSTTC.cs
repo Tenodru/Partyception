@@ -42,6 +42,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     public Slider timerSlider;
     [Tooltip("The answer choice buttons.")]
     public List<AnswerButton> answerButtons;
+    [Tooltip("Spectate filter panel.")]
+    public GameObject hostSpectatePanel;
 
     [Header("Outcome Screen (P)")]
     [Tooltip("The outcome screen.")]
@@ -120,7 +122,7 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        if (GameManager.current.playerStatus == PlayerStatus.Host && !GameManagerAYSTTC.current.hostEliminated)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
@@ -212,6 +214,11 @@ public class UIManagerAYSTTC : MonoBehaviour
                 colorVar.selectedColor = new Color(255, 255, 255);
                 button.colors = colorVar;
             }
+        }
+
+        if (GameManagerAYSTTC.current.hostEliminated)
+        {
+            hostSpectatePanel.SetActive(true);
         }
     }
 
