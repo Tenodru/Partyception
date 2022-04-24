@@ -577,7 +577,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.HostSpectate);
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
                         }
-                        if (selectedAnswer == null)
+                        else if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
                             StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
