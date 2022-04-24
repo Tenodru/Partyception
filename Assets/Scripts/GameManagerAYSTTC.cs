@@ -898,6 +898,10 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Tells the server to 
+    /// </summary>
+    /// <returns></returns>
     public IEnumerator _GetEliminatedPlayers()
     {
         WWWForm form = new WWWForm();
@@ -916,11 +920,17 @@ public class GameManagerAYSTTC : MonoBehaviour
             else
             {
                 string receivedData = www.downloadHandler.text;
-                Debug.Log(receivedData);
-                if (receivedData == "successfully sent eliminated players")
+                Debug.Log("Received Player List: " + receivedData);
+                string[] splitData = receivedData.Split('\n');
+                List<string> playerList = new List<string>();
+                int playerCount = int.Parse(splitData[0]);
+                foreach (string str in splitData)
                 {
-                    
+                    if (str == splitData[0]) { continue; }
+                    if (str != "") { playerList.Add(str); }
                 }
+                Debug.Log("Eliminated Player List: " + playerList + ", " + playerList.Count);
+                
             }
         }
     }

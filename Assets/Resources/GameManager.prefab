@@ -301,7 +301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   music: {fileID: 7242910530425039319}
   soundEffects: {fileID: 7242910529682031477}
-  mainMenuMusic: {fileID: 8300000, guid: df47bfa1eead18440b0de5cbcb20e787, type: 3}
+  mainMenuMusic: {fileID: 8300000, guid: f84e3337e8b292b4e9e1897bd4c9ef35, type: 3}
   inGameMusic: {fileID: 8300000, guid: af37cf4a695995c49b7f8353f7709ae5, type: 3}
 --- !u!1 &7242910531583467679
 GameObject:
