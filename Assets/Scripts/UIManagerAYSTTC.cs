@@ -284,6 +284,13 @@ public class UIManagerAYSTTC : MonoBehaviour
             }
             outcomeAnim.SetTrigger("Lose");
         }
+        else if (outcome == OutcomeType.HostSpectate)
+        {
+            outcomeText.text = "You've already been eliminated." + "\n" +
+            "You will continue spectating.";
+            
+            outcomeAnim.SetTrigger("Lose");
+        }
 
         StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2f));
         StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2f));

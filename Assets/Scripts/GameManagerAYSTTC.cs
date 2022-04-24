@@ -46,6 +46,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public List<Question> usedQuestions = new List<Question>();
     [HideInNormalInspector] public List<string> playerList = new List<string>();
     [HideInNormalInspector] public int eliminatedPlayerCount = 0;
+    [HideInNormalInspector] public bool hostEliminated = false;
 
     public static GameManagerAYSTTC current;
 
@@ -348,6 +349,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         }
                         else
                         {
+                            hostEliminated = true;
                             StartRound();
                         }
                     }
@@ -566,6 +568,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                         UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                         timeRemaining = 5f;
                         Debug.Log("Time Set: " + timeRemaining);
+                        if (hostEliminated)
+                        {
+                            UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.HostSpectate);
+                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
+                        }
                         if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
