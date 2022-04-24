@@ -291,7 +291,7 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void UpdateEliminatedPlayers(int remainingPlayers, int eliminatedPlayers, List<string> playerNames)
     {
-        numRemainingPlayers = remainingPlayers - eliminatedPlayers;
+        numRemainingPlayers = remainingPlayers + eliminatedPlayers;
         remainingPlayerCount.text = numRemainingPlayers.ToString();
 
         foreach (PlayerCard playerCard in playerCards)
