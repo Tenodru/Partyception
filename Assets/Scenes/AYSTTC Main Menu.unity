@@ -623,7 +623,6 @@ MonoBehaviour:
   nameInputField: {fileID: 1962428159}
   charCountDisplay: {fileID: 998769054}
   charLimitDisplay: {fileID: 1470135594}
-  videoPlayer: {fileID: 1485463392}
 --- !u!4 &232041194
 Transform:
   m_ObjectHideFlags: 0
@@ -3263,7 +3262,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485463390}
   m_Enabled: 1
-  m_VideoClip: {fileID: 0}
+  m_VideoClip: {fileID: 32900000, guid: 64368f1d7a03dc3479a47a49fada16b2, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}

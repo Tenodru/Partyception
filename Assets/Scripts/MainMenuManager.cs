@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Video;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using TMPro;
@@ -36,15 +35,15 @@ public class MainMenuManager : MonoBehaviour
     public Text charCountDisplay;
     public Text charLimitDisplay;
 
-    [Header("Opening Animation")]
-    public VideoPlayer videoPlayer;
+    //[Header("Opening Animation")]
+    //public VideoPlayer videoPlayer;
 
     // Start is called before the first frame update
     void Start()
     {
         if (GameManager.current == null)
         {
-            videoPlayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, "SDP_Intro_Progress_04182022.mp4");
+            //videoPlayer.url = System.IO.Path.Combine(Application.streamingAssetsPath, "SDP_Intro_Progress_04182022.mp4");
             Instantiate(newGM, transform.position, transform.rotation);
         }
         else
