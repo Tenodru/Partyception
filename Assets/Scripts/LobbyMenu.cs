@@ -22,6 +22,14 @@ public class LobbyMenu : MonoBehaviour
 
     public AudioClip playerJoinSound;
 
+    [Header("Avatars")]
+    public Image speechBubble;
+    public TextMeshProUGUI avatarQuote;
+    public Image avatarPic;
+    public Sprite[] avatars;
+    public Color[] colors;
+    public string[] avatarQuotes;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +41,22 @@ public class LobbyMenu : MonoBehaviour
         StartCoroutine("_CheckForStart");
 
         lobbyCodeDisplay.text = GameManager.current.currentLobby;
+
+        SetRandomAvatar();
     }
 
     // Update is called once per frame
     void Update()
     {
         timer += Time.deltaTime;
+    }
+
+    public void SetRandomAvatar()
+    {
+        int randNum = Random.Range(0,7);
+        avatarPic.sprite = avatars[randNum];
+        avatarQuote.text = avatarQuotes[randNum];
+        speechBubble.color = colors[randNum];
     }
 
     public IEnumerator _GetPlayerList()
