@@ -16,7 +16,7 @@ MonoBehaviour:
   difficulty: 5
   answerList:
   - answer: Prisoner on Death Row
-    isCorrectAnswer: 0
+    isCorrectAnswer: 1
   - answer: Child
     isCorrectAnswer: 0
   - answer: Hollywood Actor

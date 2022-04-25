@@ -268,7 +268,7 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (GameManager.current.playerStatus == PlayerStatus.Host)
             {
                 outcomeText.text = "Wrong! You have been eliminated." + "\n" +
-                "However, you can stay answering questions because you are the host.";
+                "However, you will stay and spectate because you are the host.";
             }
             else
             {
@@ -282,7 +282,7 @@ public class UIManagerAYSTTC : MonoBehaviour
             if (GameManager.current.playerStatus == PlayerStatus.Host)
             {
                 outcomeText.text = "You ran out of time! You have been eliminated." + "\n" +
-                "However, you can stay answering questions because you are the host.";
+                "However, you will stay and spectate because you are the host.";
             }
             else
             {
