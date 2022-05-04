@@ -570,6 +570,10 @@ public class UIManagerAYSTTC : MonoBehaviour
                 difficultySliderText.text = "Very Hard";
             }
         }
+        else if ((SettingType)settingType == SettingType.HostAnswers)
+        {
+            
+        }
     }
 
     /// <summary>
@@ -662,4 +666,4 @@ public class UIManagerAYSTTC : MonoBehaviour
 /// A type of lobby Setting to be changed. Created for AYSTTC.
 /// </summary>
 [System.Serializable]
-public enum SettingType { MaxRounds, RoundTime, Difficulty }
+public enum SettingType { MaxRounds, RoundTime, Difficulty, HostAnswers }
