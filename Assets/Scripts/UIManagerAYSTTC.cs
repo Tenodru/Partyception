@@ -25,6 +25,11 @@ public class UIManagerAYSTTC : MonoBehaviour
     public TextMeshProUGUI difficultySliderText;
     [Tooltip("The screen participants see during the category selection phase.")]
     public GameObject participantWaitingScreen;
+    public GameObject hoverOverlay;
+    public GameObject infoBox;
+    public Toggle hideHostAnswerCheckbox;
+    public TextMeshProUGUI hideHostAnswersText;
+    public bool hideHostAnswer = false;
 
     [Header("Game Screen (H)")]
     [Tooltip("The host's status info screen.")]
@@ -122,31 +127,35 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.current.playerStatus == PlayerStatus.Host && !GameManagerAYSTTC.current.hostEliminated)
+        if (GameManager.current.playerStatus == PlayerStatus.Host && !GameManagerAYSTTC.current.hostEliminated && hideHostAnswer)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Keypad1))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[0].answer;
                 GameManagerAYSTTC.current.ChooseAnswer(answerButtons[0].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
+                Background.current.PlayParticleEffect();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Keypad2))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[1].answer;
                 GameManagerAYSTTC.current.ChooseAnswer(answerButtons[1].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
+                Background.current.PlayParticleEffect();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Keypad3))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[2].answer;
                 GameManagerAYSTTC.current.ChooseAnswer(answerButtons[2].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
+                Background.current.PlayParticleEffect();
             }
             else if (Input.GetKeyDown(KeyCode.Alpha4) || Input.GetKeyDown(KeyCode.Keypad4))
             {
                 GameManagerAYSTTC.current.selectedAnswer = answerButtons[3].answer;
                 GameManagerAYSTTC.current.ChooseAnswer(answerButtons[3].answer);
                 AudioManager.current.PlaySound(buttonPressSound);
+                Background.current.PlayParticleEffect();
             }
         }
     }
@@ -163,6 +172,34 @@ public class UIManagerAYSTTC : MonoBehaviour
         }
         categoryButtons[categories.IndexOf(category)].GetComponent<Image>().color = Color.yellow;
         GameManagerAYSTTC.current.ChooseCategory(category);
+    }
+
+    public void HideHostAnswerMode()
+    {
+        if (hideHostAnswerCheckbox.isOn)
+        {
+            hideHostAnswersText.color = new Color(0, 0, 0, 1);
+            hideHostAnswer = true;
+        }
+        else
+        {
+            hideHostAnswer = false;
+            hideHostAnswersText.color = new Color(0, 0, 0, 0.5f);
+        }
+    }
+
+    public void HoverOver(bool active)
+    {
+        if (active)
+        {
+            hoverOverlay.SetActive(true);
+            infoBox.SetActive(true);
+        }
+        else
+        {
+            hoverOverlay.SetActive(false);
+            infoBox.SetActive(false);
+        }
     }
 
     // Selection Stage. ---------------------------------------------------------
@@ -231,7 +268,7 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void SelectAnswerChoice(AnswerButton answerChoice)
     {
-        if (GameManager.current.playerStatus == PlayerStatus.Host)
+        if (GameManager.current.playerStatus == PlayerStatus.Host && hideHostAnswer)
         {
             return;
         }
@@ -244,6 +281,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         answerChoice.GetComponent<Image>().color = answerChoice.colors.selectedColor;
         AudioManager.current.PlaySound(buttonPressSound);
         GameManagerAYSTTC.current.selectedAnswer = answerChoice.answer;
+        Background.current.PlayParticleEffect();
     }
 
     // Intro and Ending Stages. ---------------------------------------------------------

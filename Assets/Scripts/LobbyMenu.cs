@@ -53,7 +53,7 @@ public class LobbyMenu : MonoBehaviour
 
     public void SetRandomAvatar()
     {
-        int randNum = Random.Range(0,7);
+        int randNum = Random.Range(0,6);
         avatarPic.sprite = avatars[randNum];
         avatarQuote.text = avatarQuotes[randNum];
         speechBubble.color = colors[randNum];
