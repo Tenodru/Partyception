@@ -42,8 +42,10 @@ public class UIManagerAYSTTC : MonoBehaviour
     [Tooltip("The main game screen.")]
     public GameObject gameScreen;
     [Tooltip("The question display.")]
+    public TextMeshProUGUI questionNum;
     public TextMeshProUGUI questionDisplay;
     [Tooltip("The timer displaying the amount of time remaining.")]
+    public TextMeshProUGUI timerText;
     public Slider timerSlider;
     [Tooltip("The answer choice buttons.")]
     public List<AnswerButton> answerButtons;
@@ -236,6 +238,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         gameScreen.SetActive(true);
         timerSlider.gameObject.SetActive(true);
 
+        questionNum.text = GameManagerAYSTTC.current.currentRound.ToString();
         questionDisplay.text = question.question;
         List<Answer> answerList = new List<Answer>(question.answerList);
         foreach (AnswerButton button in answerButtons)
@@ -261,9 +264,10 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void ShowTimer(float val, float maxVal)
     {
-        timerSlider.gameObject.SetActive(true);
-        timerSlider.maxValue = maxVal;
-        timerSlider.value = val;
+        timerText.text = Mathf.Ceil(val).ToString();
+        //timerSlider.gameObject.SetActive(true);
+        //timerSlider.maxValue = maxVal;
+        //timerSlider.value = val;
     }
 
     public void SelectAnswerChoice(AnswerButton answerChoice)
