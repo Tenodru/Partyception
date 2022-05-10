@@ -389,7 +389,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 }
                 else if (purpose == TimerPurpose.KickCheck)
                 {
-
+                    StartCoroutine(_KickCheck());
                 }
             }
             yield return null;
@@ -885,7 +885,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     // Someone may have disconnected or left, etc.
                     else
                     {
-                        StartCoroutine(_Timer(8, TimerPurpose.KickCheck));
+                        StartCoroutine(_Timer(8f, TimerPurpose.KickCheck));
                     }
                 }
             }
@@ -970,7 +970,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public IEnumerator KickCheck()
+    public IEnumerator _KickCheck()
     {
         WWWForm form = new WWWForm();
         form.AddField("function", "kick");
