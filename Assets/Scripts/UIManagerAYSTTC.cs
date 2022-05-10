@@ -519,7 +519,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         {
             StartCoroutine(_Timer(2f, () =>
             {
-                congratsText.text = "Well..."
+                congratsText.text = "Well...";
                 playersRemainingDisplay.text = "...it seems that NOBODY made it to the end!";
                 playersRemainingDisplay.gameObject.SetActive(true);
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
