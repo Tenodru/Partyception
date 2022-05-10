@@ -838,7 +838,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public IEnumerator _ReadyCheck(string type = "completeRound")
+    public IEnumerator _ReadyCheck(string type = "")
     {
         while (true)
         {
@@ -961,6 +961,8 @@ public class GameManagerAYSTTC : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
 
+        StopCoroutine(_ReadyCheck());
+
         WWWForm form = new WWWForm();
         form.AddField("function", "kick");
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
@@ -979,7 +981,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Kick Check: " + receivedData);
                 //StartCoroutine(_ReadyCheck("completeRound"));
-                StopCoroutine(_ReadyCheck());
                 Debug.Log("completed round through kick check");
                 StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
             }
