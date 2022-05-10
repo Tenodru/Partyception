@@ -223,6 +223,7 @@ public class LobbyMenu : MonoBehaviour
                                     break;
                                 }
                             }
+                            break;
                         }
                     }
                 }
