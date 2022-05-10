@@ -375,6 +375,11 @@ public class GameManagerAYSTTC : MonoBehaviour
                         else
                         {
                             hostEliminated = true;
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                                yield break;
+                            }
                             StartRound();
                         }
                     }
@@ -974,7 +979,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 UIManagerAYSTTC.current.UpdateEliminatedPlayers(playerCount, eliminatedPlayerCount, playerList);
 
                 // No players remaining. Go to end screen after recap.
-                if (remainingPlayerCount == 0)
+                if (playerCount == 0)
                 {
                     skipToEnd = true; 
                 }
