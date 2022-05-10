@@ -885,7 +885,8 @@ public class GameManagerAYSTTC : MonoBehaviour
                     // Someone may have disconnected or left, etc.
                     else
                     {
-                        StartCoroutine(_Timer(8f, TimerPurpose.KickCheck));
+                        if (runningReadyCheck == false)
+                            StartCoroutine(_Timer(8f, TimerPurpose.KickCheck));
                     }
                 }
             }
