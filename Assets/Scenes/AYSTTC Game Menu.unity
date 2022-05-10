@@ -16111,6 +16111,7 @@ MonoBehaviour:
   allIntro: {fileID: 0}
   gameEndScreen: {fileID: 2137840707}
   playersRemainingDisplay: {fileID: 1517014226}
+  congratsText: {fileID: 130146819}
   gameRecapScreen: {fileID: 634610363}
   questionHolder: {fileID: 225216835}
   questionCards: []
