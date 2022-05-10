@@ -516,6 +516,15 @@ public class UIManagerAYSTTC : MonoBehaviour
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
         }
+        else if (GameManagerAYSTTC.current.remainingPlayerCount > 0)
+        {
+            StartCoroutine(_Timer(2f, () =>
+            {
+                playersRemainingDisplay.text = "NOBODY made it to the end....";
+                playersRemainingDisplay.gameObject.SetActive(true);
+                StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
+            }));
+        }
     }
 
     /// <summary>
