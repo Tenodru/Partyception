@@ -51,6 +51,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public static GameManagerAYSTTC current;
 
     private Coroutine readyCheck;
+    private Coroutine kickCheck;
 
     private void Awake()
     {
@@ -301,7 +302,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));k
                         readyCheck = StartCoroutine(_ReadyCheck("completeRound"));
-                        StartCoroutine(_KickCheck());
+                        kickCheck = StartCoroutine(_KickCheck());
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -862,6 +863,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log(receivedData);
                     if (receivedData == "everyone is ready")
                     {
+                        StopCoroutine(kickCheck);
                         if (GameManager.current.playerStatus == PlayerStatus.Host)
                         {
                             if (type == "completeRound")
