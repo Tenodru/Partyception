@@ -50,6 +50,8 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     public static GameManagerAYSTTC current;
 
+    private Coroutine readyCheck;
+
     private void Awake()
     {
         current = this;
@@ -296,7 +298,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
-                        StartCoroutine(_ReadyCheck("completeRound"));
+                        if (readyCheck == null)
+                        {
+                            readyCheck = StartCoroutine(_ReadyCheck("completeRound"));
+                        }
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -380,6 +385,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                     }
                     Debug.Log("First round has started.");
                     yield break;
+                }
+                else if (purpose == TimerPurpose.KickCheck)
+                {
+
                 }
             }
             yield return null;
@@ -850,6 +859,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (www.result != UnityWebRequest.Result.Success)
                 {
                     Debug.Log(www.error);
+                    readyCheck = null;
                 }
                 else
                 {
@@ -868,7 +878,13 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 StartRound();
                             }
                         }
+                        readyCheck = null;
                         yield break;
+                    }
+                    // Someone may have disconnected or left, etc.
+                    else
+                    {
+                        StartCoroutine(_Timer(8, TimerPurpose.KickCheck));
                     }
                 }
             }
@@ -952,9 +968,33 @@ public class GameManagerAYSTTC : MonoBehaviour
             }
         }
     }
+
+    public IEnumerator KickCheck()
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("function", "kick");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("question", currentRound);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log("Kick Check: " + receivedData);
+                StartCoroutine(_ReadyCheck("completeRound"));
+            }
+        }
+    }
 }
 
 /// <summary>
 /// When the Timer coroutine is going to be used.
 /// </summary>
-public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
+public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame, KickCheck }
