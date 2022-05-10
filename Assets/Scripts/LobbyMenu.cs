@@ -15,6 +15,8 @@ public class LobbyMenu : MonoBehaviour
     public Button startButton;
     public TextMeshProUGUI lobbyCodeDisplay;
     private float timer = 0;
+    public GameObject leaveInfoPanel;
+    public GameObject hostAbandonInfoPanel;
 
     [TextArea(1, 5)]
     public string gameDatabaseLink;
@@ -57,6 +59,67 @@ public class LobbyMenu : MonoBehaviour
         avatarPic.sprite = avatars[randNum];
         avatarQuote.text = avatarQuotes[randNum];
         speechBubble.color = colors[randNum];
+    }
+
+    public void ToggleLeaveCheck(bool active)
+    {
+        if (active)
+        {
+            leaveInfoPanel.SetActive(true);
+        }
+        else
+        {
+            leaveInfoPanel.SetActive(false);
+        }
+    }
+
+    public void LeaveLobby()
+    {
+        StartCoroutine(_LeaveLobby());
+    }
+
+    public void ReturnToMainMenu()
+    {
+        GameManager.current.LoadScene("AYSTTC Main Menu");
+    }
+
+    public IEnumerator _LeaveLobby()
+    {
+        LoadingPanel.current.ToggleLoadingPanel(true);
+
+        WWWForm form = new WWWForm();
+        form.AddField("function", "leaveLobby");
+        form.AddField("lobbyNumber", GameManager.current.currentLobby);
+        form.AddField("playerName", GameManager.current.playerName);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                LoadingPanel.current.ToggleLoadingPanel(false);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "successfully removed player")
+                {
+                    LoadingPanel.current.ToggleLoadingPanel(false);
+                    GameManager.current.LoadScene("AYSTTC Main Menu");
+                    yield return true;
+                }
+                else
+                {
+                    LoadingPanel.current.ToggleLoadingPanel(false);
+                    AlertText.current.ToggleAlertText(receivedData, Color.red);
+                    yield return false;
+                }
+            }
+        }
     }
 
     public IEnumerator _GetPlayerList()
@@ -176,10 +239,15 @@ public class LobbyMenu : MonoBehaviour
                 else
                 {
                     string receivedData = www.downloadHandler.text;
-                    if (receivedData != "" && !lobbyLeader)
+                    if (receivedData == "start" && !lobbyLeader)
                     {
                         GameManager.current.playerStatus = PlayerStatus.Participant;
                         GameManager.current.LoadScene(mainScene);
+                        yield break;
+                    }
+                    else if (receivedData == "abandon")
+                    {
+                        hostAbandonInfoPanel.SetActive(true);
                         yield break;
                     }
                 }
