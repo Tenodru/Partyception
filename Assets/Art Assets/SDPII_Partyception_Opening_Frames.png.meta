@@ -1,0 +1,1332 @@
+fileFormatVersion: 2
+guid: 8cebf46ad04421f44a95defcd5fb8ee1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2041046450185760132
+    second: SDPII_Partyception_Opening_Frames_0
+  - first:
+      213: 7035360206978403024
+    second: SDPII_Partyception_Opening_Frames_1
+  - first:
+      213: -5348437642473532010
+    second: SDPII_Partyception_Opening_Frames_2
+  - first:
+      213: -6561911689726254963
+    second: SDPII_Partyception_Opening_Frames_3
+  - first:
+      213: -1643346706391512795
+    second: SDPII_Partyception_Opening_Frames_4
+  - first:
+      213: 5184990648517233214
+    second: SDPII_Partyception_Opening_Frames_5
+  - first:
+      213: 2999988113095567733
+    second: SDPII_Partyception_Opening_Frames_6
+  - first:
+      213: 654662260224196509
+    second: SDPII_Partyception_Opening_Frames_7
+  - first:
+      213: 382426670700673086
+    second: SDPII_Partyception_Opening_Frames_8
+  - first:
+      213: -1695750704956208464
+    second: SDPII_Partyception_Opening_Frames_9
+  - first:
+      213: 7798783231968730485
+    second: SDPII_Partyception_Opening_Frames_10
+  - first:
+      213: -7331160841936138199
+    second: SDPII_Partyception_Opening_Frames_11
+  - first:
+      213: -6557407178712623291
+    second: SDPII_Partyception_Opening_Frames_12
+  - first:
+      213: -6594610022483138259
+    second: SDPII_Partyception_Opening_Frames_13
+  - first:
+      213: 3991992062246963496
+    second: SDPII_Partyception_Opening_Frames_14
+  - first:
+      213: 7010552527033899715
+    second: SDPII_Partyception_Opening_Frames_15
+  - first:
+      213: 7899779432715636243
+    second: SDPII_Partyception_Opening_Frames_16
+  - first:
+      213: 2005552744655542965
+    second: SDPII_Partyception_Opening_Frames_17
+  - first:
+      213: -9106761355404723729
+    second: SDPII_Partyception_Opening_Frames_18
+  - first:
+      213: 3555260989570496336
+    second: SDPII_Partyception_Opening_Frames_19
+  - first:
+      213: -7725513283682744337
+    second: SDPII_Partyception_Opening_Frames_20
+  - first:
+      213: -3874766052427792036
+    second: SDPII_Partyception_Opening_Frames_21
+  - first:
+      213: -7044063975846653588
+    second: SDPII_Partyception_Opening_Frames_22
+  - first:
+      213: 1928895729471613629
+    second: SDPII_Partyception_Opening_Frames_23
+  - first:
+      213: 795480550865115712
+    second: SDPII_Partyception_Opening_Frames_24
+  - first:
+      213: 3920684043911218163
+    second: SDPII_Partyception_Opening_Frames_25
+  - first:
+      213: -3880714813638208059
+    second: SDPII_Partyception_Opening_Frames_26
+  - first:
+      213: 335403003046860489
+    second: SDPII_Partyception_Opening_Frames_27
+  - first:
+      213: 4654377101639018629
+    second: SDPII_Partyception_Opening_Frames_28
+  - first:
+      213: -1374108675856979739
+    second: SDPII_Partyception_Opening_Frames_29
+  - first:
+      213: -4914080807130235918
+    second: SDPII_Partyception_Opening_Frames_30
+  - first:
+      213: 1383806621130451375
+    second: SDPII_Partyception_Opening_Frames_31
+  - first:
+      213: -1198815640545982905
+    second: SDPII_Partyception_Opening_Frames_32
+  - first:
+      213: -6387638012028513062
+    second: SDPII_Partyception_Opening_Frames_33
+  - first:
+      213: 4846505896374178945
+    second: SDPII_Partyception_Opening_Frames_34
+  - first:
+      213: -1732491475460334313
+    second: SDPII_Partyception_Opening_Frames_35
+  - first:
+      213: -3920366593493620569
+    second: SDPII_Partyception_Opening_Frames_36
+  - first:
+      213: -7023145457413012541
+    second: SDPII_Partyception_Opening_Frames_37
+  - first:
+      213: 2459905071191138012
+    second: SDPII_Partyception_Opening_Frames_38
+  - first:
+      213: 470510141022779464
+    second: SDPII_Partyception_Opening_Frames_39
+  - first:
+      213: 8489576030350394170
+    second: SDPII_Partyception_Opening_Frames_40
+  - first:
+      213: 7110232816445677581
+    second: SDPII_Partyception_Opening_Frames_41
+  - first:
+      213: 3704688784239205148
+    second: SDPII_Partyception_Opening_Frames_42
+  - first:
+      213: -233448959071785503
+    second: SDPII_Partyception_Opening_Frames_43
+  - first:
+      213: 8807565855887251491
+    second: SDPII_Partyception_Opening_Frames_44
+  - first:
+      213: -3130699389912696512
+    second: SDPII_Partyception_Opening_Frames_45
+  - first:
+      213: -40955651693718831
+    second: SDPII_Partyception_Opening_Frames_46
+  - first:
+      213: 4275407023993737484
+    second: SDPII_Partyception_Opening_Frames_47
+  - first:
+      213: -6708928618721366687
+    second: SDPII_Partyception_Opening_Frames_48
+  - first:
+      213: 4706105447197883117
+    second: SDPII_Partyception_Opening_Frames_49
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48de469bee0435c10800000000000000
+      internalID: 2041046450185760132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_1
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dacdd355de92a160800000000000000
+      internalID: 7035360206978403024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_2
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69599092d4886c5b0800000000000000
+      internalID: -5348437642473532010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_3
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d80226ea5186fe4a0800000000000000
+      internalID: -6561911689726254963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_4
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 529c9ba90e8a139e0800000000000000
+      internalID: -1643346706391512795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_5
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3a87980689c4f740800000000000000
+      internalID: 5184990648517233214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_6
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 579a4735b4912a920800000000000000
+      internalID: 2999988113095567733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_7
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f748c6bd3d51900800000000000000
+      internalID: 654662260224196509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_8
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e38bfb3e707ae4500800000000000000
+      internalID: 382426670700673086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_9
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ba8773e7bb7778e0800000000000000
+      internalID: -1695750704956208464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_10
+      rect:
+        serializedVersion: 2
+        x: 6000
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57dd4cd9708da3c60800000000000000
+      internalID: 7798783231968730485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_11
+      rect:
+        serializedVersion: 2
+        x: 6600
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92094217e0c724a90800000000000000
+      internalID: -7331160841936138199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_12
+      rect:
+        serializedVersion: 2
+        x: 7200
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 547dc31e9e86ff4a0800000000000000
+      internalID: -6557407178712623291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_13
+      rect:
+        serializedVersion: 2
+        x: 7800
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2969a1df1d3b74a0800000000000000
+      internalID: -6594610022483138259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_14
+      rect:
+        serializedVersion: 2
+        x: 8400
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 829c86051a7666730800000000000000
+      internalID: 3991992062246963496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_15
+      rect:
+        serializedVersion: 2
+        x: 9000
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ca921d316c7a4160800000000000000
+      internalID: 7010552527033899715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_16
+      rect:
+        serializedVersion: 2
+        x: 9600
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31ec3fa0a87a1ad60800000000000000
+      internalID: 7899779432715636243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_17
+      rect:
+        serializedVersion: 2
+        x: 10200
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bad08b689725db10800000000000000
+      internalID: 2005552744655542965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_18
+      rect:
+        serializedVersion: 2
+        x: 10800
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe9b8d40cc84e9180800000000000000
+      internalID: -9106761355404723729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_19
+      rect:
+        serializedVersion: 2
+        x: 11400
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 057372f8803d65130800000000000000
+      internalID: 3555260989570496336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_20
+      rect:
+        serializedVersion: 2
+        x: 12000
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe7478a999679c490800000000000000
+      internalID: -7725513283682744337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_21
+      rect:
+        serializedVersion: 2
+        x: 12600
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c518c410ec01a3ac0800000000000000
+      internalID: -3874766052427792036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_22
+      rect:
+        serializedVersion: 2
+        x: 13200
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c61d88092257e3e90800000000000000
+      internalID: -7044063975846653588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_23
+      rect:
+        serializedVersion: 2
+        x: 13800
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dba6ceb3270d4ca10800000000000000
+      internalID: 1928895729471613629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_24
+      rect:
+        serializedVersion: 2
+        x: 14400
+        y: 337.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a1c0ca85d1a0b00800000000000000
+      internalID: 795480550865115712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_25
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f3ced18d51196630800000000000000
+      internalID: 3920684043911218163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_26
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c59f7a107ee42ac0800000000000000
+      internalID: -3880714813638208059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_27
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c61535114797a400800000000000000
+      internalID: 335403003046860489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_28
+      rect:
+        serializedVersion: 2
+        x: 1800
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588e7e1605ba79040800000000000000
+      internalID: 4654377101639018629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_29
+      rect:
+        serializedVersion: 2
+        x: 2400
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e823cc807f2eece0800000000000000
+      internalID: -1374108675856979739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_30
+      rect:
+        serializedVersion: 2
+        x: 3000
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fbff65ba8dadcbb0800000000000000
+      internalID: -4914080807130235918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_31
+      rect:
+        serializedVersion: 2
+        x: 3600
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa9605a4ac4443310800000000000000
+      internalID: 1383806621130451375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_32
+      rect:
+        serializedVersion: 2
+        x: 4200
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 746031ac683fc5fe0800000000000000
+      internalID: -1198815640545982905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_33
+      rect:
+        serializedVersion: 2
+        x: 4800
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad4124b321d8a57a0800000000000000
+      internalID: -6387638012028513062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_34
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18418335f6f324340800000000000000
+      internalID: 4846505896374178945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_35
+      rect:
+        serializedVersion: 2
+        x: 6000
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71d5bc4ae24f4f7e0800000000000000
+      internalID: -1732491475460334313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_36
+      rect:
+        serializedVersion: 2
+        x: 6600
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a8218daa5f0899c0800000000000000
+      internalID: -3920366593493620569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_37
+      rect:
+        serializedVersion: 2
+        x: 7200
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c3cffcaa66c88e90800000000000000
+      internalID: -7023145457413012541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_38
+      rect:
+        serializedVersion: 2
+        x: 7800
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cde978d01a6532220800000000000000
+      internalID: 2459905071191138012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_39
+      rect:
+        serializedVersion: 2
+        x: 8400
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848b1eafa76978600800000000000000
+      internalID: 470510141022779464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_40
+      rect:
+        serializedVersion: 2
+        x: 9000
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a33c4be7b6801d570800000000000000
+      internalID: 8489576030350394170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_41
+      rect:
+        serializedVersion: 2
+        x: 9600
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d00e19e231f9ca260800000000000000
+      internalID: 7110232816445677581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_42
+      rect:
+        serializedVersion: 2
+        x: 10200
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1b93fb22d2b96330800000000000000
+      internalID: 3704688784239205148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_43
+      rect:
+        serializedVersion: 2
+        x: 10800
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ed6759986f92ccf0800000000000000
+      internalID: -233448959071785503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_44
+      rect:
+        serializedVersion: 2
+        x: 11400
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328d4004b72ca3a70800000000000000
+      internalID: 8807565855887251491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_45
+      rect:
+        serializedVersion: 2
+        x: 12000
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 049b8b5fd758d84d0800000000000000
+      internalID: -3130699389912696512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_46
+      rect:
+        serializedVersion: 2
+        x: 12600
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d250414d0f7e6ff0800000000000000
+      internalID: -40955651693718831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_47
+      rect:
+        serializedVersion: 2
+        x: 13200
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c015b57490c455b30800000000000000
+      internalID: 4275407023993737484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_48
+      rect:
+        serializedVersion: 2
+        x: 13800
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16d29a977f815e2a0800000000000000
+      internalID: -6708928618721366687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SDPII_Partyception_Opening_Frames_49
+      rect:
+        serializedVersion: 2
+        x: 14400
+        y: 0.5
+        width: 600
+        height: 337.5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deab2cf58f17f4140800000000000000
+      internalID: 4706105447197883117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
