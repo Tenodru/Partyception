@@ -213,7 +213,7 @@ public class LobbyMenu : MonoBehaviour
                             GameManager.current.players.Remove(player);
                             foreach (GameObject playerCard in playerCards)
                             {
-                                if (playerCard.activeInHierarchy && playerNames.Contains(player))
+                                if (playerCard.activeInHierarchy && playerNames.Contains(player) && playerCard.GetComponent<PlayerCard>().playerName.text == player)
                                 {
                                     playerCard.SetActive(false);
                                     AudioManager.current.PlaySound(playerLeaveSound);
