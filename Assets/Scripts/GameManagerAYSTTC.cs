@@ -50,7 +50,7 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     public static GameManagerAYSTTC current;
 
-    private Coroutine readyCheck;
+    private bool runningReadyCheck = false;
 
     private void Awake()
     {
@@ -298,9 +298,10 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
-                        if (readyCheck == null)
+                        if (runningReadyCheck == false)
                         {
-                            readyCheck = StartCoroutine(_ReadyCheck("completeRound"));
+                            runningReadyCheck = true;
+                            StartCoroutine(_ReadyCheck("completeRound"));
                         }
                         yield break;
                     }
@@ -859,7 +860,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (www.result != UnityWebRequest.Result.Success)
                 {
                     Debug.Log(www.error);
-                    readyCheck = null;
+                    runningReadyCheck = false;
                 }
                 else
                 {
@@ -878,7 +879,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 StartRound();
                             }
                         }
-                        readyCheck = null;
+                        runningReadyCheck = false;
                         yield break;
                     }
                     // Someone may have disconnected or left, etc.
