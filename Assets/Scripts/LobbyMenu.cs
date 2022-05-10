@@ -17,12 +17,14 @@ public class LobbyMenu : MonoBehaviour
     private float timer = 0;
     public GameObject leaveInfoPanel;
     public GameObject hostAbandonInfoPanel;
+    public GameObject afkTimerPanel;
 
     [TextArea(1, 5)]
     public string gameDatabaseLink;
     public string mainScene;
 
     public AudioClip playerJoinSound;
+    public AudioClip playerLeaveSound;
 
     [Header("Avatars")]
     public Image speechBubble;
@@ -73,6 +75,19 @@ public class LobbyMenu : MonoBehaviour
         }
     }
 
+    public void ToggleAFKPrompt(bool active)
+    {
+        if (active)
+        {
+            afkTimerPanel.SetActive(true);
+        }
+        else
+        {
+            afkTimerPanel.SetActive(false);
+            StartCoroutine(_AFKTimer());
+        }
+    }
+
     public void LeaveLobby()
     {
         StartCoroutine(_LeaveLobby());
@@ -81,6 +96,13 @@ public class LobbyMenu : MonoBehaviour
     public void ReturnToMainMenu()
     {
         GameManager.current.LoadScene("AYSTTC Main Menu");
+    }
+
+    public IEnumerator _AFKTimer()
+    {
+        yield return new WaitForSeconds(60);
+
+        ToggleAFKPrompt(true);
     }
 
     public IEnumerator _LeaveLobby()
@@ -144,8 +166,11 @@ public class LobbyMenu : MonoBehaviour
                 {
                     string receivedData = www.downloadHandler.text;
                     string[] splitData = receivedData.Split('\n');
+                    List<string> splitDataList = new List<string>();
                     foreach (string data in splitData)
                     {
+                        splitDataList.Add(data);
+
                         if (data != "")
                         {
                             if (!GameManager.current.players.Contains(data))
@@ -160,6 +185,8 @@ public class LobbyMenu : MonoBehaviour
                                     AudioManager.current.PlaySound(playerJoinSound);
                                     playerCard.GetComponent<PlayerCard>().AssignPlayerName(data);
                                     playerNames.Add(data);
+                                    StopCoroutine(_AFKTimer());
+                                    StartCoroutine(_AFKTimer());
                                     if (data.Contains("Leader: "))
                                     {
                                         playerCard.GetComponent<PlayerCard>().MakeLeader();
@@ -173,6 +200,26 @@ public class LobbyMenu : MonoBehaviour
                                             startButton.interactable = true;
                                         }
                                     }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (string player in GameManager.current.players)
+                    {
+                        if (!splitDataList.Contains(player))
+                        {
+                            GameManager.current.players.Remove(player);
+                            foreach (GameObject playerCard in playerCards)
+                            {
+                                if (playerCard.activeInHierarchy && playerNames.Contains(player))
+                                {
+                                    playerCard.SetActive(false);
+                                    AudioManager.current.PlaySound(playerLeaveSound);
+                                    playerNames.Remove(player);
+                                    StopCoroutine(_AFKTimer());
+                                    StartCoroutine(_AFKTimer());
                                     break;
                                 }
                             }

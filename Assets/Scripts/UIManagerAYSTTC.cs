@@ -238,7 +238,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         gameScreen.SetActive(true);
         timerSlider.gameObject.SetActive(true);
 
-        questionNum.text = GameManagerAYSTTC.current.currentRound.ToString();
+        questionNum.text = "Question " + GameManagerAYSTTC.current.currentRound.ToString();
         questionDisplay.text = question.question;
         List<Answer> answerList = new List<Answer>(question.answerList);
         foreach (AnswerButton button in answerButtons)
