@@ -15,15 +15,15 @@ public class GameManagerAYSTTC : MonoBehaviour
     [Header("Parameters")]
     [Tooltip("The current difficulty of the game.")]
     public int difficulty = 1;
-    [Tooltip ("The number of rounds, or questions, to play.")]
+    [Tooltip("The number of rounds, or questions, to play.")]
     public int roundCount = 5;
-    [Tooltip ("Round timer duration in seconds.")]
+    [Tooltip("Round timer duration in seconds.")]
     public float timerDuration = 5f;
     [Tooltip("The question categories.")]
     public List<QuestionCategory> categories;
     public int tierInc = 1;
     public int maxTier = 5;
-    [Header ("UI")]
+    [Header("UI")]
     [Tooltip("The start button.")]
     public Button startButton;
     [TextArea(1, 5)]
@@ -49,8 +49,6 @@ public class GameManagerAYSTTC : MonoBehaviour
     [HideInNormalInspector] public bool hostEliminated = false;
 
     public static GameManagerAYSTTC current;
-
-    private bool runningReadyCheck = false;
 
     private void Awake()
     {
@@ -188,7 +186,8 @@ public class GameManagerAYSTTC : MonoBehaviour
             quesIndex = chosenCategory.questions.FindIndex(x => x.Equals(tierQuestions[qIndex]));
             catIndex = categories.FindIndex(x => x.Equals(chosenCategory));
             return chosenCategory.questions[quesIndex];
-        } else
+        }
+        else
         {
             // If not unlimited rounds, avoid using used questions.
             List<Question> tierQuestions = chosenCategory.questions.Where(qu => qu.difficulty == currentTier).ToList();
@@ -216,7 +215,7 @@ public class GameManagerAYSTTC : MonoBehaviour
 
             return chosenCategory.questions[quesIndex];
         }
-        
+
     }
 
     /// <summary>
@@ -241,13 +240,14 @@ public class GameManagerAYSTTC : MonoBehaviour
         if (selectedAnswer.isCorrectAnswer)
         {
             outcome = "correct";
-        } else
+        }
+        else
         {
             outcome = "incorrect";
         }
         StartCoroutine(_Answer(GameManager.current.currentLobby, GameManager.current.playerName, outcome));
     }
-    
+
     /// <summary>
     /// A timer. Accepts a maximum (starting) value, and a TimerPurpose (when the timer is going to be run).
     /// </summary>
@@ -281,7 +281,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     else if (selectedAnswer == null)
                     {
                         Debug.Log("selected answer was null");
-                        
+
                         StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
                     }
                     else if (selectedAnswer.isCorrectAnswer)
@@ -297,12 +297,9 @@ public class GameManagerAYSTTC : MonoBehaviour
 
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
-                        //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
-                        if (runningReadyCheck == false)
-                        {
-                            runningReadyCheck = true;
-                            StartCoroutine(_ReadyCheck("completeRound"));
-                        }
+                        //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));k
+                        StartCoroutine(_ReadyCheck("completeRound"));
+                        StartCoroutine(_KickCheck());
                         yield break;
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -806,7 +803,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 }
             }
         }
-        
+
         if (co != null)
         {
             StartCoroutine(co);
@@ -845,7 +842,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         }
     }
 
-    public IEnumerator _ReadyCheck(string type)
+    public IEnumerator _ReadyCheck(string type = "completeRound")
     {
         while (true)
         {
@@ -860,7 +857,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                 if (www.result != UnityWebRequest.Result.Success)
                 {
                     Debug.Log(www.error);
-                    runningReadyCheck = false;
                 }
                 else
                 {
@@ -879,14 +875,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                                 StartRound();
                             }
                         }
-                        runningReadyCheck = false;
                         yield break;
-                    }
-                    // Someone may have disconnected or left, etc.
-                    else
-                    {
-                        if (runningReadyCheck == true)
-                            StartCoroutine(_Timer(8f, TimerPurpose.KickCheck));
                     }
                 }
             }
@@ -973,6 +962,8 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     public IEnumerator _KickCheck()
     {
+        yield return new WaitForSeconds(6f);
+
         WWWForm form = new WWWForm();
         form.AddField("function", "kick");
         form.AddField("lobbyNumber", GameManager.current.currentLobby);
@@ -990,7 +981,9 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 Debug.Log("Kick Check: " + receivedData);
-                StartCoroutine(_ReadyCheck("completeRound"));
+                //StartCoroutine(_ReadyCheck("completeRound"));
+                StopCoroutine(_ReadyCheck());
+                StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
             }
         }
     }
