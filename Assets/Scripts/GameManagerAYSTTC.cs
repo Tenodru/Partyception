@@ -384,10 +384,6 @@ public class GameManagerAYSTTC : MonoBehaviour
                     Debug.Log("First round has started.");
                     yield break;
                 }
-                else if (purpose == TimerPurpose.KickCheck)
-                {
-                    StartCoroutine(_KickCheck());
-                }
             }
             yield return null;
         }
@@ -868,6 +864,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                         {
                             if (type == "completeRound")
                             {
+                                Debug.Log("completed round through ready check");
                                 StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
                             }
                             else if (type == "startRound")
@@ -983,6 +980,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("Kick Check: " + receivedData);
                 //StartCoroutine(_ReadyCheck("completeRound"));
                 StopCoroutine(_ReadyCheck());
+                Debug.Log("completed round through kick check");
                 StartCoroutine(_CompleteRound(GameManager.current.currentLobby));
             }
         }
@@ -992,4 +990,4 @@ public class GameManagerAYSTTC : MonoBehaviour
 /// <summary>
 /// When the Timer coroutine is going to be used.
 /// </summary>
-public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame, KickCheck }
+public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
