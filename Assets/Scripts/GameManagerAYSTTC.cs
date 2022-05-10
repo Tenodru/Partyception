@@ -50,6 +50,8 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     public static GameManagerAYSTTC current;
 
+    private Coroutine readyCheck;
+
     private void Awake()
     {
         current = this;
@@ -298,7 +300,7 @@ public class GameManagerAYSTTC : MonoBehaviour
                     if (GameManager.current.playerStatus == PlayerStatus.Host)
                     {
                         //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));k
-                        StartCoroutine(_ReadyCheck("completeRound"));
+                        readyCheck = StartCoroutine(_ReadyCheck("completeRound"));
                         StartCoroutine(_KickCheck());
                         yield break;
                     }
@@ -961,7 +963,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
 
-        StopCoroutine(_ReadyCheck());
+        StopCoroutine(readyCheck);
 
         WWWForm form = new WWWForm();
         form.AddField("function", "kick");
