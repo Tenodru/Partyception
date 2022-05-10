@@ -88,6 +88,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject gameEndScreen;
     [Tooltip("Displays the number of remaining players.")]
     public TextMeshProUGUI playersRemainingDisplay;
+    [Tooltip("Displays the congrats splash text.")]
+    public TextMeshProUGUI congratsText;
 
     [Header("Game Recap Screen")]
     public GameObject gameRecapScreen;
@@ -485,9 +487,6 @@ public class UIManagerAYSTTC : MonoBehaviour
         outcomeScreen.SetActive(false);
         timerSlider.gameObject.SetActive(false);
         gameEndScreen.SetActive(true);
-        // TODO: Display number of remaining players.
-        // TODO: Display eliminated players (in memoriam).
-        // TODO: Host should have Create New Lobby button.
         UpdatePlayerCount();
         if (GameManagerAYSTTC.current.remainingPlayerCount == 1)
         {
@@ -516,11 +515,12 @@ public class UIManagerAYSTTC : MonoBehaviour
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));
         }
-        else if (GameManagerAYSTTC.current.remainingPlayerCount > 0)
+        else if (GameManagerAYSTTC.current.remainingPlayerCount == 0)
         {
             StartCoroutine(_Timer(2f, () =>
             {
-                playersRemainingDisplay.text = "NOBODY made it to the end....";
+                congratsText.text = "Well..."
+                playersRemainingDisplay.text = "...it seems that NOBODY made it to the end!";
                 playersRemainingDisplay.gameObject.SetActive(true);
                 StartCoroutine(_FadeObjectIn(playersRemainingDisplay.gameObject, 1f));
             }));

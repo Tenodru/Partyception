@@ -52,6 +52,7 @@ public class GameManagerAYSTTC : MonoBehaviour
 
     private Coroutine readyCheck;
     private Coroutine kickCheck;
+    private bool skipToEnd = false;
 
     private void Awake()
     {
@@ -325,7 +326,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                         }
                         else
                         {
-                            StartRound();
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(func: () => StartCoroutine(_EndGame(GameManager.current.currentLobby))));
+                            }
+                            else
+                            {
+                                StartRound();
+                            }
                         }
                     }
                     else if (GameManager.current.playerStatus == PlayerStatus.Participant)
@@ -339,7 +347,14 @@ public class GameManagerAYSTTC : MonoBehaviour
                         }
                         else
                         {
-                            StartCoroutine(_CheckForRoundStart());
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(func: () => UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant)));
+                            }
+                            else
+                            {
+                                StartCoroutine(_CheckForRoundStart());
+                            }
                         }
                     }
                     Debug.Log("End of round has ended.");
@@ -957,6 +972,12 @@ public class GameManagerAYSTTC : MonoBehaviour
                 Debug.Log("Eliminated Player Count: " + eliminatedPlayerCount);
                 eliminatedPlayerCount += playerCount;
                 UIManagerAYSTTC.current.UpdateEliminatedPlayers(playerCount, eliminatedPlayerCount, playerList);
+
+                // No players remaining. Go to end screen after recap.
+                if (remainingPlayerCount == 0)
+                {
+                    skipToEnd = true; 
+                }
             }
         }
     }
