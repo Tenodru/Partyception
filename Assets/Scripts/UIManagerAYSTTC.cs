@@ -350,8 +350,8 @@ public class UIManagerAYSTTC : MonoBehaviour
             outcomeAnim.SetTrigger("Lose");
         }
 
-        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), GameManagerAYSTTC.current.roundRecapTime/2));
-        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), GameManagerAYSTTC.current.roundRecapTime / 2));
+        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2));
+        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2));
     }
 
     public void UpdateEliminatedPlayers(int remainingPlayers, int eliminatedPlayers, List<string> playerNames)
