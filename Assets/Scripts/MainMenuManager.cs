@@ -62,10 +62,12 @@ public class MainMenuManager : MonoBehaviour
             if (nameInputField.text.Length < nameInputField.characterLimit / 2)
             {
                 charCountDisplay.color = new Color(0.2509804f, 1f, 0.4862745f);
-            } else if (nameInputField.text.Length == nameInputField.characterLimit)
+            }
+            else if (nameInputField.text.Length == nameInputField.characterLimit)
             {
                 charCountDisplay.color = new Color(1f, 0f, 0f);
-            } else
+            }
+            else
             {
                 charCountDisplay.color = new Color(1f, 0.6705883f, 0.2509804f);
             }
@@ -119,19 +121,75 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(EnterLobby(functionName, nameField.text, lobbyField.text));
     }
 
-    public void CreateLobby ()
+    public void CreateLobby()
     {
-        StartCoroutine(EnterLobby("createLobby", nameField.text, lobbyCode));
+        if (validName(nameField.text))
+        {
+            StartCoroutine(EnterLobby("createLobby", nameField.text, lobbyCode));
+        }
+        else
+        {
+            AlertText.current.ToggleAlertText("Invalid name. Please choose a different name.", Color.red);
+        }
     }
 
     public void JoinLobby()
     {
-        StartCoroutine(EnterLobby("joinLobby", nameField.text, lobbyField.text));
+        if (validName(nameField.text))
+        {
+            StartCoroutine(EnterLobby("joinLobby", nameField.text, lobbyField.text));
+        }
+        else
+        {
+            AlertText.current.ToggleAlertText("Invalid name. Please choose a different name.", Color.red);
+        }
+    }
+
+    public bool validName(string name)
+    {
+        if (name.Contains("prestart") || name.Contains("Leader:") || name.Contains("answering") || name.Contains("eliminated") || name.Contains("prestart") || name.Contains("awaiting"))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public IEnumerator EnterLobby(string functionType, string playerName, string lobbyNumber)
     {
         LoadingPanel.current.ToggleLoadingPanel(true);
+
+        WWWForm checkForm = new WWWForm();
+        checkForm.AddField("function", "getPlayerList");
+        checkForm.AddField("lobbyNumber", lobbyField.text);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", checkForm))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                string[] splitData = receivedData.Split('\n');
+                List<string> splitDataList = new List<string>();
+                foreach (string data in splitData)
+                {
+                    splitDataList.Add(data);
+                }
+                if (splitDataList.Contains(name))
+                {
+                    AlertText.current.ToggleAlertText("That name already exists in this lobby.", Color.red);
+                    yield break;
+                }
+            }
+        }
 
         WWWForm form = new WWWForm();
         form.AddField("function", functionType);
