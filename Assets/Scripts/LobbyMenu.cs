@@ -198,6 +198,7 @@ public class LobbyMenu : MonoBehaviour
                                         {
                                             lobbyLeader = true;
                                             startButton.interactable = true;
+                                            startButton.GetComponentInChildren<Text>().text = "Start";
                                         }
                                     }
                                     break;
