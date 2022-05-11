@@ -350,8 +350,8 @@ public class UIManagerAYSTTC : MonoBehaviour
             outcomeAnim.SetTrigger("Lose");
         }
 
-        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2f));
-        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2f));
+        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), GameManagerAYSTTC.current.roundRecapTime/2));
+        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), GameManagerAYSTTC.current.roundRecapTime / 2));
     }
 
     public void UpdateEliminatedPlayers(int remainingPlayers, int eliminatedPlayers, List<string> playerNames)
@@ -413,7 +413,7 @@ public class UIManagerAYSTTC : MonoBehaviour
         while (playerHolder.GetComponent<RectTransform>().anchoredPosition.y < newY)
         {
             yield return new WaitForSeconds(0.02f);
-            currentY += (playerHolderHeight * 2)/150;
+            currentY += (playerHolderHeight * 2)/ ((GameManagerAYSTTC.current.roundRecapTime / 2)/0.02f);
             playerHolder.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, currentY, 0);
         }
     }

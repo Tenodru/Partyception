@@ -19,6 +19,8 @@ public class GameManagerAYSTTC : MonoBehaviour
     public int roundCount = 5;
     [Tooltip("Round timer duration in seconds.")]
     public float timerDuration = 5f;
+    [Tooltip("Round recap time in seconds.")]
+    public float roundRecapTime = 5f;
     [Tooltip("The question categories.")]
     public List<QuestionCategory> categories;
     public int tierInc = 1;
@@ -591,14 +593,14 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
-                if (receivedData == "player has been eliminated")
+                if (receivedData == "player has been eliminated" && !hostEliminated)
                 {
                     StartCoroutine(_GetEliminatedPlayers());
                     UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                     timeRemaining = 5f;
                     Debug.Log("Time Set: " + timeRemaining);
                     UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                    StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
+                    StartCoroutine(_Timer(roundRecapTime, TimerPurpose.EndOfRoundEliminated));
                     yield break;
                 }
             }
@@ -627,27 +629,27 @@ public class GameManagerAYSTTC : MonoBehaviour
                     {
                         StartCoroutine(_GetEliminatedPlayers());
                         UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
-                        timeRemaining = 5f;
+                        timeRemaining = roundRecapTime;
                         Debug.Log("Time Set: " + timeRemaining);
                         if (hostEliminated)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.HostSpectate);
-                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
+                            StartCoroutine(_Timer(roundRecapTime, TimerPurpose.EndOfRoundSafe));
                         }
                         else if (selectedAnswer == null)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
-                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
+                            StartCoroutine(_Timer(roundRecapTime, TimerPurpose.EndOfRoundEliminated));
                         }
                         else if (selectedAnswer.isCorrectAnswer)
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Correct);
-                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundSafe));
+                            StartCoroutine(_Timer(roundRecapTime, TimerPurpose.EndOfRoundSafe));
                         }
                         else
                         {
                             UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
-                            StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
+                            StartCoroutine(_Timer(roundRecapTime, TimerPurpose.EndOfRoundEliminated));
                         }
                         yield break;
                     }
