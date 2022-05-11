@@ -576,6 +576,7 @@ public class GameManagerAYSTTC : MonoBehaviour
         WWWForm initialForm = new WWWForm();
         initialForm.AddField("function", "checkIfEliminated");
         initialForm.AddField("lobbyNumber", lobbyNumber);
+        initialForm.AddField("playerName", GameManager.current.playerName);
 
         using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", initialForm))
         {
