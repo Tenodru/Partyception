@@ -71,6 +71,7 @@ public class UIManagerAYSTTC : MonoBehaviour
     public GameObject instructionsScreen;
     [Tooltip("The host's instructions.")]
     public GameObject hostInstructions;
+    public GameObject hideAnswersInstructions;
     [Tooltip("The participants's instructions.")]
     public GameObject pInstructions;
 
@@ -430,6 +431,10 @@ public class UIManagerAYSTTC : MonoBehaviour
             hostInstructions.SetActive(true);
             selectionScreen.SetActive(false);
             hostNumbers.SetActive(true);
+            if (hideHostAnswer)
+            {
+                hideAnswersInstructions.SetActive(true);
+            }
         }
         else
         {
