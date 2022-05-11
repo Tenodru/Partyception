@@ -183,8 +183,9 @@ public class MainMenuManager : MonoBehaviour
                 {
                     splitDataList.Add(data);
                 }
-                if (splitDataList.Contains(name))
+                if (splitDataList.Contains(playerName))
                 {
+                    LoadingPanel.current.ToggleLoadingPanel(false);
                     AlertText.current.ToggleAlertText("That name already exists in this lobby.", Color.red);
                     yield break;
                 }
