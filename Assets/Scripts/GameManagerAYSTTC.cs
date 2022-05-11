@@ -574,7 +574,7 @@ public class GameManagerAYSTTC : MonoBehaviour
     public IEnumerator _GetRoundStatus(string lobbyNumber)
     {
         WWWForm initialForm = new WWWForm();
-        initialForm.AddField("function", "checkIfDisconnected");
+        initialForm.AddField("function", "checkIfEliminated");
         initialForm.AddField("lobbyNumber", lobbyNumber);
         initialForm.AddField("playerName", GameManager.current.playerName);
 
@@ -591,13 +591,13 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
-                if (receivedData == "player has been disconnected")
+                if (receivedData == "player has been eliminated")
                 {
                     StartCoroutine(_GetEliminatedPlayers());
                     UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                     timeRemaining = 5f;
                     Debug.Log("Time Set: " + timeRemaining);
-                    UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Disconnect);
+                    UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.TimeOut);
                     StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                     yield break;
                 }
