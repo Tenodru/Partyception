@@ -590,17 +590,13 @@ public class GameManagerAYSTTC : MonoBehaviour
             {
                 string receivedData = www.downloadHandler.text;
                 Debug.Log(receivedData);
-                if (receivedData == "player has not been eliminated")
-                {
-                    //do nothing
-                }
-                else if (receivedData == "player has been eliminated")
+                if (receivedData == "player has been eliminated")
                 {
                     StartCoroutine(_GetEliminatedPlayers());
                     UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
                     timeRemaining = 5f;
                     Debug.Log("Time Set: " + timeRemaining);
-                    UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                    UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Disconnect);
                     StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
                     yield break;
                 }
