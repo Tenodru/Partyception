@@ -573,6 +573,40 @@ public class GameManagerAYSTTC : MonoBehaviour
     /// <returns></returns>
     public IEnumerator _GetRoundStatus(string lobbyNumber)
     {
+        WWWForm initialForm = new WWWForm();
+        initialForm.AddField("function", "checkIfEliminated");
+        initialForm.AddField("lobbyNumber", lobbyNumber);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "updatePlayerStatus.php", initialForm))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (receivedData == "player has not been eliminated")
+                {
+                    //do nothing
+                }
+                else if (receivedData == "player has been eliminated")
+                {
+                    StartCoroutine(_GetEliminatedPlayers());
+                    UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.1f);
+                    timeRemaining = 5f;
+                    Debug.Log("Time Set: " + timeRemaining);
+                    UIManagerAYSTTC.current.DisplayOutcomeScreen(OutcomeType.Wrong);
+                    StartCoroutine(_Timer(5f, TimerPurpose.EndOfRoundEliminated));
+                    yield break;
+                }
+            }
+        }
+
         while (true)
         {
             WWWForm form = new WWWForm();

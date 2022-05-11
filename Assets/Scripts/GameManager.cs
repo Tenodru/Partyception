@@ -100,4 +100,4 @@ public enum PlayerStatus { Host, Participant }
 /// <summary>
 /// The type of outcome that can occur after a question in AYSTTC.
 /// </summary>
-public enum OutcomeType { Correct, Wrong, TimeOut, HostSpectate }
+public enum OutcomeType { Correct, Wrong, TimeOut, HostSpectate, Disconnect }

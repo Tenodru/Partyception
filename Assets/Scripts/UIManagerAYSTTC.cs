@@ -342,6 +342,13 @@ public class UIManagerAYSTTC : MonoBehaviour
             
             outcomeAnim.SetTrigger("Lose");
         }
+        else if (outcome == OutcomeType.Disconnect)
+        {
+            outcomeText.text = "Your game is out of sync with the server." + "\n" +
+            "You've been disconnected.";
+
+            outcomeAnim.SetTrigger("Lose");
+        }
 
         StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2f));
         StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2f));
