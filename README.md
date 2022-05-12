@@ -60,6 +60,7 @@ Once this was done, I could begin building the actual loop in `GameManagerAYSTTC
 #### Step 1 - Choosing a Question
 The first step in the round loop was choosing a question. To do this, we would need to first identify the correct category, then randomly choose a question from that category.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public void ChooseCategory(QuestionCategory category)
 {
@@ -87,6 +88,7 @@ public void ChooseAllCategories()
 
 These three functions above identify and save the right category based on the user's selection in the lobby settings screen. Below, the `ChooseQuestion()` function chooses a question by first getting the right category, grabbing the question list from that category, then filtering the list to leave a list of only questions that match the round's current difficulty tier. Note that all of this category and question selection only happens in the host client - other players only retrieve and display the question.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public Question ChooseQuestion()
 {
@@ -140,6 +142,7 @@ public Question ChooseQuestion()
 
 Once a question was selected, we needed to send this question to the server so the other players in the lobby would retrieve and display it in their own clients. To do so, we needed to first serialize a question as a "question ID" that would specify what question was chosen what what category.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public string GetQuestionID(int cIndex, int qIndex)
 {
@@ -149,6 +152,7 @@ public string GetQuestionID(int cIndex, int qIndex)
 
 Then, the `_SendQuestion()` coroutine sends the question ID via a POST request using Unity's Networking library. We specify the PHP script we want to send the request to, and include the necessary parameters. The web server then stores this question.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public IEnumerator _SendQuestion(string lobbyNumber, string questionID)
 {
@@ -187,6 +191,7 @@ If the request is successful, the PHP script will echo back "successfully starte
 
 Of course, for this to function, we needed a timer function that would keep track of time, then return something once the timer hits 0.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
 {
@@ -213,6 +218,7 @@ IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound
 We used a coroutine for this Timer. It will constantly count down from the specified time to 0, then when it hits 0 (or a negative number), it stops the timer and initiates whatever should be done after the timer ends.
 To determine what should be done on timer end, I created a `TimerPurpose` enum. When `_Timer()` is called, the timer will begin with a `TimerPurpose` in mind - we could then specify these timer-end actions based on what the timer is being used for (during a round, during the round recap screen, etc.)
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
 ```
@@ -221,6 +227,7 @@ public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, Pr
 
 Up until this point, the other players' clients will be periodically sending requests to the web server checking for the game start via the `_CheckForGameStart()` coroutine. 
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public IEnumerator _CheckForGameStart()
     {
@@ -262,6 +269,7 @@ public IEnumerator _CheckForGameStart()
 
 When the server receives its first question, it will set the lobby status in the database to "prestart". When this coroutine receives this "prestart" status from its web request, it will tell the client that the round is ready to begin. The coroutine will then call the `_GetQuestion()` coroutine to retrieve the question ID from the server.
 
+`GameManagerAYSTTC.cs` : 
 ```csharp
 public IEnumerator _GetQuestion(string lobbyNumber)
 {
