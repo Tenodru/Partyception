@@ -217,6 +217,8 @@ To determine what should be done on timer end, I created a `TimerPurpose` enum. 
 public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
 ```
 
+#### Step 3 - Receiving the Question
+
 Up until this point, the other players' clients will be periodically sending requests to the web server checking for the game start via the `_CheckForGameStart()` coroutine. 
 
 ```csharp
@@ -258,4 +260,79 @@ public IEnumerator _CheckForGameStart()
     }
 ```
 
-When the server receives its first question, it will set the lobby status in the database to "prestart". When this coroutine receives this "prestart" status from its web request, it will tell the client that the round is ready to begin.
+When the server receives its first question, it will set the lobby status in the database to "prestart". When this coroutine receives this "prestart" status from its web request, it will tell the client that the round is ready to begin. The coroutine will then call the `_GetQuestion()` coroutine to retrieve the question ID from the server.
+
+```csharp
+public IEnumerator _GetQuestion(string lobbyNumber)
+{
+    WWWForm form = new WWWForm();
+    form.AddField("function", "getQuestion");
+    form.AddField("lobbyNumber", lobbyNumber);
+
+    using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+    {
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            AlertText.current.ToggleAlertText(www.error, Color.red);
+        }
+        else
+        {
+            // questionID received. Split the ID into appropriate Category index and Question index data.
+            string receivedData = www.downloadHandler.text;
+            Debug.Log(receivedData);
+            string[] splitData = receivedData.Split('.');
+            string dataID = splitData[splitData.Length - 1];
+            int dataIDCategory = int.Parse(dataID.Split('Q')[0]);
+            int dataIDQuestion = int.Parse(dataID.Split('Q')[1]);
+            Debug.Log("Grabbed category: " + dataIDCategory);
+            Debug.Log("Grabbed question: " + dataIDQuestion);
+            chosenCategory = categories[dataIDCategory];
+            currentQuestion = chosenCategory.questions[dataIDQuestion];
+
+            if (GameManager.current.playerStatus == PlayerStatus.Participant)
+            {
+                //timeRemaining = timerDuration;
+                StartCoroutine(_Timer(timerDuration));
+                UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+                usedQuestions.Add(currentQuestion);
+            }
+
+            yield break;
+        }
+    }
+}
+```
+
+This coroutine will "decode" the question ID and grab the right category and question. It will then move the player to the Answering screen via the `UIManagerAYSTTC.cs` script (and start the round timer). Host and participants will do this at the same time to ensure that the gameplay of all players remains synced up. 
+
+#### Step 4 - Answering the Question
+On the answering screen, players will be given the question and its four answer choices. I created the `AnswerButton.cs` script to give the default Button additional functionality - storing the answer associated with the Button.
+
+`AnswerButton.cs` : 
+```csharp
+public class AnswerButton : Button
+{
+    [Tooltip ("The Answer associated with this Button.")]
+    public Answer answer;
+}
+```
+
+`AnswerButtonEditor.cs` : 
+```csharp
+[CustomEditor (typeof(AnswerButton))]
+public class AnswerButtonEditor : ButtonEditor
+{
+    public override void OnInspectorGUI()
+    {
+        AnswerButton button = (AnswerButton)target;
+
+        base.OnInspectorGUI();
+    }
+}
+```
+
+
+
