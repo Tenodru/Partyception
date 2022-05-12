@@ -1,5 +1,6 @@
 # Partyception
  The code repository for the Partyception party game.
+ The repository for Partyception's serverside code can be found here: https://github.com/Tenodru/Partyception-Serverside
 
 ## Overview
 This repository hosts all of the code and assets used in the Partyception game.
