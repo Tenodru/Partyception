@@ -36,9 +36,11 @@ To begin, we needed a framework for our questions and answers. I wrote a `Questi
 - `question` : String. The question text.
 - `difficulty` : Int. The question difficulty, from 1-5.
 - `answerList` : List. A list of the question's Answers.
+
 To hold answer choices, I wrote an `Answer` scriptable object with the following parameters:
 - `answer` : String. The answer text.
 - `isCorrectAnswer` : Bool. Whether this answer is the correct one for its associated question. `False` by default.
+
 Finally, we needed a Category object to hold a list of questions for our various categories. The `QuestionCategory` takes in these parameters:
 - `categoryName` : String. A name for the category.
 - `question` : List. A list of all Questions in this category.
