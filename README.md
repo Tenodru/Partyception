@@ -345,3 +345,71 @@ public class AnswerButtonEditor : ButtonEditor
 By extending the default Button functionality, we could "assign" answers to each of the four buttons in the UI without needing to attach another script to these elements.
 
 ![Answer UI](https://github.com/Tenodru/Partyception/blob/43733d8c381b66176ed619e6c69a4c04b055039b/Other/Readme%20Resources/Alex/Answer%20UI.PNG)
+
+
+The UIManager script will take the answer list from the GameManager script, then randomly assign each answer to each of the buttons. This means that while everyone will see the same answers, the buttons that each answer is assigned to will be different.
+
+`UIManagerAYSTTC.cs` : 
+```csharp
+public void SetGameStageP(Question question)
+{
+    instructionsScreen.SetActive(false);
+    preStartScreen.SetActive(false);
+    outcomeScreen.SetActive(false);
+    selectionScreen.SetActive(false);
+    participantWaitingScreen.SetActive(false);
+    gameScreen.SetActive(true);
+    timerSlider.gameObject.SetActive(true);
+
+    questionNum.text = "Question " + GameManagerAYSTTC.current.currentRound.ToString();
+    questionDisplay.text = question.question;
+    List<Answer> answerList = new List<Answer>(question.answerList);
+    foreach (AnswerButton button in answerButtons)
+    {
+        int answerIndex = UnityEngine.Random.Range(0, answerList.Count - 1);
+        button.answer = answerList[answerIndex];
+        button.GetComponentInChildren<TextMeshProUGUI>().text = answerList[answerIndex].answer;
+        button.GetComponent<Image>().color = button.colors.normalColor;
+        answerList.RemoveAt(answerIndex);
+        if (GameManager.current.playerStatus == PlayerStatus.Host && hideHostAnswer)
+        {
+            ColorBlock colorVar = button.colors;
+            colorVar.selectedColor = new Color(255, 255, 255);
+            button.colors = colorVar;
+        }
+    }
+
+    if (GameManagerAYSTTC.current.hostEliminated)
+    {
+        hostSpectatePanel.SetActive(true);
+    }
+}
+```
+
+Then, when a player clicks a button, that button will call `SelectAnswerChoice()` function in the UIManager, passing in itself as the AnswerButton parameter. This function will then record the player's selected answer via a call to the GameManager. Clean and simple!
+
+`UIManagerAYSTTC.cs` : 
+```csharp
+public void SelectAnswerChoice(AnswerButton answerChoice)
+{
+    if (GameManager.current.playerStatus == PlayerStatus.Host && hideHostAnswer)
+    {
+        return;
+    }
+    foreach (AnswerButton button in answerButtons)
+    {
+        //button.GetComponent<Image>().color = Color.white;
+        button.GetComponent<Image>().color = button.colors.normalColor;
+    }
+    //answerChoice.GetComponent<Image>().color = Color.yellow;
+    answerChoice.GetComponent<Image>().color = answerChoice.colors.selectedColor;
+    AudioManager.current.PlaySound(buttonPressSound);
+    GameManagerAYSTTC.current.selectedAnswer = answerChoice.answer;
+    Background.current.PlayParticleEffect();
+}
+```
+
+Furthermore, by clicking any other answer choice, `SelectAnswerChoice()` will "deselect" all other answer buttons by resetting their colors to normal.
+
+The GameManager script will also keep identify whether the player's answer choice is correct or incorrect, allowing the game to eliminate players once the round is over. This elimination system was implemented by Victor, and is covered in his section further below in this readme.
+
