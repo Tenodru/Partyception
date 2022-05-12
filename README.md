@@ -39,3 +39,13 @@ To begin, we needed a framework for our questions and answers. I wrote a `Questi
 To hold answer choices, I wrote an `Answer` scriptable object with the following parameters:
 - `answer` : String. The answer text.
 - `isCorrectAnswer` : Bool. Whether this answer is the correct one for its associated question. `False` by default.
+Finally, we needed a Category object to hold a list of questions for our various categories. The `QuestionCategory` takes in these parameters:
+- `categoryName` : String. A name for the category.
+- `question` : List. A list of all Questions in this category.
+
+This setup would allow our writers to easily add and change questions with ease using Unity's inspector, instead of having to mess around with code.
+![Inspector 1](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Games.PNG)
+![Inspector 2](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Category.PNG)
+
+
+
