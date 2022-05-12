@@ -421,5 +421,15 @@ Repeating the round is very simple - the above steps are just repeated in the sa
 
 
 
-### Task 2 - The Game End Screen
+### Task 2 - The End Screen and Closing the Loop Back to Main Menu
+With the basic functionality of the game loop completed, my next task was to implement an end to the game that would then allow players to return to the main menu. This would allow us to "complete the loop" of the game, so to speak, so the game could be experienced in repeat from main menu, lobby, game, and main menu again.
 
+![End Loop](https://github.com/Tenodru/Partyception/blob/382bc4835c2c678987352c7077e146a28f3583d1/Other/Readme%20Resources/Alex/Game%20End%20Screen.png)
+
+
+To begin, I added a `roundCount` variable and a `currentRound` variable to the GameManager; with each round, `currentRound` will increment by 1. Each time the timer is run during a round, when the time runs out, it will check if the `currentRound == roundCount`. If so, it will move to the game end screen with a call to the UIManager. This screen includes a button that will move the client back to the main menu if clicked by the player.
+
+
+
+### Task 3 - The Game Lobby System
+With the basic functionality of the game loop completed, my next task was to begin working on the lobby system, where each lobby would be assigned a "lobby code," and players could enter lobbies with this code. Victor had already developed a basic lobby system that I would 
