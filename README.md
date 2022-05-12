@@ -257,3 +257,5 @@ public IEnumerator _CheckForGameStart()
         }
     }
 ```
+
+When the server receives its first question, it will set the lobby status in the database to "prestart". When this coroutine receives this "prestart" status from its web request, it will tell the client that the round is ready to begin.
