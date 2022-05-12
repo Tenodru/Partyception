@@ -54,7 +54,7 @@ Editing a Question            |  Editing a Category
 :-------------------------:|:-------------------------:
 ![Inspector 1](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Games.PNG) | ![Inspector 2](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Category.PNG)
 
-Once this was done, I could begin building the actual loop.
+Once this was done, I could begin building the actual loop in `GameManagerAYSTTC.cs`.
 
 
 #### Step 1 - Choosing a Question
@@ -217,4 +217,43 @@ To determine what should be done on timer end, I created a `TimerPurpose` enum. 
 public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
 ```
 
-Up until this point, the other players' clients will be 
+Up until this point, the other players' clients will be periodically sending requests to the web server checking for the game start via the `_CheckForGameStart()` coroutine. 
+
+```csharp
+public IEnumerator _CheckForGameStart()
+    {
+        while (true)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(gameDatabaseLink + "lobbies/" + GameManager.current.currentLobby + "/lobbyStatus.txt"))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    if (receivedData.Contains("prestart"))
+                    {
+                        if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                        {
+                            //REMOVE THIS IF BROKEN
+                            StartCoroutine(_UpdatePlayerStatus("prestart"));
+                            AudioManager.current.PlayMusic("inGameMusic");
+                            StartCoroutine(_CheckForRoundStart());
+                            string category = receivedData.Split('/')[1];
+                            timerDuration = int.Parse(receivedData.Split('/')[2]);
+                            roundCount = int.Parse(receivedData.Split('/')[3]);
+                            UIManagerAYSTTC.current.DisplayPreStartScreen(category);
+                            timeRemaining = timerDuration;
+                            Debug.Log("host starts game, new prestart timer");
+                        }
+                        yield break;
+                    }
+                }
+            }
+        }
+    }
+```
