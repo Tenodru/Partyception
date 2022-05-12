@@ -342,5 +342,6 @@ public class AnswerButtonEditor : ButtonEditor
 }
 ```
 
+By extending the default Button functionality, we could "assign" answers to each of the four buttons in the UI without needing to attach another script to these elements.
 
-
+![Answer UI](https://github.com/Tenodru/Partyception/blob/43733d8c381b66176ed619e6c69a4c04b055039b/Other/Readme%20Resources/Alex/Answer%20UI.PNG)
