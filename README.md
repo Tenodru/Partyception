@@ -431,5 +431,60 @@ To begin, I added a `roundCount` variable and a `currentRound` variable to the G
 
 
 
-### Task 3 - The Game Lobby System
-With the basic functionality of the game loop completed, my next task was to begin working on the lobby system, where each lobby would be assigned a "lobby code," and players could enter lobbies with this code. Victor had already developed a basic lobby system that I would 
+### Task 3 - Expanding The Game Lobby System
+With the basic functionality of the game loop completed, my next task was to begin working on expanding the lobby system, where each lobby would be assigned a "lobby code," and players could enter lobbies with this code. Victor had already developed a basic lobby system that I augmented with a random code generator.
+
+`MainMenuManager.cs` : 
+```csharp
+public string GenerateLobbyCode()
+{
+    string code = "";
+    int charCount = Random.Range(minCharCount, maxCharCount);
+    for (int i = 0; i < charCount; i++)
+    {
+        code += codeChars[Random.Range(0, codeChars.Length)];
+    }
+    return code;
+}
+```
+
+Having random code generation allowed us to "control" lobby codes, so players wouldn't try to enter a code, get stopped because the code was already used for another lobby, and have to try again...over and over. However, we still needed to check if the current generated code was used for another lobby (otherwise the lobby files would be merged), so I created the `_GetLobbyList()` coroutine to do so.
+
+`MainMenuManager.cs` : 
+```csharp
+public IEnumerator _GetLobbyList()
+{
+    WWWForm form = new WWWForm();
+    form.AddField("function", "getLobbyList");
+
+    using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+    {
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            AlertText.current.ToggleAlertText(www.error, Color.red);
+        }
+        else
+        {
+            lobbyListStr = www.downloadHandler.text;
+            string[] splitData = lobbyListStr.Split('/');
+            lobbyList = new List<string>(splitData);
+
+            bool foundValidCode = false;
+            while (!foundValidCode)
+            {
+                lobbyCode = GenerateLobbyCode();
+                if (!lobbyList.Contains(lobbyCode))
+                {
+                    lobbyCodeDisplay.text = lobbyCode;
+                    foundValidCode = true;
+                }
+            }
+        }
+    }
+}
+```
+
+This coroutine requests the server for a list of all lobbies currently in the server's lobby directory - it then parses the returned list, checking for the current generated code. If the code already exists, it re-runs the generator, and this loops until a valid lobby code is found.
