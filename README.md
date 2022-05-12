@@ -135,6 +135,9 @@ public Question ChooseQuestion()
 }
 ```
 
+
+#### Step 2 - Sending the Question
+
 Once a question was selected, we needed to send this question to the server so the other players in the lobby would retrieve and display it in their own clients. To do so, we needed to first serialize a question as a "question ID" that would specify what question was chosen what what category.
 
 ```csharp
@@ -143,3 +146,75 @@ public string GetQuestionID(int cIndex, int qIndex)
     return ("." + cIndex.ToString() + "Q" + qIndex.ToString());
 }
 ```
+
+Then, the `_SendQuestion()` coroutine sends the question ID via a POST request using Unity's Networking library. We specify the PHP script we want to send the request to, and include the necessary parameters. The web server then stores this question.
+
+```csharp
+public IEnumerator _SendQuestion(string lobbyNumber, string questionID)
+{
+    Debug.Log("Sending question.");
+    WWWForm form = new WWWForm();
+    form.AddField("function", "startQuestion");
+    form.AddField("lobbyNumber", lobbyNumber);
+    form.AddField("questionID", questionID);
+
+    using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "question.php", form))
+    {
+        yield return www.SendWebRequest();
+
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(www.error);
+            AlertText.current.ToggleAlertText(www.error, Color.red);
+        }
+        else
+        {
+            string receivedData = www.downloadHandler.text;
+            Debug.Log(receivedData);
+            if (receivedData == "successfully started question")
+            {
+                //timeRemaining = timerDuration;
+                StartCoroutine(_Timer(timerDuration));
+                StartCoroutine(_GetQuestion(GameManager.current.currentLobby));
+                UIManagerAYSTTC.current.SetGameStageP(currentQuestion);
+            }
+        }
+    }
+    }
+```
+
+If the request is successful, the PHP script will echo back "successfully started question". This lets the host client know that it's time to actially initialize the round; it starts the Timer then moves to the Answering screen.
+
+Of course, for this to function, we needed a timer function that would keep track of time, then return something once the timer hits 0.
+
+```csharp
+IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
+{
+    timeRemaining = maxVal;
+    Debug.Log("Timer begun with purpose: " + purpose);
+    while (true)
+    {
+        UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
+        if (timeRemaining > 0)
+        {
+            if (purpose == TimerPurpose.DuringRound)
+            {
+                UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.8f - ((timeRemaining / timerDuration * 0.6f) + 0.1f));
+            }
+            timeRemaining -= Time.deltaTime;
+        }
+        else
+        {
+            timeRemaining = 0;
+            // Do end-of-timer things.
+        }
+```
+
+We used a coroutine for this Timer. It will constantly count down from the specified time to 0, then when it hits 0 (or a negative number), it stops the timer and initiates whatever should be done after the timer ends.
+To determine what should be done on timer end, I created a `TimerPurpose` enum. When `_Timer()` is called, the timer will begin with a `TimerPurpose` in mind - we could then specify these timer-end actions based on what the timer is being used for (during a round, during the round recap screen, etc.)
+
+```csharp
+public enum TimerPurpose { DuringRound, EndOfRoundSafe, EndOfRoundEliminated, PreStart, EndOfGame }
+```
+
+Up until this point, the other players' clients will be 
