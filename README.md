@@ -24,7 +24,7 @@ This code was developed by Alex Kong and Victor Do. Below are the main contribut
 
 ## Contributions and Breakdown - Alex
 
-### The Game Loop
+### Task 1 - The Game Loop
 We wanted to create a game that was straightforward and easy to grasp. From the start, we knew our main game loop was gonna be pretty simple - you enter a game, and try to answer a number of questions until you reach the end.
 ![Main Game Loop Flowchart](https://github.com/Tenodru/Partyception/blob/25e4aa505c1dd881a2f8a55a98c0d6696e805cb6/Other/Readme%20Resources/Alex/Game%20Loop%20Flowchart%201.png)
 
@@ -412,4 +412,14 @@ public void SelectAnswerChoice(AnswerButton answerChoice)
 Furthermore, by clicking any other answer choice, `SelectAnswerChoice()` will "deselect" all other answer buttons by resetting their colors to normal.
 
 The GameManager script will also keep identify whether the player's answer choice is correct or incorrect, allowing the game to eliminate players once the round is over. This elimination system was implemented by Victor, and is covered in his section further below in this readme.
+
+#### Step 5 - Ending the Round
+Once the timer runs out, the `_GetRoundStatus()` coroutine will be called, which will check whether or not the player answered incorrectly; the coroutine will then call the `DisplayOutcomeScreen()` function in UIManager, telling the player whether or not they were eliminated. The intricacies of this step - progressing from answering questions to the outcome screen - was mostly handled by Victor.
+
+#### Step 6 - Repeating the Round
+Repeating the round is very simple - the above steps are just repeated in the same order. At this point in the development process, Victor began working on the frontend, adding to the existing functionality of the game.
+
+
+
+### Task 2 - The Game End Screen
 
