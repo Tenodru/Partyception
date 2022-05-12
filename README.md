@@ -488,3 +488,10 @@ public IEnumerator _GetLobbyList()
 ```
 
 This coroutine requests the server for a list of all lobbies currently in the server's lobby directory - it then parses the returned list, checking for the current generated code. If the code already exists, it re-runs the generator, and this loops until a valid lobby code is found.
+
+
+
+### Other Tasks and Code Contribution
+Alongside these major tasks, I worked closely in tandem with Victor to edit, tweak, add to, and debug other parts of the game code that would be too numerous to detail here. For insight on other parts of the code, see Victor's breakdown section below.
+
+## Contributions and Breakdown - Victor
