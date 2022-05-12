@@ -21,3 +21,6 @@ This code was developed by Alex Kong and Victor Do. Below are the main contribut
 - All other scripts are located here.
 
 
+## Contributions and Breakdown - Alex
+We wanted to create a game that was straightforward and easy to grasp. From the start, we knew our main game loop was gonna be pretty simple - you enter a game, and try to answer a number of questions until you reach the end.
+![Main Game Loop Flowchart](Other/Readme Resources/Alex/Game Loop Flowchart 1.png)
