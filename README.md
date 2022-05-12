@@ -44,8 +44,9 @@ Finally, we needed a Category object to hold a list of questions for our various
 - `question` : List. A list of all Questions in this category.
 
 This setup would allow our writers to easily add and change questions with ease using Unity's inspector, instead of having to mess around with code.
+<p float="left">
 ![Inspector 1](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Games.PNG)
 ![Inspector 2](https://github.com/Tenodru/Partyception/blob/9603e1fa1ee0bb9d937300aa42ed1c63997ad948/Other/Readme%20Resources/Alex/ScriptableObject%20Category.PNG)
-
+</p>
 
 
