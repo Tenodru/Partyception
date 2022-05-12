@@ -21,6 +21,7 @@ This code was developed by Alex Kong and Victor Do. Below are the main contribut
 - All other scripts are located here.
 
 
+
 ## Contributions and Breakdown - Alex
 ### The Game Loop
 We wanted to create a game that was straightforward and easy to grasp. From the start, we knew our main game loop was gonna be pretty simple - you enter a game, and try to answer a number of questions until you reach the end.
@@ -30,6 +31,7 @@ The "Answer Question" step could then be expanded into a Round Loop, illustrated
 ![Round Loop Flowchart](https://github.com/Tenodru/Partyception/blob/0e76fbd66557594684a1fb64e7fdd183fab46c6e/Other/Readme%20Resources/Alex/Round%20Loop.png)
 
 My first primary task was to build this Round Loop.
+
 
 #### The Question-Answer Object System
 To begin, we needed a framework for our questions and answers. I wrote a `Question` scriptable object class that would take in several parameters:
