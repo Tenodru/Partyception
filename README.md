@@ -23,4 +23,4 @@ This code was developed by Alex Kong and Victor Do. Below are the main contribut
 
 ## Contributions and Breakdown - Alex
 We wanted to create a game that was straightforward and easy to grasp. From the start, we knew our main game loop was gonna be pretty simple - you enter a game, and try to answer a number of questions until you reach the end.
-![Main Game Loop Flowchart](/Other/Readme Resources/Alex/Game Loop Flowchart 1.png)
+![Main Game Loop Flowchart](https://github.com/Tenodru/Partyception/blob/25e4aa505c1dd881a2f8a55a98c0d6696e805cb6/Other/Readme%20Resources/Alex/Game%20Loop%20Flowchart%201.png)
