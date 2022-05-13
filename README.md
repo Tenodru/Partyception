@@ -498,4 +498,460 @@ This coroutine requests the server for a list of all lobbies currently in the se
 ### Other Tasks and Code Contribution
 Alongside these major tasks, I worked closely in tandem with Victor to edit, tweak, add to, and debug other parts of the game code that would be too numerous to detail here. For insight on other parts of the code, see Victor's breakdown section below.
 
+
+
 ## Contributions and Breakdown - Victor
+
+My contributions to the game client side of Partyception can be broken down to three sections.
+
+### Main Menu (Creating and joining lobbies)
+
+In the main menu, I implemented the functions that called server functions to create and join lobbies. I also implemented the UI to facilitate the creation and joining process for streamers and players.
+
+### Lobby Menu (Displaying players in lobby)
+
+In the lobby menu, I implemented the coroutines that display the lobby's current players and functions that would start the game or would allow the players to leave their current lobby.
+
+### Game Menu (Setting up corountine loops for the main game)
+
+In the game menu, I set up the UI implementation for each of the screens that would appear over the course of the game, as well as set up the cycle of coroutine loops that would use the functions Alex created (which allowed the host to notify the server of which questions were being chosen, helping players retrieve said questions to answer, sending answers, and recapping the game in between rounds and at the end of the game.
+
+
+#### Main Menu (In-depth)
+
+### Enter Lobby Coroutine
+
+The following coroutine is used both for the creating and joining lobbies. The coroutine takes 3 parameters: functionType, playerName, and a lobbyNumber. To create and join lobbies, we call functions located in the web database that do the heavy lifting for us, and read returned data to determine what to do. For example, we consider whether the player's name already exists in the lobby before joining, or whether the lobby already exists if it is being created for the first time. The server function are explained in more detail in our server side README.
+
+```
+public IEnumerator EnterLobby(string functionType, string playerName, string lobbyNumber)
+    {
+        LoadingPanel.current.ToggleLoadingPanel(true);
+
+        WWWForm checkForm = new WWWForm();
+        checkForm.AddField("function", "getPlayerList");
+        checkForm.AddField("lobbyNumber", lobbyField.text);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", checkForm))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                string[] splitData = receivedData.Split('\n');
+                List<string> splitDataList = new List<string>();
+                foreach (string data in splitData)
+                {
+                    splitDataList.Add(data);
+                }
+                if (splitDataList.Contains(playerName))
+                {
+                    LoadingPanel.current.ToggleLoadingPanel(false);
+                    AlertText.current.ToggleAlertText("That name already exists in this lobby.", Color.red);
+                    yield break;
+                }
+            }
+        }
+
+        WWWForm form = new WWWForm();
+        form.AddField("function", functionType);
+        form.AddField("lobbyNumber", lobbyNumber);
+        form.AddField("playerName", playerName);
+
+        using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log(www.error);
+                LoadingPanel.current.ToggleLoadingPanel(false);
+                AlertText.current.ToggleAlertText(www.error, Color.red);
+            }
+            else
+            {
+                string receivedData = www.downloadHandler.text;
+                Debug.Log(receivedData);
+                if (functionType == "createLobby")
+                {
+                    if (receivedData == "lobby created")
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene, PlayerStatus.Host);
+                    }
+                    else if (receivedData == "lobby already exists")
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        AlertText.current.ToggleAlertText("Lobby already exists.", Color.red);
+                    }
+                    else
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        AlertText.current.ToggleAlertText(receivedData, Color.red);
+                    }
+                }
+                else if (functionType == "joinLobby")
+                {
+                    Debug.Log("trying to join");
+                    if (receivedData == "lobby successfully joined")
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        GameManager.current.JoinLobby(playerName, lobbyNumber, lobbyScene, PlayerStatus.Participant);
+                    }
+                    else if (receivedData == "lobby does not exist")
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        AlertText.current.ToggleAlertText("Lobby does not exist.", Color.red);
+                    }
+                    else
+                    {
+                        LoadingPanel.current.ToggleLoadingPanel(false);
+                        AlertText.current.ToggleAlertText(receivedData, Color.red);
+                    }
+                }
+            }
+        }
+    }
+ ```
+ 
+ #### Lobby Menu (In-depth)
+ 
+ ### Getting the list of players
+ 
+ In our lobby menu script, we have coroutines that allow players to leave lobbies or check if the game has started yet so they can transition to the game menu, and allow the streamer to start the game, however both sides run the getPlayerList coroutine constantly to update the current players in their lobby. This function encapsulates how most of our coroutines work in the game. We send some information to the web database and run a function up there, which causes the client to receive some data from the web database. Using this data, we can extract a list of players in the lobby, and use this data to update the UI in the scene that displays the current players in the lobby.
+ 
+ ```
+ public IEnumerator _GetPlayerList()
+    {
+        while (true)
+        {
+            WWWForm form = new WWWForm();
+            form.AddField("function", "getPlayerList");
+            form.AddField("lobbyNumber", GameManager.current.currentLobby);
+            form.AddField("playerName", GameManager.current.playerName);
+
+            using (UnityWebRequest www = UnityWebRequest.Post(gameDatabaseLink + "lobby.php", form))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.Log(www.error);
+                    AlertText.current.ToggleAlertText(www.error, Color.red);
+                }
+                else
+                {
+                    string receivedData = www.downloadHandler.text;
+                    string[] splitData = receivedData.Split('\n');
+                    List<string> splitDataList = new List<string>();
+                    foreach (string data in splitData)
+                    {
+                        splitDataList.Add(data);
+
+                        if (data != "")
+                        {
+                            if (!GameManager.current.players.Contains(data))
+                            {
+                                GameManager.current.AddPlayer(data);
+                            }
+                            foreach (GameObject playerCard in playerCards)
+                            {
+                                if (!playerCard.activeInHierarchy && !playerNames.Contains(data))
+                                {
+                                    playerCard.SetActive(true);
+                                    AudioManager.current.PlaySound(playerJoinSound);
+                                    playerCard.GetComponent<PlayerCard>().AssignPlayerName(data);
+                                    playerNames.Add(data);
+                                    StopCoroutine(_AFKTimer());
+                                    StartCoroutine(_AFKTimer());
+                                    if (data.Contains("Leader: "))
+                                    {
+                                        playerCard.GetComponent<PlayerCard>().MakeLeader();
+                                    }
+                                    if (data == GameManager.current.playerName || data == "Leader: " + GameManager.current.playerName)
+                                    {
+                                        playerCard.GetComponent<PlayerCard>().MakeCurrent();
+                                        if (data.Contains("Leader: "))
+                                        {
+                                            lobbyLeader = true;
+                                            startButton.interactable = true;
+                                            startButton.GetComponentInChildren<Text>().text = "Start";
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (string player in GameManager.current.players)
+                    {
+                        if (!splitDataList.Contains(player))
+                        {
+                            GameManager.current.players.Remove(player);
+                            foreach (GameObject playerCard in playerCards)
+                            {
+                                if (playerCard.activeInHierarchy && playerNames.Contains(player) && playerCard.GetComponent<PlayerCard>().playerName.text == player)
+                                {
+                                    playerCard.SetActive(false);
+                                    AudioManager.current.PlaySound(playerLeaveSound);
+                                    playerNames.Remove(player);
+                                    StopCoroutine(_AFKTimer());
+                                    StartCoroutine(_AFKTimer());
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+ ```
+ 
+ #### Game Menu (In Depth)
+ 
+ Our game menu has 2 main scripts that are both used to generate the gameplay loop: GameManagerAYSTTC and UIManagerATSTTC. GameManager focuses primarily on progressing the game on the backend, calling web functions and retrieving information, advancing the round, depleting the timer, choosing a random question from a list of questions, while UIManager focuses on the display of the game and what the players see, updating the screen to display the appropriate UI elements, tracking what the players press to track their answer and more.
+ 
+ Because the scripts contain so much, I have selected 2 functions/coroutines from each script that provide a small glimpse into the processes of each script.
+ 
+ ### Timer (GameManager)
+ 
+ The following coroutine is used to deplete the timer that is used to progress the game, as well as determine what to do when the timer runs out. Alex and I developed this together. Depending on the timer's purpose, the timer will call the UIManager to display different things, and furthermore, depending on whether the player is the host or a standard player, the game could resolve their game differently too. Timer is used at all stages of our game menu, whether it be while a question is up to be answered, or a recap is displayed after the round.
+ 
+ ```
+ /// <summary>
+    /// A timer. Accepts a maximum (starting) value, and a TimerPurpose (when the timer is going to be run).
+    /// </summary>
+    /// <param name="maxVal">The max/starting value.</param>
+    /// <param name="purpose">When the timer is going to be run.</param>
+    /// <returns></returns>
+    IEnumerator _Timer(float maxVal, TimerPurpose purpose = TimerPurpose.DuringRound)
+    {
+        timeRemaining = maxVal;
+        Debug.Log("Timer begun with purpose: " + purpose);
+        while (true)
+        {
+            UIManagerAYSTTC.current.ShowTimer(timeRemaining, maxVal);                                               // Keeps the timer slider display updated.
+            if (timeRemaining > 0)
+            {
+                if (purpose == TimerPurpose.DuringRound)
+                {
+                    UIManagerAYSTTC.current.bgBrightness.color = new Color(0, 0, 0, 0.8f - ((timeRemaining / timerDuration * 0.6f) + 0.1f));
+                }
+                timeRemaining -= Time.deltaTime;
+            }
+            else
+            {
+                timeRemaining = 0;
+                if (purpose == TimerPurpose.DuringRound)
+                {
+                    if (hostEliminated)
+                    {
+                        Debug.Log("Host was already eliminated");
+                    }
+                    else if (selectedAnswer == null)
+                    {
+                        Debug.Log("selected answer was null");
+
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
+                    }
+                    else if (selectedAnswer.isCorrectAnswer)
+                    {
+                        Debug.Log("correct answer");
+                        StartCoroutine(_UpdatePlayerStatus("correct"));
+                    }
+                    else
+                    {
+                        Debug.Log("wrong answer");
+                        StartCoroutine(_UpdatePlayerStatus("eliminated." + currentRound));
+                    }
+
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        //StartCoroutine(_CompleteRound(GameManager.current.currentLobby));k
+                        readyCheck = StartCoroutine(_ReadyCheck("completeRound"));
+                        kickCheck = StartCoroutine(_KickCheck());
+                        yield break;
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        StartCoroutine(_GetRoundStatus(GameManager.current.currentLobby));
+                        yield break;
+                    }
+                }
+                else if (purpose == TimerPurpose.EndOfRoundSafe)
+                {
+                    selectedAnswer = null;
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            StartCoroutine(_GetPlayerCount(func: () => StartCoroutine(_EndGame(GameManager.current.currentLobby))));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
+                        }
+                        else
+                        {
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(func: () => StartCoroutine(_EndGame(GameManager.current.currentLobby))));
+                            }
+                            else
+                            {
+                                StartRound();
+                            }
+                        }
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            StartCoroutine(_GetPlayerCount(func: () => UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant)));
+                            //UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant);
+                            yield break;
+                        }
+                        else
+                        {
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(func: () => UIManagerAYSTTC.current.DisplayGameEndScreen(PlayerStatus.Participant)));
+                            }
+                            else
+                            {
+                                StartCoroutine(_CheckForRoundStart());
+                            }
+                        }
+                    }
+                    Debug.Log("End of round has ended.");
+                    yield break;
+                }
+                else if (purpose == TimerPurpose.EndOfRoundEliminated)
+                {
+                    selectedAnswer = null;
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        // Final round was reached. Go to end screen.
+                        if (currentRound == roundCount)
+                        {
+                            StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                            //StartCoroutine(_EndGame(GameManager.current.currentLobby));
+                            yield break;
+                        }
+                        else
+                        {
+                            hostEliminated = true;
+                            if (skipToEnd)
+                            {
+                                StartCoroutine(_GetPlayerCount(co: _EndGame(GameManager.current.currentLobby)));
+                                yield break;
+                            }
+                            StartRound();
+                        }
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        GameManager.current.LoadScene("AYSTTC Main Menu");
+                        // Eventually we want to send them to an eliminated screen.
+                        yield break;
+                    }
+                    yield break;
+                }
+                else if (purpose == TimerPurpose.PreStart)
+                {
+                    if (GameManager.current.playerStatus == PlayerStatus.Host)
+                    {
+                        //StartCoroutine(_ReadyCheck("startRound"));
+                        StartRound();
+                    }
+                    else if (GameManager.current.playerStatus == PlayerStatus.Participant)
+                    {
+                        //REMOVE THIS IF BROKEN
+                        StartCoroutine(_UpdatePlayerStatus("awaiting"));
+                        StartCoroutine(_CheckForRoundStart());
+                    }
+                    Debug.Log("First round has started.");
+                    yield break;
+                }
+            }
+            yield return null;
+        }
+    }
+ ```
+ 
+  ### Display Outcome Screen (UIManager)
+  
+  At the end of each round, an outcome screen is displayed that tells you whether you got the question wrong, and whoever was eliminated during the round. This function is called by GameManagerAYSTTC, which the timer gets to 0 and its purpose is DuringRound. Depending on the player's answer, the outcome screen variables are modified to appropriate reflect the outcome. For example, if a player is a host but got eliminated, the text displayed would be different than a normal player that got the question correct.
+  
+  ```
+  /// <summary>
+    /// Displays the Outcome screen after the timer for a question hits 0.
+    /// </summary>
+    /// <param name="outcome">The Outcome (Correct, TimeOut, Wrong) for the player.</param>
+    public void DisplayOutcomeScreen(OutcomeType outcome)
+    {
+        outcomeScreen.SetActive(true);
+        gameScreen.SetActive(false);
+
+        if (outcome == OutcomeType.Correct)
+        {
+            outcomeText.text = "Correct!" + "\n" +
+                "Awaiting next question.";
+            outcomeAnim.SetTrigger("Win");
+        }
+        else if (outcome == OutcomeType.Wrong)
+        {
+            if (GameManager.current.playerStatus == PlayerStatus.Host)
+            {
+                outcomeText.text = "Wrong! You have been eliminated." + "\n" +
+                "However, you will stay and spectate because you are the host.";
+            }
+            else
+            {
+                outcomeText.text = "Wrong!" + "\n" +
+                "You have been eliminated.";
+            }
+            outcomeAnim.SetTrigger("Lose");
+        }
+        else if (outcome == OutcomeType.TimeOut)
+        {
+            if (GameManager.current.playerStatus == PlayerStatus.Host)
+            {
+                outcomeText.text = "You ran out of time! You have been eliminated." + "\n" +
+                "However, you will stay and spectate because you are the host.";
+            }
+            else
+            {
+                outcomeText.text = "You ran out of time!" + "\n" +
+                "You have been eliminated.";
+            }
+            outcomeAnim.SetTrigger("Lose");
+        }
+        else if (outcome == OutcomeType.HostSpectate)
+        {
+            outcomeText.text = "You've already been eliminated." + "\n" +
+            "You will continue spectating.";
+            
+            outcomeAnim.SetTrigger("Lose");
+        }
+        else if (outcome == OutcomeType.Disconnect)
+        {
+            outcomeText.text = "Your game is out of sync with the server." + "\n" +
+            "You've been disconnected.";
+
+            outcomeAnim.SetTrigger("Lose");
+        }
+
+        StartCoroutine(Timer(x => StartCoroutine(ReduceRemainingPlayerCount()), 2));
+        StartCoroutine(Timer(x => StartCoroutine(Memoriam()), 2));
+    }
+ ```
