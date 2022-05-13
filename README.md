@@ -502,7 +502,7 @@ Alongside these major tasks, I worked closely in tandem with Victor to edit, twe
 
 ## Contributions and Breakdown - Victor
 
-My contributions to the game client side of Partyception can be broken down to three sections.
+My contributions to the game client side of Partyception can be broken down to four sections.
 
 ### Main Menu (Creating and joining lobbies)
 
@@ -516,6 +516,16 @@ In the lobby menu, I implemented the coroutines that display the lobby's current
 
 In the game menu, I set up the UI implementation for each of the screens that would appear over the course of the game, as well as set up the cycle of coroutine loops that would use the functions Alex created (which allowed the host to notify the server of which questions were being chosen, helping players retrieve said questions to answer, sending answers, and recapping the game in between rounds and at the end of the game.
 
+### UI Implementation
+
+I implemented most of the UI for the game and colloborated with our UI/UX designer to try to make the UI look as close to what she was envisioning in her wireframes. Here are a couple of screenshots of the UI I have integrated into our game.
+
+![Answer Question](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/answeringQuestion.PNG)
+![Creating Lobby](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/creatingLobby.PNG)
+![Eliminated](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/elimination.PNG)
+![Lobby Screen](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/lobbyScreen.PNG)
+![Question Recap](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/questionRecap.PNG)
+![Settings](https://github.com/Tenodru/Partyception/blob/main/Other/Readme%20Resources/Victor/settings.PNG)
 
 #### Main Menu (In-depth)
 
