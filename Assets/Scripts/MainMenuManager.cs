@@ -38,8 +38,7 @@ public class MainMenuManager : MonoBehaviour
     //[Header("Opening Animation")]
     //public VideoPlayer videoPlayer;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
         if (GameManager.current == null)
         {
@@ -50,6 +49,12 @@ public class MainMenuManager : MonoBehaviour
         {
             GameManager.current.players.Clear();
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
         AudioManager.current.PlayMusic("mainMenuMusic");
         StartCoroutine(_GetLobbyList());
     }
