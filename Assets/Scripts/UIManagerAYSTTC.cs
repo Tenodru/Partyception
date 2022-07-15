@@ -11,6 +11,8 @@ using TMPro;
 /// </summary>
 public class UIManagerAYSTTC : MonoBehaviour
 {
+    public Button settingsIcon1;
+    public Button settingsIcon2;
     public Image bgBrightness;
 
     [Tooltip ("The category selection screen.")]
@@ -211,12 +213,14 @@ public class UIManagerAYSTTC : MonoBehaviour
     public void SetSelectionStageH()
     {
         selectionScreen.SetActive(true);
+        settingsIcon1.gameObject.SetActive(false);
         participantWaitingScreen.SetActive(false);
     }
 
     public void SetSelectionStageP()
     {
         selectionScreen.SetActive(false);
+        settingsIcon1.gameObject.SetActive(false);
         participantWaitingScreen.SetActive(true);
     }
 
@@ -233,6 +237,8 @@ public class UIManagerAYSTTC : MonoBehaviour
 
     public void SetGameStageP(Question question)
     {
+        settingsIcon1.gameObject.SetActive(true);
+        settingsIcon2.gameObject.SetActive(false);
         instructionsScreen.SetActive(false);
         preStartScreen.SetActive(false);
         outcomeScreen.SetActive(false);
@@ -299,6 +305,8 @@ public class UIManagerAYSTTC : MonoBehaviour
     /// <param name="outcome">The Outcome (Correct, TimeOut, Wrong) for the player.</param>
     public void DisplayOutcomeScreen(OutcomeType outcome)
     {
+        settingsIcon1.gameObject.SetActive(false);
+        settingsIcon2.gameObject.SetActive(true);
         outcomeScreen.SetActive(true);
         gameScreen.SetActive(false);
 

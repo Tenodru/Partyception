@@ -27,31 +27,4 @@ public class SettingsManager : MonoBehaviour
     [Header("Audio")]
     public float musicVolume = 100.0f;
     public float soundEffectVolume = 100.0f;
-
-    [SerializeField] GameObject settingsPanel;
-    [SerializeField] Slider musicSlider;
-    [SerializeField] Slider soundEffectSlider;
-
-    public void Start()
-    {
-        settingsPanel.SetActive(false);
-        AudioManager.current.music.volume = musicVolume;
-        AudioManager.current.soundEffects.volume = soundEffectVolume;
-    }
-
-    /// <summary>
-    /// Toggles the settings panel on or off.
-    /// </summary>
-    public void ToggleSettingsPanel()
-    {
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
-    }
-
-    public void AdjustSettings()
-    {
-        musicVolume = musicSlider.value;
-        soundEffectVolume = soundEffectSlider.value;
-        AudioManager.current.music.volume = musicVolume/100;
-        AudioManager.current.soundEffects.volume = soundEffectVolume/100;
-    }
 }
